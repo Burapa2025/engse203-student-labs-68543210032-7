@@ -1,64 +1,70 @@
 import { useState } from 'react';
 
+const initialFormData = { title: '', category: '', priority: 'normal' };
+
 function TaskForm({ onAddTask }) {
-  const [title, setTitle] = useState('');
-  const [category, setCategory] = useState('');
-  const [priority, setPriority] = useState('normal');
+  const [formData, setFormData] = useState(initialFormData);
   const [error, setError] = useState('');
+
+  function handleChange(e) {
+    const { name, value } = e.target;
+    setFormData((current) => ({ ...current, [name]: value }));
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (title.trim().length < 3) {
+    if (formData.title.trim().length < 3) {
       setError('ชื่องานต้องมีอย่างน้อย 3 ตัวอักษร');
       return;
     }
-    if (!category) {
-      setError('กรุณาเลือกหมวดหมู่');
+    if (!formData.category) {
+      setError('กรุณาเลือกประเภท');
       return;
     }
 
     const newTask = {
       id: `TASK-${Date.now()}`,
-      title: title.trim(),
-      category,
-      priority,
+      title: formData.title.trim(),
+      category: formData.category,
+      priority: formData.priority,
       status: 'todo',
     };
 
     onAddTask(newTask);
-
-    // reset form เฉพาะตอน valid เท่านั้น
-    setTitle('');
-    setCategory('');
-    setPriority('normal');
+    setFormData(initialFormData);
     setError('');
   }
 
   return (
     <form className="task-form" onSubmit={handleSubmit}>
+      <p className="eyebrow">CONTROLLED FORM</p>
+      <h2>เพิ่มงานฝึก</h2>
+
       <div className="field">
         <label htmlFor="title">ชื่องาน</label>
         <input
           id="title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          name="title"
+          value={formData.title}
+          onChange={handleChange}
           aria-invalid={!!error}
         />
       </div>
 
       <div className="field">
-        <label htmlFor="category">หมวดหมู่</label>
+        <label htmlFor="category">ประเภท</label>
         <select
           id="category"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
+          name="category"
+          value={formData.category}
+          onChange={handleChange}
           aria-invalid={!!error}
         >
-          <option value="">-- เลือก --</option>
-          <option value="reading">reading</option>
-          <option value="coding">coding</option>
-          <option value="review">review</option>
+          <option value="">-- เลือกประเภท --</option>
+          <option value="reading">อ่าน/ทบทวน</option>
+          <option value="coding">เขียนโค้ด</option>
+          <option value="review">ตรวจและอธิบาย</option>
         </select>
       </div>
 
@@ -66,15 +72,20 @@ function TaskForm({ onAddTask }) {
         <label htmlFor="priority">ความสำคัญ</label>
         <select
           id="priority"
-          value={priority}
-          onChange={(e) => setPriority(e.target.value)}
+          name="priority"
+          value={formData.priority}
+          onChange={handleChange}
         >
-          <option value="normal">normal</option>
-          <option value="high">high</option>
+          <option value="normal">ปกติ</option>
+          <option value="high">สูง</option>
         </select>
       </div>
 
-      {error && <p className="error" role="status">{error}</p>}
+      {error && (
+        <p className="error" role="status">
+          {error}
+        </p>
+      )}
 
       <button type="submit">เพิ่มงาน</button>
     </form>

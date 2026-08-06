@@ -1,19 +1,27 @@
-// src/components/FilterBar.jsx
+const FILTERS = [
+  { value: 'all', label: 'ทั้งหมด' },
+  { value: 'todo', label: 'ต้องทำ' },
+  { value: 'doing', label: 'กำลังทำ' },
+  { value: 'done', label: 'เสร็จแล้ว' },
+];
+
 function FilterBar({ value, onChange }) {
   return (
-    <div className="filter-bar">
-      <label htmlFor="status-filter">กรองสถานะ</label>
-      <select
-        id="status-filter"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-      >
-        <option value="all">ทั้งหมด</option>
-        <option value="todo">todo</option>
-        <option value="doing">doing</option>
-        <option value="done">done</option>
-      </select>
+    <div className="filter-tabs" role="tablist" aria-label="กรองสถานะงาน">
+      {FILTERS.map((f) => (
+        <button
+          key={f.value}
+          type="button"
+          role="tab"
+          aria-selected={value === f.value}
+          className={value === f.value ? 'tab active' : 'tab'}
+          onClick={() => onChange(f.value)}
+        >
+          {f.label}
+        </button>
+      ))}
     </div>
   );
 }
+
 export default FilterBar;
