@@ -3,9 +3,9 @@
   "title": "Responsive Web UI & Form Interaction",
   "status": "submitted",
   "sourceOrigin": "migrated-repository",
-  "originalRepoUrl": "",
-  "originalCommit": "",
-  "pullRequestUrl": "",
+  "originalRepoUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7",
+  "originalCommit": "0494777c",
+  "pullRequestUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/pull/1",
   "submissionTag": "lab-03-submission-v1",
   "testStatus": "pass",
   "notes": "Static site ต้องมี index.html ที่ publish root"
