@@ -6,7 +6,7 @@ const repositoryName = "engse203-lab02-68543210032-7";
 export default defineConfig({
   base: `/${repositoryName}/`,
   build: {
-    outDir: "docs",
+    outDir: "dist",
     emptyOutDir: true,
   },
 });
