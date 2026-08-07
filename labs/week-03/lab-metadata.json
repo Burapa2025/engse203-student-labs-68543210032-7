@@ -6,7 +6,7 @@
   "originalRepoUrl": "",
   "originalCommit": "",
   "pullRequestUrl": "",
-  "submissionTag": "",
+  "submissionTag": "lab-03-submission-v1",
   "testStatus": "pass",
   "notes": "Static site ต้องมี index.html ที่ publish root"
 }
