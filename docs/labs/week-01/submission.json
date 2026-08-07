@@ -1,16 +1,16 @@
 {
   "week": "week-01",
   "title": "Developer Environment & GitHub Repository Setup",
-  "status": "draft",
+  "status": "ready-for-pr",
   "sourceOrigin": "course-starter",
-  "originalRepoUrl": "",
-  "originalCommit": "",
+  "originalRepoUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7",
+  "originalCommit": "5933868",
   "pullRequestUrl": "",
-  "submissionTag": "",
-  "testStatus": "not-tested",
-  "notes": "LAB 1 ใช้ evidence report ได้โดยไม่ต้องมี web application",
+  "submissionTag": "lab-01-submission-v1",
+  "testStatus": "pass",
+  "notes": "รัน hello.js และตรวจ environment แล้ว",
   "pageUrl": "https://Burapa2025.github.io/engse203-student-labs-68543210032/labs/week-01/",
   "sourceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032/tree/lab/week-01/labs/week-01/source",
   "hasPublish": false,
-  "sourceEntries": 0
+  "sourceEntries": 5
 }
