@@ -1,11 +1,11 @@
 {
   "week": "week-01",
   "title": "Developer Environment & GitHub Repository Setup",
-  "status": "ready-for-pr",
+  "status": "submitted",
   "sourceOrigin": "course-starter",
   "originalRepoUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7",
   "originalCommit": "5933868",
-  "pullRequestUrl": "",
+  "pullRequestUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/pull/2",
   "submissionTag": "lab-01-submission-v1",
   "testStatus": "pass",
   "notes": "รัน hello.js และตรวจ environment แล้ว"
