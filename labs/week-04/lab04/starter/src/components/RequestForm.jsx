@@ -1,155 +1,144 @@
 import { useState } from 'react';
 
-export default function RequestForm({ onAddRequest }) {
-  const [formData, setFormData] = useState({
-    requesterName: '',
-    requestType: '',
-    location: '',
-    details: '',
-    priority: 'normal'
-  });
+const initialFormData = {
+  requesterName: '',
+  requestType: '',
+  location: '',
+  details: '',
+  priority: 'normal',
+};
 
+function RequestForm({ onAddRequest }) {
+  const [formData, setFormData] = useState(initialFormData);
   const [errors, setErrors] = useState({});
-  const [successMsg, setSuccessMsg] = useState('');
+  const [feedback, setFeedback] = useState('');
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: '' }));
-    }
-  };
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setFormData((previousData) => ({ ...previousData, [name]: value }));
+  }
 
-  const validate = () => {
-    const newErrors = {};
+  function handleSubmit(event) {
+    event.preventDefault();
+    // TODO LAB4-R05–R07: validate controlled state แล้วเรียก onAddRequest
+
+    const nextErrors = {};
+
     if (formData.requesterName.trim().length < 2) {
-      newErrors.requesterName = 'ชื่อผู้แจ้งต้องมีอย่างน้อย 2 ตัวอักษร';
+      nextErrors.requesterName = 'ชื่อผู้แจ้งต้องมีอย่างน้อย 2 ตัวอักษร';
     }
     if (!formData.requestType) {
-      newErrors.requestType = 'กรุณาเลือกประเภทบริการ';
+      nextErrors.requestType = 'กรุณาเลือกประเภทคำร้อง';
     }
-    if (formData.location.trim().length === 0) {
-      newErrors.location = 'กรุณาระบุสถานที่';
+    if (!formData.location.trim()) {
+      nextErrors.location = 'กรุณาระบุสถานที่';
     }
     if (formData.details.trim().length < 10) {
-      newErrors.details = 'รายละเอียดต้องมีอย่างน้อย 10 ตัวอักษร';
+      nextErrors.details = 'รายละเอียดต้องมีอย่างน้อย 10 ตัวอักษร';
     }
-    return newErrors;
-  };
+    if (formData.priority !== 'normal' && formData.priority !== 'urgent') {
+      nextErrors.priority = 'ระบุความเร่งด่วนไม่ถูกต้อง';
+    }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setSuccessMsg('');
-    const validationErrors = validate();
-
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
+    if (Object.keys(nextErrors).length > 0) {
+      setErrors(nextErrors);
+      setFeedback('');
       return;
     }
 
-    const newReq = {
-      id: `REQ-${String(Date.now()).slice(-4)}`,
+    setErrors({});
+    onAddRequest({
       requesterName: formData.requesterName.trim(),
       requestType: formData.requestType,
       location: formData.location.trim(),
       details: formData.details.trim(),
       priority: formData.priority,
-      status: 'pending'
-    };
-
-    onAddRequest(newReq);
-    setSuccessMsg('บันทึกคำร้องเรียบร้อยแล้ว!');
-    setFormData({
-      requesterName: '',
-      requestType: '',
-      location: '',
-      details: '',
-      priority: 'normal'
     });
-    setErrors({});
-  };
+
+    setFormData(initialFormData);
+    setFeedback('เพิ่มคำร้องสำเร็จแล้ว');
+    setTimeout(() => setFeedback(''), 3000);
+  }
 
   return (
-    <section className="panel" aria-labelledby="form-title">
-      <h2 id="form-title">สร้างคำร้องบริการ</h2>
-      {successMsg && <p className="status-msg success" role="status">{successMsg}</p>}
-
+    <section className="panel" aria-labelledby="request-form-title">
+      <p className="eyebrow dark">CONTROLLED FORM</p>
+      <h2 id="request-form-title">สร้างคำร้องใหม่</h2>
       <form onSubmit={handleSubmit} noValidate>
-        <div className="form-group">
+        <div className="field">
           <label htmlFor="requesterName">ชื่อผู้แจ้ง</label>
           <input
-            type="text"
             id="requesterName"
             name="requesterName"
             value={formData.requesterName}
             onChange={handleChange}
-            className={errors.requesterName ? 'is-invalid' : ''}
-            placeholder="ระบุชื่อ-นามสกุล"
+            aria-invalid={Boolean(errors.requesterName)}
           />
-          {errors.requesterName && <span className="error-text">{errors.requesterName}</span>}
+          <small className="error" id="requesterName-error">{errors.requesterName}</small>
         </div>
 
-        <div className="form-group">
-          <label htmlFor="requestType">ประเภทบริการ</label>
+        <div className="field">
+          <label htmlFor="requestType">ประเภทคำร้อง</label>
           <select
             id="requestType"
             name="requestType"
             value={formData.requestType}
             onChange={handleChange}
-            className={errors.requestType ? 'is-invalid' : ''}
+            aria-invalid={Boolean(errors.requestType)}
           >
-            <option value="">-- เลือกประเภทบริการ --</option>
+            <option value="">-- เลือกประเภท --</option>
             <option value="แจ้งซ่อม">แจ้งซ่อม</option>
-            <option value="IT Support">IT Support</option>
-            <option value="ทำความสะอาด">ทำความสะอาด</option>
-            <option value="เรื่องทั่วไป">เรื่องทั่วไป</option>
+            <option value="ขอใช้ห้อง">ขอใช้ห้อง</option>
+            <option value="บริการบัญชีผู้ใช้">บริการบัญชีผู้ใช้</option>
           </select>
-          {errors.requestType && <span className="error-text">{errors.requestType}</span>}
+          <small className="error" id="requestType-error">{errors.requestType}</small>
         </div>
 
-        <div className="form-group">
+        <div className="field">
           <label htmlFor="location">สถานที่</label>
           <input
-            type="text"
             id="location"
             name="location"
             value={formData.location}
             onChange={handleChange}
-            className={errors.location ? 'is-invalid' : ''}
-            placeholder="เช่น ห้องปฏิบัติการ 301"
+            aria-invalid={Boolean(errors.location)}
           />
-          {errors.location && <span className="error-text">{errors.location}</span>}
+          <small className="error" id="location-error">{errors.location}</small>
         </div>
 
-        <div className="form-group">
+        <div className="field">
           <label htmlFor="details">รายละเอียด</label>
           <textarea
             id="details"
             name="details"
-            rows="3"
+            rows="4"
             value={formData.details}
             onChange={handleChange}
-            className={errors.details ? 'is-invalid' : ''}
-            placeholder="รายละเอียดเพิ่มเติม (อย่างน้อย 10 ตัวอักษร)"
-          ></textarea>
-          {errors.details && <span className="error-text">{errors.details}</span>}
+            aria-invalid={Boolean(errors.details)}
+          />
+          <small className="error" id="details-error">{errors.details}</small>
         </div>
 
-        <div className="form-group">
-          <label htmlFor="priority">ความสำคัญ</label>
-          <select
-            id="priority"
-            name="priority"
-            value={formData.priority}
-            onChange={handleChange}
-          >
-            <option value="normal">ปกติ (Normal)</option>
-            <option value="urgent">ด่วนที่สุด (Urgent)</option>
-          </select>
-        </div>
+        <fieldset className="field">
+          <legend>ความเร่งด่วน</legend>
+          <label>
+            <input type="radio" name="priority" value="normal" checked={formData.priority === 'normal'} onChange={handleChange} />
+            ปกติ
+          </label>
+          <label>
+            <input type="radio" name="priority" value="urgent" checked={formData.priority === 'urgent'} onChange={handleChange} />
+            เร่งด่วน
+          </label>
+          <small className="error" id="priority-error">{errors.priority}</small>
+        </fieldset>
 
-        <button type="submit" className="btn btn-primary">ส่งคำร้อง</button>
+        <button type="submit">เพิ่มคำร้อง</button>
+        <p className={`status ${feedback ? 'success' : ''}`} role="status" aria-live="polite">
+          {feedback}
+        </p>
       </form>
     </section>
   );
 }
+
+export default RequestForm;
