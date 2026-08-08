@@ -1,26 +1,26 @@
-export default function FilterBar({ currentFilter, onFilterChange }) {
-  const filters = [
-    { key: 'all', label: 'ทั้งหมด' },
-    { key: 'pending', label: 'รอดำเนินการ' },
-    { key: 'in-progress', label: 'กำลังดำเนินการ' },
-    { key: 'completed', label: 'เสร็จสิ้น' }
-  ];
+const filters = [
+  ['all', 'ทั้งหมด'],
+  ['pending', 'รอดำเนินการ'],
+  ['in-progress', 'กำลังดำเนินการ'],
+  ['completed', 'เสร็จสิ้น'],
+];
 
+function FilterBar({ value, onFilterChange }) {
   return (
-    <div className="filter-bar">
-      <span className="filter-label">กรองตามสถานะ: </span>
-      <div className="filter-buttons">
-        {filters.map(f => (
-          <button
-            key={f.key}
-            type="button"
-            className={`btn-filter ${currentFilter === f.key ? 'active' : ''}`}
-            onClick={() => onFilterChange(f.key)}
-          >
-            {f.label}
-          </button>
-        ))}
-      </div>
+    <div className="filter-bar" role="group" aria-label="กรองสถานะคำร้อง">
+      {filters.map(([filterValue, label]) => (
+        <button
+          className={value === filterValue ? 'filter-active' : 'filter-button'}
+          key={filterValue}
+          type="button"
+          onClick={() => onFilterChange(filterValue)}
+          aria-pressed={value === filterValue}
+        >
+          {label}
+        </button>
+      ))}
     </div>
   );
 }
+
+export default FilterBar;

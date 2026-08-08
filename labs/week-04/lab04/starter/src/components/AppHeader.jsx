@@ -1,11 +1,13 @@
-export default function AppHeader() {
+function AppHeader({ title, subtitle }) {
   return (
-    <header className="app-header">
+    <header className="hero">
       <div className="container">
         <p className="eyebrow">ENGSE203 • LAB 4</p>
-        <h1>Campus Service Request</h1>
-        <p>React Component-based Application</p>
+        <h1>{title}</h1>
+        <p>{subtitle}</p>
       </div>
     </header>
   );
 }
+
+export default AppHeader;
