@@ -11,7 +11,6 @@
  * ทำเฉพาะ TODO ของคาบปัจจุบัน อย่าข้ามไปทำของคาบหน้า
  */
 
-// TODO 5B-1: เปิดใช้บรรทัดล่างนี้เมื่อถึงคาบ 5B
 import { clearStoredRequests, readStoredRequests, writeStoredRequests } from './requestStorage.js';
 
 const LAB_DELAY_MS = 420;
@@ -61,6 +60,19 @@ async function fetchSeedRequests() {
  *
  * ส่วน scenario error และ empty เขียนไว้ให้แล้ว ใช้ทดสอบ UI
  */
+async function loadNormalRequests(onRecovery) {
+  const stored = readStoredRequests();
+  if (stored.status === 'valid') return stored.requests;
+
+  const seedRequests = await fetchSeedRequests();
+  writeStoredRequests(seedRequests);
+
+  if (stored.status === 'invalid') {
+    onRecovery?.('พบข้อมูลเดิมที่อ่านไม่ได้ ระบบจึงกู้ข้อมูลตัวอย่างให้แล้ว');
+  }
+  return seedRequests;
+}
+
 export async function getRequests(options = {}) {
   await waitForLabDelay();
 
@@ -71,10 +83,7 @@ export async function getRequests(options = {}) {
     return [];
   }
 
-  //return fetchSeedRequests();
   return loadNormalRequests(options.onRecovery);
-
-  // TODO 5B-3: เปลี่ยนบรรทัดข้างบนเป็น return loadNormalRequests(options.onRecovery);
 }
 
 /**
@@ -101,16 +110,9 @@ export async function getRequestById(requestId) {
  *   4. ถ้า status เป็น 'invalid' ให้เรียก onRecovery?.(ข้อความ) เพื่อให้หน้าจอแจ้งผู้ใช้
  *   5. คืนข้อมูล seed
  */
-
-async function loadNormalRequests() {
-  const stored = readStoredRequests();
-  if (stored.status === 'valid') return stored.requests;
-
-  const seedRequests = await fetchSeedRequests();
-  writeStoredRequests(seedRequests);
-  // TODO 5B-2b: แจ้งผู้ใช้เมื่อกู้ข้อมูลจากของเสีย (ทำใน CP04b)
-  return seedRequests;
-}
+// async function loadNormalRequests(onRecovery) {
+//   throw new Error('TODO 5B-2: loadNormalRequests');
+// }
 
 /**
  * TODO 5B-4 · เพิ่มคำร้องใหม่
@@ -122,6 +124,29 @@ async function loadNormalRequests() {
  *   4. status เริ่มต้นเป็น 'pending' เสมอ
  *   5. persist แล้วคืน object ใหม่
  */
+function readText(value) {
+  return typeof value === 'string' ? value.trim() : '';
+}
+
+function validateRequestInput(input) {
+  if (!input) throw new Error('ข้อมูลคำร้องไม่ถูกต้อง');
+  if (readText(input.requesterName).length < 2) throw new Error('ชื่อผู้แจ้งไม่ถูกต้อง');
+  if (!readText(input.requestType)) throw new Error('กรุณาเลือกประเภทคำร้อง');
+  if (!readText(input.location)) throw new Error('กรุณาระบุสถานที่');
+  if (readText(input.details).length < 10) throw new Error('รายละเอียดต้องมีอย่างน้อย 10 ตัวอักษร');
+  if (!['normal', 'urgent'].includes(input.priority)) throw new Error('ความเร่งด่วนไม่ถูกต้อง');
+}
+
+function createRequestId(requests) {
+  let id;
+  do {
+    const time = Date.now().toString(36).toUpperCase();
+    const random = Math.random().toString(36).slice(2, 6).toUpperCase();
+    id = `REQ-${time}-${random}`;
+  } while (requests.some((request) => request.id === id));
+  return id;
+}
+
 export async function addRequest(requestInput) {
   validateRequestInput(requestInput);
   const requests = await getRequests();
@@ -154,32 +179,8 @@ export async function deleteRequest(requestId) {
  * ล้างคีย์ของ LAB05 แล้วโหลด seed ใหม่ทับ
  */
 export async function resetRequests() {
-  clearStoredRequests();    
+  clearStoredRequests();
   const seedRequests = await fetchSeedRequests();
   writeStoredRequests(seedRequests);
   return structuredClone(seedRequests);
-}
-
-function readText(value) {
-  return typeof value === 'string' ? value.trim() : '';
-}
-
-function validateRequestInput(input) {
-  if (!input) throw new Error('ข้อมูลคำร้องไม่ถูกต้อง');
-  if (readText(input.requesterName).length < 2) throw new Error('ชื่อผู้แจ้งไม่ถูกต้อง');
-  if (!readText(input.requestType)) throw new Error('กรุณาเลือกประเภทคำร้อง');
-  if (!readText(input.location)) throw new Error('กรุณาระบุสถานที่');
-  if (readText(input.details).length < 10) throw new Error('รายละเอียดต้องมีอย่างน้อย 10 ตัวอักษร');
-  if (!['normal', 'urgent'].includes(input.priority)) throw new Error('ความเร่งด่วนไม่ถูกต้อง');
-}
-
-function createRequestId(requests) {
-  let id;
-  do {
-    const time = Date.now().toString(36).toUpperCase();
-    const random = Math.random().toString(36).slice(2, 6).toUpperCase();
-    id = `REQ-
-time-{random}`;
-  } while (requests.some((request) => request.id === id));
-  return id;
 }
