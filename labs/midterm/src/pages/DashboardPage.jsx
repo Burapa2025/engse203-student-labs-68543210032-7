@@ -18,6 +18,7 @@ function DashboardPage() {
   const [requests, setRequests] = useState([]);
   const [statusFilter, setStatusFilter] = useState('all');
   // TODO B2: เพิ่ม state สำหรับข้อความค้นหา ที่นี่
+  const [searchText, setSearchText] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [notice, setNotice] = useState('');
 
@@ -106,6 +107,12 @@ function DashboardPage() {
               <FilterBar value={statusFilter} onFilterChange={setStatusFilter} />
             </div>
             {/* TODO B2: วางช่อง <input> ค้นหา ตรงนี้ (เหนือรายการ) แล้วกรองร่วมกับตัวกรองสถานะ ค้นจากประเภท/สถานที่ */}
+            <input
+              type="text"
+              placeholder="ค้นหาคำร้อง..."
+              value={searchText}
+              onChange={(e) => setSearchText(e.target.value)}
+            />
             {/* TODO B3: ส่ง onAcknowledge={handleAcknowledge} ให้ RequestList เพื่อให้การ์ด pending มีปุ่ม "รับเรื่อง" */}
             <RequestList requests={filteredRequests} onDeleteRequest={handleDelete} />
           </section>
