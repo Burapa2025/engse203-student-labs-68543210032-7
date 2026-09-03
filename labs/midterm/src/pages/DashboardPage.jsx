@@ -51,9 +51,11 @@ function DashboardPage() {
     completed: requests.filter((request) => request.status === 'completed').length,
   }), []);
 
-  const filteredRequests = statusFilter === 'all'
-    ? requests
-    : requests.filter((request) => request.status === statusFilter);
+  const filteredRequests = searchText
+    ? requests.filter((request) => request.requestType.includes(searchText) || request.location.includes(searchText))
+    : statusFilter === 'all'
+      ? requests
+      : requests.filter((request) => request.status === statusFilter);
 
   function handleRetry() {
     if (scenario) setSearchParams({});
