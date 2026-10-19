@@ -30,13 +30,18 @@ export const config = {
   // production เสิร์ฟไฟล์ frontend ที่ build แล้วจากที่ไหน
   staticDir: process.env.STATIC_DIR ?? path.join(API_ROOT, '..', 'frontend', 'dist'),
 
-  /**
-   * 🏫 TODO W13-SECRET (CP52) — แบบนี้ยังอันตราย
-   *   ถ้าลืมตั้ง JWT_SECRET ตอน production ระบบจะใช้ค่าด้านล่างซึ่งอยู่ใน GitHub ให้ทุกคนเห็น
-   *   → ใครก็ปลอม token ของเจ้าหน้าที่ได้
-   *   แก้: production ที่ไม่มี JWT_SECRET ต้อง throw new Error(...) ทันที (fail fast)
-   *        dev/test ยังใช้ค่าสำหรับพัฒนาได้
-   */
-  jwtSecret: process.env.JWT_SECRET || 'dev-only-secret-do-not-use-in-production',
+  // CP52 · W13-SECRET — fail fast: production ต้องไม่ยอม start ถ้าไม่มี JWT_SECRET
+  //   (ค่า default ด้านล่างอยู่ใน GitHub ให้ทุกคนอ่าน → ใครก็ปลอม token เจ้าหน้าที่ได้)
+  //   ตรวจด้วย falsy check ไม่ใช่ ?? เพราะ JWT_SECRET= ค่าว่างใน .env ต้องถือว่า "ไม่มี" ด้วย
+  jwtSecret: (() => {
+    const secret = process.env.JWT_SECRET;
+    if (!secret) {
+      if (process.env.NODE_ENV === 'production') {
+        throw new Error('ต้องตั้งค่า JWT_SECRET ก่อนรันในโหมด production — ระบบจะไม่ start โดยไม่มี secret (ตั้งใน Environment Variables ของ Render)');
+      }
+      return 'dev-only-secret-do-not-use-in-production';
+    }
+    return secret;
+  })(),
   jwtExpiresIn: process.env.JWT_EXPIRES_IN ?? '2h',
 };

@@ -5,6 +5,21 @@
 
 const BASE_URL = import.meta.env.VITE_API_BASE_URL ?? 'http://localhost:3001';
 
+// ⭐ Challenge — เก็บ token ไว้ที่เดียว แล้วแนบทุกคำขอผ่าน apiFetch (หน้า login จะต่อใน Term Project)
+const TOKEN_KEY = 'campus_token';
+
+export function getToken() {
+  return localStorage.getItem(TOKEN_KEY);
+}
+
+export function setToken(token) {
+  localStorage.setItem(TOKEN_KEY, token);
+}
+
+export function clearToken() {
+  localStorage.removeItem(TOKEN_KEY);
+}
+
 /** error ที่รู้ว่ามาจาก API พร้อม status ที่ได้กลับมา */
 export class ApiError extends Error {
   constructor(message, status) {
@@ -30,18 +45,21 @@ async function parseError(response) {
  * - ต่อ API ไม่ได้เลย → โยน ApiError status 0
  */
 export async function apiFetch(path, options = {}) {
+  const token = getToken();
+  const headers = { 'Content-Type': 'application/json', ...options.headers };
+  if (token) headers.Authorization = `Bearer ${token}`;
+
   let response;
   try {
-    response = await fetch(`${BASE_URL}${path}`, {
-      headers: { 'Content-Type': 'application/json', ...options.headers },
-      ...options,
-    });
+    response = await fetch(`${BASE_URL}${path}`, { ...options, headers });
   } catch {
     // fetch โยน error เมื่อต่อเซิร์ฟเวอร์ไม่ได้เลย เช่น API ไม่ได้เปิด
     throw new ApiError('ติดต่อเซิร์ฟเวอร์ไม่ได้ — ตรวจว่าเปิด API ที่พอร์ต 3001 แล้วหรือยัง', 0);
   }
 
   if (!response.ok) {
+    // token ไม่ถูกต้องหรือหมดอายุ → ล้างทิ้ง ให้ผู้ใช้เข้าสู่ระบบใหม่
+    if (response.status === 401) clearToken();
     throw new ApiError(await parseError(response), response.status);
   }
 

@@ -21,6 +21,14 @@ export function createApp() {
   // test ไม่ต้อง log ทุกคำขอ — ผลการทดสอบจะได้อ่านง่าย
   if (config.env !== 'test') app.use(morgan(config.isProd ? 'combined' : 'dev'));
 
+  // ⭐ Challenge — security headers ให้ทุก response (ลดความเสี่ยง XSS จาก MIME sniffing / iframe / referrer)
+  app.use((req, res, next) => {
+    res.set('X-Content-Type-Options', 'nosniff');
+    res.set('X-Frame-Options', 'DENY');
+    res.set('Referrer-Policy', 'no-referrer');
+    next();
+  });
+
   // ③ อ่าน JSON body
   // 🏫 TODO W13-VALID (CP48): จำกัดขนาด body ไม่เกิน 10kb → express.json({ limit: '10kb' })
   app.use(express.json({ limit: '10kb' }));   // Week 13 — body ใหญ่เกินนี้ได้ 413

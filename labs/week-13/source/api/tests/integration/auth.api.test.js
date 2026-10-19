@@ -2,13 +2,17 @@ import { describe, test, expect, beforeEach } from 'vitest';
 import request from 'supertest';
 import { createApp } from '../../src/app.js';
 import { loadSeed } from '../../src/services/requestService.js';
+import { resetLoginLimiter } from '../../src/routes/authRoutes.js';
 import { STAFF, loginAsStaff, tokenFor } from '../helpers/auth.js';
 
 /**
  * Week 13 — เข้าสู่ระบบและสิทธิ์
  */
 const app = createApp();
-beforeEach(async () => { await loadSeed(); });
+beforeEach(async () => {
+  resetLoginLimiter();   // ⭐ Challenge — ไม่งั้นข้อที่ login ผิดหลายครั้งจะโดน 429 ทดสอบข้ามข้อ
+  await loadSeed();
+});
 
 describe('POST /api/auth/login', () => {
   test('อีเมลและรหัสผ่านถูก → 200 พร้อม token', async () => {

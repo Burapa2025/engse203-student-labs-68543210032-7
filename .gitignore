@@ -2,6 +2,8 @@
 **/dist/
 **/.env
 **/.env.*
+# .env.example ไม่มีค่าลับ ต้อง commit (CP52) — ยกเว้นจาก pattern ข้างบน
+!**/.env.example
 .DS_Store
 Thumbs.db
 .vscode/
