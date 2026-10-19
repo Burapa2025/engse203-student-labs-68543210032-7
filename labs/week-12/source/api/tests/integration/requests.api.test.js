@@ -107,6 +107,45 @@ describe('เส้นทางที่ไม่มีอยู่', () => {
   });
 });
 
+// ── ครอบคลุม endpoint ที่เหลือ จากการอ่านรายงาน coverage (Challenge) ──
+
+describe('GET /api และ GET /', () => {
+  test('GET /api → 200 บอกว่า API กำลังทำงาน', async () => {
+    const r = await request(app).get('/api');
+    expect(r.status).toBe(200);
+    expect(r.body).toHaveProperty('message');
+  });
+  test('GET / (dev) → 200 บอกทางไปหน้าเว็บ', async () => {
+    const r = await request(app).get('/');
+    expect(r.status).toBe(200);
+    expect(r.body).toHaveProperty('api');
+  });
+});
+
+describe('GET /api/health', () => {
+  test('ตอบ 200 · สถานะ ok และต่อฐานข้อมูลได้', async () => {
+    const r = await request(app).get('/api/health');
+    expect(r.status).toBe(200);
+    expect(r.body.status).toBe('ok');
+    expect(r.body.database.connected).toBe(true);
+  });
+});
+
+describe('GET /api/users', () => {
+  test('คืนรายชื่อผู้ใช้ ไม่มีคอลัมน์อีเมล', async () => {
+    const r = await request(app).get('/api/users');
+    expect(r.status).toBe(200);
+    expect(Array.isArray(r.body)).toBe(true);
+    expect(r.body.length).toBeGreaterThan(0);
+    expect(r.body[0]).not.toHaveProperty('email');
+  });
+  test('GET /api/users/:id/requests → คำร้องของผู้ใช้คนนั้น', async () => {
+    const r = await request(app).get('/api/users/1/requests');
+    expect(r.status).toBe(200);
+    expect(Array.isArray(r.body)).toBe(true);
+  });
+});
+
 describe('ข้อมูลผิดรูปแบบ', () => {
   test('ส่ง JSON ที่เสีย → 400 เป็น JSON ไม่ใช่ 500', async () => {
     const r = await request(app).post('/api/requests')
@@ -116,5 +155,24 @@ describe('ข้อมูลผิดรูปแบบ', () => {
   });
 });
 
-// 🏫 TODO W12-DEBUG (CP47): regression test ของ bug จาก BUG_REPORTS.md
-//   เขียน test ที่ "ทำซ้ำอาการ" ก่อน → ต้อง fail → แก้โค้ด → test ผ่าน
+// ═══ regression test — กันไม่ให้ bug จาก BUG_REPORTS.md กลับมา ═══
+// ทำซ้ำอาการของแต่ละ bug ใน test → แก้โค้ดแล้ว test เหล่านี้ต้องผ่านเสมอ
+
+describe('regression · BUG #1 ลบรายการกลางแล้วเพิ่มใหม่', () => {
+  test('ลบ REQ-002 แล้ว POST → 201 ได้รหัสถัดไปที่ไม่ซ้ำ (REQ-006 ไม่ใช่ REQ-005)', async () => {
+    await request(app).delete('/api/requests/REQ-002').expect(204);
+    const r = await request(app).post('/api/requests').send(valid);
+    expect(r.status).toBe(201);
+    expect(r.body.id).toBe('REQ-006');
+    const after = await request(app).get('/api/requests/REQ-006');
+    expect(after.status).toBe(200);
+  });
+});
+
+describe('regression · BUG #3 เปลี่ยนสถานะคำร้องที่ไม่มีอยู่', () => {
+  test('PUT /api/requests/REQ-999 → 404 ไม่ใช่ 500', async () => {
+    const r = await request(app).put('/api/requests/REQ-999').send({ status: 'completed' });
+    expect(r.status).toBe(404);
+    expect(r.body).toHaveProperty('error');
+  });
+});

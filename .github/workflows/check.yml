@@ -1,0 +1,27 @@
+# ⭐ Challenge Week 12 — รัน test ทุกครั้งที่ push
+# GitHub รัน workflow จาก .github/workflows ที่ root ของ Student Repository เท่านั้น
+name: check
+
+on: [push, pull_request]
+
+defaults:
+  run:
+    working-directory: labs/week-12/source
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: |
+          npm install --prefix api
+          npm install --prefix frontend
+
+      - name: Run tests (api + frontend)
+        run: npm test
