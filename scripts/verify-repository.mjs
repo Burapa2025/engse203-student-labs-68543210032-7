@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { execFileSync } from "node:child_process";
-import { ROOT, exists, listLabs, meaningfulEntries, normalizeWeek, readJson, validHttpUrl } from "./common.mjs";
+import { ROOT, exists, labPath, listLabs, meaningfulEntries, normalizeWeek, readJson, validHttpUrl } from "./common.mjs";
 
 const args = process.argv.slice(2);
 const setupMode = args.includes("--setup");
@@ -33,9 +33,13 @@ for (const week of labs) {
   if (!["course-starter", "migrated-repository", "student-created"].includes(metadata.sourceOrigin)) errors.push(`${week}: sourceOrigin ไม่ถูกต้อง`);
   if (!(await exists(path.join(ROOT, "docs", "labs", week, "index.html")))) errors.push(`${week}: ยังไม่มี Pages output — รัน npm run build:pages`);
   if (!setupMode) {
-    if (!["ready", "submitted", "revision"].includes(metadata.status)) errors.push(`${week}: status ยังเป็น draft/ไม่ถูกต้อง`);
-    if (metadata.testStatus !== "pass") errors.push(`${week}: testStatus ต้องเป็น pass`);
-    if ((await meaningfulEntries(path.join(labRoot, "source"))).length === 0) errors.push(`${week}: ยังไม่มี source code`);
+    if (!["ready", "submitted", "revision", "published"].includes(metadata.status)) errors.push(`${week}: status ยังเป็น draft/ไม่ถูกต้อง`);
+    if (metadata.status === "published") {
+      if (!["pass", "partial", "fail", "not-tested"].includes(metadata.testStatus)) errors.push(`${week}: testStatus ไม่ถูกต้อง`);
+      if (!metadata.verification?.length) errors.push(`${week}: published ต้องมีผลการตรวจสอบ`);
+      if (metadata.testStatus !== "pass") warnings.push(`${week}: ผลทดสอบ ${metadata.testStatus} — ดูรายละเอียดในหน้ารายงาน`);
+    } else if (metadata.testStatus !== "pass") errors.push(`${week}: testStatus ต้องเป็น pass`);
+    if ((await meaningfulEntries(labPath(labRoot, metadata.sourcePath || "source"))).length === 0) errors.push(`${week}: ยังไม่มี source code`);
     if (config.repositoryMode === "migration" && ["week-01", "week-02", "week-03"].includes(week) && metadata.sourceOrigin !== "migrated-repository") {
       errors.push(`${week}: migration mode ต้องตั้ง sourceOrigin เป็น migrated-repository`);
     }
@@ -51,15 +55,25 @@ for (const week of labs) {
   pass.push(`${week} ${setupMode ? "setup structure/metadata/pages" : "structure/metadata/pages"}`);
 }
 
-const forbiddenNames = new Set([".git", "node_modules", ".env", ".env.local", ".env.production"]);
-async function scanForbidden(directory) {
-  if (!(await exists(directory))) return;
-  for (const entry of await fs.readdir(directory, { withFileTypes: true })) {
-    if (forbiddenNames.has(entry.name)) errors.push(`พบไฟล์/โฟลเดอร์ที่ห้าม commit: ${path.relative(ROOT, path.join(directory, entry.name))}`);
-    else if (entry.isDirectory()) await scanForbidden(path.join(directory, entry.name));
+const forbiddenName = (name) => [".git", "node_modules"].includes(name) || (name !== ".env.example" && /^\.env(?:\.|$)/.test(name));
+try {
+  // Installed packages and local .env files are allowed when Git ignores them.
+  // Include cached files too, so an accidentally tracked secret still fails.
+  const files = execFileSync("git", ["ls-files", "--cached", "--others", "--exclude-standard", "-z", "--", "labs"], { cwd: ROOT, encoding: "utf8" }).split("\0").filter(Boolean);
+  for (const file of new Set(files)) {
+    if (file.split("/").some(forbiddenName)) errors.push(`พบไฟล์/โฟลเดอร์ที่ห้าม commit: ${file}`);
   }
+} catch {
+  // Keep validation useful for a ZIP download that has no Git repository.
+  async function scanForbidden(directory) {
+    if (!(await exists(directory))) return;
+    for (const entry of await fs.readdir(directory, { withFileTypes: true })) {
+      if (forbiddenName(entry.name)) errors.push(`พบไฟล์/โฟลเดอร์ที่ห้าม commit: ${path.relative(ROOT, path.join(directory, entry.name))}`);
+      else if (entry.isDirectory()) await scanForbidden(path.join(directory, entry.name));
+    }
+  }
+  await scanForbidden(path.join(ROOT, "labs"));
 }
-await scanForbidden(path.join(ROOT, "labs"));
 
 try {
   const branch = execFileSync("git", ["branch", "--show-current"], { cwd: ROOT, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }).trim();

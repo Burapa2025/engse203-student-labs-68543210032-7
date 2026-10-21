@@ -65,6 +65,16 @@ export async function meaningfulEntries(directory) {
   return entries.filter((entry) => !PLACEHOLDER_FILES.has(entry));
 }
 
+// Metadata paths are relative to their own LAB, including older nested layouts.
+export function labPath(labRoot, relative = "source") {
+  const target = path.resolve(labRoot, relative);
+  const inside = path.relative(labRoot, target);
+  if (typeof relative !== "string" || !inside || inside.startsWith("..") || path.isAbsolute(inside)) {
+    throw new Error(`LAB path must stay inside ${labRoot}: ${relative}`);
+  }
+  return target;
+}
+
 export function isInsideRoot(target) {
   const relative = path.relative(ROOT, path.resolve(target));
   return relative && !relative.startsWith("..") && !path.isAbsolute(relative);

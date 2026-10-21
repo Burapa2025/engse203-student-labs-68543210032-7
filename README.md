@@ -48,7 +48,13 @@ https://<github-username>.github.io/engse203-student-labs-<student-id>/
 
 ## LAB ที่เตรียมไว้
 
-Template รุ่นนี้มี workspace LAB01–04 และ Pages Hub จะสร้างการ์ดจากทุก `labs/week-NN/` อัตโนมัติ
+Pages Hub มี LAB01–07 และ LAB09–13 (ไม่มี LAB08) โดยแยก branch `lab/week-NN` ของแต่ละแลบ และสร้างการ์ดจาก `labs/week-NN/` อัตโนมัติ
+
+LAB06–07 และ LAB09–13 แสดงหน้ารายงาน หลักฐาน และวิธีรัน เพราะงาน API/SQLite ต้องใช้ Node server เพิ่มเติมนอก GitHub Pages สถานะ `Published` หมายถึงเผยแพร่รายงานแล้ว ส่วนผลตรวจสอบของแต่ละแลบแสดงตามผลจริงในหน้านั้น
+
+metadata รองรับ `sourcePath` และ `evidencePath` ที่อ้างอิงจากโฟลเดอร์ของแลบนั้น เพื่อใช้โครงสร้างงานเดิมได้โดยไม่ต้องย้าย source พร้อม `verification`, `highlights`, `runCommands`, `reportFiles` และ `screenshots` สำหรับสร้างรายงาน
+
+เปิด Portfolio: https://burapa2025.github.io/engse203-student-labs-68543210032-7/
 
 ## เพิ่ม LAB ในอนาคต
 

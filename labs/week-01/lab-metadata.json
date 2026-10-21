@@ -1,5 +1,6 @@
 {
   "week": "week-01",
+  "sourceBranch": "labs/week-01",
   "title": "Developer Environment & GitHub Repository Setup",
   "status": "submitted",
   "sourceOrigin": "migrated-repository",
