@@ -6,7 +6,7 @@ import LoadingState from '../components/LoadingState.jsx';
 import RequestList from '../components/RequestList.jsx';
 import SummaryPanel from '../components/SummaryPanel.jsx';
 import useManualReload from '../hooks/useManualReload.js';
-import { deleteRequest, getRequests, resetRequests } from '../services/requestService.js';
+import { deleteRequest, getRequests, IS_PAGES_DEMO, resetRequests } from '../services/requestService.js';
 
 function DashboardPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -67,7 +67,7 @@ function DashboardPage() {
   }
 
   async function handleReset() {
-    if (!window.confirm('ต้องการคืนข้อมูลตัวอย่างเริ่มต้นหรือไม่?')) return;
+    if (!IS_PAGES_DEMO && !window.confirm('ต้องการคืนข้อมูลตัวอย่างเริ่มต้นหรือไม่?')) return;
     try {
       setRequests(await resetRequests());
       setStatusFilter('all');
@@ -80,7 +80,7 @@ function DashboardPage() {
   return (
     <section data-testid="page-dashboard">
       <div className="page-heading">
-        <div><p className="eyebrow dark">ROUTED + PERSISTENT</p><h1>Dashboard</h1><p>ติดตามคำร้องจาก URL, Service Layer และ browser storage</p></div>
+        <div><p className="eyebrow dark">REACT + API + SQLITE</p><h1>Dashboard</h1><p>{IS_PAGES_DEMO ? 'สาธิตระบบคำร้อง React + API + SQLite · ข้อมูลบนเพจนี้บันทึกในเบราว์เซอร์' : 'ข้อมูลคำร้องเก็บในฐานข้อมูล SQLite ผ่าน Express API · ปิดเปิดเซิร์ฟเวอร์แล้วข้อมูลไม่หาย'}</p></div>
         <button className="button secondary" data-testid="reset-button" type="button" onClick={handleReset}>Reset Demo Data</button>
       </div>
       {scenario && <p className="lab-scenario" role="status">LAB test scenario: {scenario}</p>}

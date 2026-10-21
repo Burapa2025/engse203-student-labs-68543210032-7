@@ -1,6 +1,7 @@
 {
   "week": "week-10",
   "title": "Node.js & SQLite Integration",
+  "type": "web-output",
   "status": "published",
   "sourceOrigin": "student-created",
   "evidencePath": "evidence",
@@ -9,11 +10,12 @@
   "testStatus": "partial",
   "sourcePath": "source",
   "originalCommit": "af84f2665306bea2a5e62ea729d4afe533f1a4ac",
-  "notes": "เผยแพร่รายงานและหลักฐานของระบบ React + Express + SQLite บน GitHub Pages; ตัว API ต้องรันด้วย Node.js ผลตรวจยังผ่านบางส่วนและบันทึกข้อจำกัดไว้ครบถ้วน",
+  "notes": "GitHub Pages แสดง Dashboard LAB10 พร้อมข้อมูลสาธิต 10 รายการ ทดลองสร้าง ดูรายละเอียด กรอง เปลี่ยนสถานะ ลบ และ Reset ได้ โดยเก็บข้อมูลในเบราว์เซอร์แยกจากแลบอื่น; โหมดปกติยังใช้ Express API + SQLite และผล checker เดิมยังเป็น partial",
   "highlights": [
     "เชื่อม Express API กับ SQLite ผ่าน node:sqlite และ JOIN เพื่อคืน requesterName",
     "ใช้ parameterized queries และแยกชั้น route, controller และ service",
-    "Frontend build ผ่าน; checker LAB10 ผ่าน 22/31 และ checker LAB07 ผ่าน 32/36",
+    "Pages Dashboard เริ่มต้น 10 รายการ: pending 5, in-progress 3, completed 2 และทดสอบ adapter ผ่าน 10/10",
+    "Frontend build ปกติและ Pages build ผ่าน; checker LAB10 เดิมผ่าน 22/31 และ checker LAB07 เดิมผ่าน 32/36",
     "API test เดิมมี 1 placeholder จึงยังยืนยันความครอบคลุมการทดสอบไม่ได้"
   ],
   "runCommands": [
@@ -22,14 +24,28 @@
     "npm ci --prefix labs/week-10/source/frontend --include=dev",
     "npm start --prefix labs/week-10/source/api",
     "npm run dev --prefix labs/week-10/source/frontend",
-    "npm run build --prefix labs/week-10/source/frontend"
+    "npm run build --prefix labs/week-10/source/frontend",
+    "npm run test:pages --prefix labs/week-10/source/frontend",
+    "npm run build:pages --prefix labs/week-10/source/frontend"
   ],
   "verification": [
     {
       "label": "Frontend production build",
       "command": "npm run build --prefix frontend",
       "result": "pass",
-      "detail": "Vite 8.1.5 build สำเร็จ 41 modules (รันจาก source/)"
+      "detail": "Vite 8.1.5 build ปกติสำเร็จ 43 modules; requestService ยังใช้ Express API ใน build นี้"
+    },
+    {
+      "label": "Pages demo adapter behavior",
+      "command": "npm run test:pages --prefix frontend",
+      "result": "pass",
+      "detail": "10/10: seed และตัวกรอง 5/3/2, สร้าง/รายละเอียด/สถานะ/ลบ/Reset, persistence, validation, recovery, storage isolation และ storage failure"
+    },
+    {
+      "label": "Explicit GitHub Pages production build",
+      "command": "npm run build:pages --prefix frontend",
+      "result": "pass",
+      "detail": "VITE_PAGES_DEMO=true; Vite 8.1.5 build สำเร็จ 43 modules; คัดลอก dist เท่านั้นเข้า publish/ ใช้ relative assets และ HashRouter"
     },
     {
       "label": "LAB10 checker",
