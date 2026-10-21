@@ -10,7 +10,7 @@
   "originalRepoUrl": "",
   "originalCommit": "a66f5400b0844d921274a4018c76ffd848d32ebc",
   "submissionTag": "",
-  "pullRequestUrl": "",
+  "pullRequestUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/pull/19",
   "testStatus": "pass",
   "notes": "เผยแพร่รายงานผลทดสอบ JWT, สิทธิ์เจ้าหน้าที่และความปลอดภัย; ระบบจริงต้องมี API และฐานข้อมูลแยกจาก GitHub Pages",
   "highlights": [
