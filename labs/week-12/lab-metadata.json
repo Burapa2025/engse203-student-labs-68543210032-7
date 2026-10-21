@@ -1,0 +1,65 @@
+{
+  "week": "week-12",
+  "title": "Campus Service — Testing, Debugging & Regression Tests",
+  "type": "evidence-report",
+  "status": "published",
+  "sourceOrigin": "student-created",
+  "sourcePath": "source",
+  "evidencePath": "evidence",
+  "originalRepoUrl": "",
+  "originalCommit": "c7b2b48425f9c6957398d7894bdaaceb90dd73b6",
+  "submissionTag": "",
+  "pullRequestUrl": "",
+  "testStatus": "pass",
+  "notes": "เผยแพร่รายงานผลทดสอบของ React + Express + SQLite; ระบบจริงต้องมี API และฐานข้อมูลแยกจาก GitHub Pages",
+  "highlights": [
+    "Vitest: API 41/41 และ frontend 3/3 ผ่าน",
+    "ทดสอบค่าขอบ, CRUD และ regression ของปัญหารหัสคำร้องซ้ำ, Dashboard และ 404",
+    "API coverage: statements 88.19%, branches 72.41%, functions 87.87%, lines 90.64%",
+    "Week 12 checker ผ่าน 22/22 รายการ และ frontend production build ผ่าน"
+  ],
+  "runCommands": [
+    "cd labs/week-12/source",
+    "npm ci --prefix api",
+    "npm ci --prefix frontend",
+    "npm test",
+    "npm run check",
+    "npm run coverage",
+    "npm run build --prefix frontend"
+  ],
+  "verification": [
+    {
+      "label": "API and frontend tests",
+      "command": "npm test",
+      "result": "pass",
+      "detail": "API: 2 files, 41 tests; frontend: 1 file, 3 tests. All passed using an in-memory SQLite database."
+    },
+    {
+      "label": "Week 12 checker",
+      "command": "npm run check",
+      "result": "pass",
+      "detail": "22/22 checks: in-class 20/20, challenge 2/2. The isolated copy includes the original branch CI workflow so repository-level CI inspection remains valid."
+    },
+    {
+      "label": "API coverage",
+      "command": "npm run coverage --prefix api",
+      "result": "pass",
+      "detail": "41/41 tests; statements 88.19%, branches 72.41%, functions 87.87%, lines 90.64%."
+    },
+    {
+      "label": "Frontend production build",
+      "command": "npm run build --prefix frontend",
+      "result": "pass",
+      "detail": "Vite 8.1.5 built 42 modules and produced dist/index.html with CSS and JavaScript assets."
+    }
+  ],
+  "reportFiles": [
+    { "label": "Pages verification and backend requirements", "path": "evidence/PAGES_VERIFICATION.md" },
+    { "label": "Test cases", "path": "source/TEST_CASES.md" },
+    { "label": "Debug log", "path": "source/DEBUG_LOG.md" },
+    { "label": "Reported bugs", "path": "source/BUG_REPORTS.md" },
+    { "label": "API contract", "path": "source/API_CONTRACT.md" },
+    { "label": "Run the full-stack application", "path": "source/README.md" }
+  ],
+  "screenshots": []
+}
