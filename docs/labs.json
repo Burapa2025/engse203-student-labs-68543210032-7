@@ -142,7 +142,7 @@
   {
     "week": "week-07",
     "title": "RESTful API, CORS & Frontend Integration",
-    "type": "evidence-report",
+    "type": "web-output",
     "status": "published",
     "sourceOrigin": "student-created",
     "sourcePath": "starter",
@@ -152,19 +152,21 @@
     "pullRequestUrl": "",
     "submissionTag": "",
     "testStatus": "partial",
-    "notes": "API tests ผ่าน 6/6, Week07 checker 35/36, frontend build ผ่าน; มีรายละเอียดรายการที่ยังไม่ผ่านในรายงาน การใช้งานเต็มระบบต้องเปิด API และ frontend พร้อมกัน",
+    "notes": "Pages เปิด Dashboard ใช้งานได้ด้วยข้อมูลสาธิตที่บันทึกแยกใน browser storage; การรันปกติยังใช้ Express API จริง API tests ผ่าน 6/6, Pages demo tests ผ่าน 8/8 และ build ทั้งสองโหมดผ่าน; คงผล Week07 checker เดิม 35/36 และข้อจำกัด inherited verifier ไว้ในรายงาน",
     "highlights": [
       "เชื่อม React กับ Express ผ่าน apiClient, fetch และ environment config",
       "รองรับ CORS, preflight, PUT เปลี่ยนสถานะ และ API error handling",
       "มี API contract, automated tests และภาพหลักฐานจาก branch เดิม",
-      "Pages แสดงรายงาน; API จริงใช้ Node.js ที่พอร์ต 3001 และ frontend ที่พอร์ต 5173"
+      "Pages Demo ใช้งาน Dashboard, filter, สร้างคำร้อง, เปลี่ยนสถานะ, ลบ และ Reset Demo Data พร้อมบันทึกแยกเฉพาะ LAB07",
+      "Build ปกติยังใช้ API จริงที่พอร์ต 3001; build:pages เปิดโหมดสาธิตอย่างชัดเจน"
     ],
     "runCommands": [
       "npm ci (repository root; dependency ของ Week07 checker)",
       "cd labs/week-07/starter/api && npm ci && npm test && npm start",
       "cd labs/week-07/starter/frontend && npm ci && npm run dev (อีก terminal)",
       "node labs/week-07/starter/check-week07.mjs",
-      "cd labs/week-07/starter/frontend && npm run build"
+      "cd labs/week-07/starter/frontend && npm run build",
+      "cd labs/week-07/starter/frontend && npm run test:pages && npm run build:pages"
     ],
     "verification": [
       {
@@ -183,7 +185,19 @@
         "label": "Frontend production build",
         "command": "npm run build (starter/frontend)",
         "result": "pass",
-        "detail": "Vite build สำเร็จ 41 modules; ใช้ HashRouter และ base './'"
+        "detail": "ตรวจใหม่ 2026-10-21: Vite build สำเร็จ 42 modules; ใช้ Express API ตามเดิม, HashRouter และ base './'"
+      },
+      {
+        "label": "Pages demo automated tests",
+        "command": "npm run test:pages (starter/frontend)",
+        "result": "pass",
+        "detail": "8/8 tests: seed, filters, CRUD, validation, reload persistence, reset, per-lab isolation, corruption recovery, storage failure, UI scenarios และ default Express API mode"
+      },
+      {
+        "label": "Pages frontend build",
+        "command": "npm run build:pages (starter/frontend)",
+        "result": "pass",
+        "detail": "Vite pages mode สำเร็จ 42 modules; Node build helper เปิด VITE_PAGES_DEMO=true โดยไม่ใช้ไฟล์ environment; คัดลอก dist ไป publish/ พร้อม relative assets และ seed JSON"
       },
       {
         "label": "Inherited frontend verifier",
@@ -223,7 +237,7 @@
     "pageUrl": "https://burapa2025.github.io/engse203-student-labs-68543210032-7/labs/week-07/",
     "sourceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/lab/week-07/labs/week-07/starter",
     "evidenceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/lab/week-07/labs/week-07/evidence",
-    "hasPublish": false,
+    "hasPublish": true,
     "sourceEntries": 6
   },
   {
@@ -298,6 +312,7 @@
   {
     "week": "week-10",
     "title": "Node.js & SQLite Integration",
+    "type": "web-output",
     "status": "published",
     "sourceOrigin": "student-created",
     "evidencePath": "evidence",
@@ -306,11 +321,12 @@
     "testStatus": "partial",
     "sourcePath": "source",
     "originalCommit": "af84f2665306bea2a5e62ea729d4afe533f1a4ac",
-    "notes": "เผยแพร่รายงานและหลักฐานของระบบ React + Express + SQLite บน GitHub Pages; ตัว API ต้องรันด้วย Node.js ผลตรวจยังผ่านบางส่วนและบันทึกข้อจำกัดไว้ครบถ้วน",
+    "notes": "GitHub Pages แสดง Dashboard LAB10 พร้อมข้อมูลสาธิต 10 รายการ ทดลองสร้าง ดูรายละเอียด กรอง เปลี่ยนสถานะ ลบ และ Reset ได้ โดยเก็บข้อมูลในเบราว์เซอร์แยกจากแลบอื่น; โหมดปกติยังใช้ Express API + SQLite และผล checker เดิมยังเป็น partial",
     "highlights": [
       "เชื่อม Express API กับ SQLite ผ่าน node:sqlite และ JOIN เพื่อคืน requesterName",
       "ใช้ parameterized queries และแยกชั้น route, controller และ service",
-      "Frontend build ผ่าน; checker LAB10 ผ่าน 22/31 และ checker LAB07 ผ่าน 32/36",
+      "Pages Dashboard เริ่มต้น 10 รายการ: pending 5, in-progress 3, completed 2 และทดสอบ adapter ผ่าน 10/10",
+      "Frontend build ปกติและ Pages build ผ่าน; checker LAB10 เดิมผ่าน 22/31 และ checker LAB07 เดิมผ่าน 32/36",
       "API test เดิมมี 1 placeholder จึงยังยืนยันความครอบคลุมการทดสอบไม่ได้"
     ],
     "runCommands": [
@@ -319,14 +335,28 @@
       "npm ci --prefix labs/week-10/source/frontend --include=dev",
       "npm start --prefix labs/week-10/source/api",
       "npm run dev --prefix labs/week-10/source/frontend",
-      "npm run build --prefix labs/week-10/source/frontend"
+      "npm run build --prefix labs/week-10/source/frontend",
+      "npm run test:pages --prefix labs/week-10/source/frontend",
+      "npm run build:pages --prefix labs/week-10/source/frontend"
     ],
     "verification": [
       {
         "label": "Frontend production build",
         "command": "npm run build --prefix frontend",
         "result": "pass",
-        "detail": "Vite 8.1.5 build สำเร็จ 41 modules (รันจาก source/)"
+        "detail": "Vite 8.1.5 build ปกติสำเร็จ 43 modules; requestService ยังใช้ Express API ใน build นี้"
+      },
+      {
+        "label": "Pages demo adapter behavior",
+        "command": "npm run test:pages --prefix frontend",
+        "result": "pass",
+        "detail": "10/10: seed และตัวกรอง 5/3/2, สร้าง/รายละเอียด/สถานะ/ลบ/Reset, persistence, validation, recovery, storage isolation และ storage failure"
+      },
+      {
+        "label": "Explicit GitHub Pages production build",
+        "command": "npm run build:pages --prefix frontend",
+        "result": "pass",
+        "detail": "VITE_PAGES_DEMO=true; Vite 8.1.5 build สำเร็จ 43 modules; คัดลอก dist เท่านั้นเข้า publish/ ใช้ relative assets และ HashRouter"
       },
       {
         "label": "LAB10 checker",
@@ -360,7 +390,7 @@
     "pageUrl": "https://burapa2025.github.io/engse203-student-labs-68543210032-7/labs/week-10/",
     "sourceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/lab/week-10/labs/week-10/source",
     "evidenceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/lab/week-10/labs/week-10/evidence",
-    "hasPublish": false,
+    "hasPublish": true,
     "sourceEntries": 5
   },
   {
