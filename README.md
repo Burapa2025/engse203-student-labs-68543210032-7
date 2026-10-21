@@ -56,6 +56,8 @@ metadata รองรับ `sourcePath` และ `evidencePath` ที่อ�
 
 เปิด Portfolio: https://burapa2025.github.io/engse203-student-labs-68543210032-7/
 
+ปุ่ม Pull Request เปิด PR ที่ระบุใน metadata หากยังไม่มี PR จะเปิดรายการ PR บน GitHub ที่กรองตาม branch ของแลบนั้น โดยไม่สร้าง PR หรือเปลี่ยนสถานะส่งงานอัตโนมัติ
+
 ## เพิ่ม LAB ในอนาคต
 
 ```bash

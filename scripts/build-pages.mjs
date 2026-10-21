@@ -50,7 +50,8 @@ for (const week of labs) {
     await fs.writeFile(path.join(target, "index.html"), report, "utf8");
   }
 
-  const prUrl = validHttpUrl(metadata.pullRequestUrl);
+  const prUrl = validHttpUrl(metadata.pullRequestUrl)
+    || `${repoUrl}/pulls?${new URLSearchParams({ q: `is:pr head:${branch}` })}`;
   const pageUrl = `${pagesBase}/labs/${week}/`;
   const sourceCount = (await meaningfulEntries(sourceDirectory)).length;
   const summary = { ...metadata, pageUrl, sourceUrl, evidenceUrl, hasPublish, sourceEntries: sourceCount };
@@ -61,7 +62,7 @@ for (const week of labs) {
     <div class="card-top"><span class="week">${escapeHtml(week)}</span><span class="status">${escapeHtml(statusLabels[metadata.status] ?? metadata.status)}</span></div>
     <h2>${escapeHtml(metadata.title)}</h2>
     <p>Test: <strong>${escapeHtml(metadata.testStatus)}</strong> • ${liveUrl ? "Live application" : hasPublish ? "Web output" : "Evidence report"}</p>
-    <div class="links"><a class="primary" href="${escapeHtml(liveUrl || `labs/${week}/`)}">View Result</a><a href="${escapeHtml(sourceUrl)}">Source</a>${prUrl ? `<a href="${escapeHtml(prUrl)}">Pull Request</a>` : ""}</div>
+    <div class="links"><a class="primary" href="${escapeHtml(liveUrl || `labs/${week}/`)}">View Result</a><a href="${escapeHtml(sourceUrl)}">Source</a><a href="${escapeHtml(prUrl)}">Pull Request</a></div>
     <small>${metadata.submissionTag ? `Version: ${escapeHtml(metadata.submissionTag)}` : `Branch: ${escapeHtml(branch)}`}</small>
   </article>`);
 }

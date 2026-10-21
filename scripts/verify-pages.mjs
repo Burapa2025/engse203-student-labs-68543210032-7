@@ -24,6 +24,10 @@ for (const lab of summaries) {
   const resultHref = card?.match(/<a class="primary" href="([^"]+)">View Result<\/a>/)?.[1];
   const expectedResult = liveUrl || new URL(`labs/${lab.week}/`, base).href;
   if (!resultHref || new URL(resultHref.replaceAll("&amp;", "&"), base).href !== expectedResult) errors.push(`${lab.week}: View Result does not match its live/Pages URL`);
+  const prHref = card?.match(/<a href="([^"]+)">Pull Request<\/a>/)?.[1];
+  const expectedPr = validHttpUrl(lab.pullRequestUrl)
+    || `https://github.com/${config.githubUsername}/${config.repositoryName}/pulls?${new URLSearchParams({ q: `is:pr head:${branch}` })}`;
+  if (!prHref || prHref.replaceAll("&amp;", "&") !== expectedPr) errors.push(`${lab.week}: Pull Request does not match its PR/branch search URL`);
   const submission = await readJson(path.join(docsRoot, "labs", lab.week, "submission.json"));
   if (JSON.stringify(submission) !== JSON.stringify(lab)) errors.push(`${lab.week}: submission metadata is stale`);
 }
