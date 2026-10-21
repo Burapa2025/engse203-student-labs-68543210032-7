@@ -395,6 +395,7 @@
   },
   {
     "week": "week-11",
+    "liveUrl": "https://engse203-student-labs-68543210032-7.onrender.com/",
     "title": "Full-Stack Production Integration",
     "status": "published",
     "sourceOrigin": "student-created",
@@ -472,6 +473,7 @@
   },
   {
     "week": "week-12",
+    "liveUrl": "https://campus-service-68543210032-7-week-12.onrender.com/",
     "title": "Campus Service — Testing, Debugging & Regression Tests",
     "type": "evidence-report",
     "status": "published",
@@ -560,6 +562,7 @@
   },
   {
     "week": "week-13",
+    "liveUrl": "https://campus-service-68543210032-7-week-13-x6ds.onrender.com/",
     "title": "Campus Service — Authentication, Authorization & Security",
     "type": "evidence-report",
     "status": "published",
