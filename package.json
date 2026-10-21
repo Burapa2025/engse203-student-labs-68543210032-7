@@ -13,6 +13,8 @@
     "import:publish": "node scripts/import-publish.mjs",
     "build:pages": "node scripts/build-pages.mjs",
     "verify:setup": "node scripts/verify-repository.mjs --setup",
+    "test:pages": "node --test scripts/lab-report.test.mjs",
+    "verify:pages": "node scripts/verify-pages.mjs",
     "verify": "node scripts/verify-repository.mjs",
     "verify:lab": "node scripts/verify-repository.mjs --week"
   }
