@@ -10,7 +10,7 @@
   "originalRepoUrl": "",
   "originalCommit": "c7b2b48425f9c6957398d7894bdaaceb90dd73b6",
   "submissionTag": "",
-  "pullRequestUrl": "",
+  "pullRequestUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/pull/18",
   "testStatus": "pass",
   "notes": "เผยแพร่รายงานผลทดสอบของ React + Express + SQLite; ระบบจริงต้องมี API และฐานข้อมูลแยกจาก GitHub Pages",
   "highlights": [

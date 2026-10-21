@@ -8,7 +8,7 @@
   "evidencePath": "evidence",
   "originalRepoUrl": "",
   "originalCommit": "5f9dbb4a9ac4e751c16adba8e7c45124685c467a",
-  "pullRequestUrl": "",
+  "pullRequestUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/pull/14",
   "submissionTag": "",
   "testStatus": "partial",
   "notes": "Pages เปิด Dashboard ใช้งานได้ด้วยข้อมูลสาธิตที่บันทึกแยกใน browser storage; การรันปกติยังใช้ Express API จริง API tests ผ่าน 6/6, Pages demo tests ผ่าน 8/8 และ build ทั้งสองโหมดผ่าน; คงผล Week07 checker เดิม 35/36 และข้อจำกัด inherited verifier ไว้ในรายงาน",

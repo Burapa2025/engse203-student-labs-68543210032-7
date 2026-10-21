@@ -9,7 +9,7 @@
   "evidencePath": "evidence",
   "originalRepoUrl": "",
   "originalCommit": "2de67ca43e94efaf815aae3e4ec4cbed0a632834",
-  "pullRequestUrl": "",
+  "pullRequestUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/pull/15",
   "submissionTag": "",
   "testStatus": "partial",
   "notes": "Schema, queries, data model, and SQLite database are present in this repository.",
