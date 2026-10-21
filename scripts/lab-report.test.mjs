@@ -13,6 +13,22 @@ test("LAB metadata paths cannot leave their LAB", () => {
   assert.throws(() => labPath(root, root));
 });
 
+test("compact summaries preserve actual status, branch and commit from metadata", async () => {
+  const html = await renderLabReport({
+    week: "week-09", branch: "lab/week-09", statusLabel: "Published",
+    sourceUrl: "https://github.com/u/r/tree/lab/week-09/labs/week-09/lab09/source",
+    evidenceUrl: "https://github.com/u/r/tree/lab/week-09/labs/week-09/evidence",
+    metadata: { reportLayout: "summary", title: "SQL <SQLite>", testStatus: "partial", originalCommit: "2de67ca43e94efaf815aae3e4ec4cbed0a632834", notes: "Schema & queries" },
+  });
+  assert.match(html, /class="grid"/);
+  assert.match(html, /Published/);
+  assert.match(html, /partial/);
+  assert.match(html, /<strong>Submission<\/strong><p>lab\/week-09<\/p>/);
+  assert.match(html, />2de67ca43e94<\/p>/);
+  assert.match(html, /SQL &lt;SQLite&gt;/);
+  assert.doesNotMatch(html, /Submitted|lab-09-submission-v1/);
+});
+
 test("reports render real results, escape content, and copy only selected screenshots", async () => {
   const root = await fs.mkdtemp(path.join(os.tmpdir(), "lab-report-test-"));
   try {

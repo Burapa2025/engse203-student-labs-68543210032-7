@@ -2,7 +2,23 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import { escapeHtml as h, labPath, validHttpUrl } from "./common.mjs";
 
+function renderSummaryReport({ metadata, week, sourceUrl, evidenceUrl, statusLabel, branch }) {
+  const commit = metadata.originalCommit || "";
+  return `<!doctype html>
+<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${h(week)} — ${h(metadata.title)}</title>
+<style>body{margin:0;font-family:Tahoma,Arial,sans-serif;color:#10253d;background:#eef4f8}main{max-width:920px;margin:30px auto;padding:28px;background:#fff;border-radius:20px;box-shadow:0 12px 32px #0a27451c}a{color:#075ea8}h1{color:#092746}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.card{padding:16px;border:1px solid #c7d8e6;border-radius:12px;background:#f6f9fc;overflow-wrap:anywhere}.pill{display:inline-block;padding:6px 10px;border-radius:99px;background:#e5f1fa;font-weight:700}.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}.actions a{padding:10px 14px;border-radius:8px;color:#fff;background:#1261a6;text-decoration:none}.notes{margin-top:22px;color:#52677c}@media(max-width:640px){main{margin:16px 12px;padding:22px}h1{font-size:26px}.grid{grid-template-columns:1fr}}</style></head>
+<body><main><p><a href="../../index.html">← LAB Portfolio</a></p><span class="pill">${h(statusLabel)}</span>
+<h1>${h(week)} — ${h(metadata.title)}</h1><p>LAB นี้ใช้ evidence report แทน web application หรือยังไม่ได้นำ build output เข้า publish/</p>
+<div class="grid"><div class="card"><strong>Test Status</strong><p>${h(metadata.testStatus)}</p></div><div class="card"><strong>Submission</strong><p>${h(metadata.submissionTag || branch)}</p></div><div class="card"><strong>Original Commit</strong><p title="${h(commit)}">${h(commit ? commit.slice(0, 12) : "ยังไม่ระบุ")}</p></div></div>
+<div class="actions"><a href="${h(sourceUrl)}">View Source</a><a href="${h(evidenceUrl)}">View Evidence</a></div>
+<p class="notes">${h(metadata.notes)}</p></main></body></html>`;
+}
+
 export async function renderLabReport({ labRoot, target, metadata, week, repoUrl, sourceUrl, evidenceUrl, statusLabel, branch }) {
+  if (metadata.reportLayout === "summary") {
+    return renderSummaryReport({ metadata, week, sourceUrl, evidenceUrl, statusLabel, branch });
+  }
   const verification = (metadata.verification ?? []).map(check => `<tr><th scope="row">${h(check.label)}</th><td><span class="result ${h(check.result)}">${h(check.result)}</span></td><td><code>${h(check.command)}</code><p>${h(check.detail)}</p></td></tr>`).join("");
   const highlights = (metadata.highlights ?? []).map(item => `<li>${h(item)}</li>`).join("");
   const runCommands = (metadata.runCommands ?? []).map(command => h(command)).join("\n");
