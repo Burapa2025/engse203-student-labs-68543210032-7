@@ -7,7 +7,7 @@ const config = await readJson(path.join(ROOT, "student-config.json"));
 const labs = await listLabs();
 const docsRoot = path.join(ROOT, "docs");
 const repoUrl = `https://github.com/${config.githubUsername}/${config.repositoryName}`;
-const pagesBase = `https://${config.githubUsername}.github.io/${config.repositoryName}`;
+const pagesBase = `https://${config.githubUsername.toLowerCase()}.github.io/${config.repositoryName}`;
 
 await fs.rm(docsRoot, { recursive: true, force: true });
 await fs.mkdir(path.join(docsRoot, "labs"), { recursive: true });

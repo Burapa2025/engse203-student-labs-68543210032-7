@@ -17,5 +17,8 @@
     "verify:pages": "node scripts/verify-pages.mjs",
     "verify": "node scripts/verify-repository.mjs",
     "verify:lab": "node scripts/verify-repository.mjs --week"
+  },
+  "dependencies": {
+    "supertest": "^7.3.1"
   }
 }

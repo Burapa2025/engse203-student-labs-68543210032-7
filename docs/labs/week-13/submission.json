@@ -1,0 +1,77 @@
+{
+  "week": "week-13",
+  "title": "Campus Service — Authentication, Authorization & Security",
+  "type": "evidence-report",
+  "status": "published",
+  "sourceOrigin": "student-created",
+  "sourcePath": "source",
+  "evidencePath": "evidence",
+  "originalRepoUrl": "",
+  "originalCommit": "a66f5400b0844d921274a4018c76ffd848d32ebc",
+  "submissionTag": "",
+  "pullRequestUrl": "",
+  "testStatus": "pass",
+  "notes": "เผยแพร่รายงานผลทดสอบ JWT, สิทธิ์เจ้าหน้าที่และความปลอดภัย; ระบบจริงต้องมี API และฐานข้อมูลแยกจาก GitHub Pages",
+  "highlights": [
+    "Vitest: API 68/68 และ frontend 3/3 ผ่าน",
+    "ตรวจ password hashing ด้วย scrypt, JWT login และสิทธิ์ 401/403",
+    "ตรวจ validation, body limit, security header และ login rate limit",
+    "Week 13 checker ผ่าน 27/27 รายการ และ frontend production build ผ่าน"
+  ],
+  "runCommands": [
+    "cd labs/week-13/source",
+    "npm ci --prefix api",
+    "npm ci --prefix frontend",
+    "npm test",
+    "npm run check",
+    "npm run build --prefix frontend"
+  ],
+  "verification": [
+    {
+      "label": "API and frontend tests",
+      "command": "npm test",
+      "result": "pass",
+      "detail": "API: 4 files, 68 tests; frontend: 1 file, 3 tests. All passed using an in-memory SQLite database."
+    },
+    {
+      "label": "Week 13 security checker",
+      "command": "npm run check",
+      "result": "pass",
+      "detail": "27/27 checks: in-class 23/23, challenge 4/4. Covers hashing, JWT, 401/403, validation, production secret requirement, security header and login rate limiting."
+    },
+    {
+      "label": "Frontend production build",
+      "command": "npm run build --prefix frontend",
+      "result": "pass",
+      "detail": "Vite 8.1.5 built 42 modules and produced dist/index.html with CSS and JavaScript assets."
+    }
+  ],
+  "reportFiles": [
+    {
+      "label": "Pages verification and backend requirements",
+      "path": "evidence/PAGES_VERIFICATION.md"
+    },
+    {
+      "label": "Test cases",
+      "path": "source/TEST_CASES.md"
+    },
+    {
+      "label": "Debug log",
+      "path": "source/DEBUG_LOG.md"
+    },
+    {
+      "label": "API contract",
+      "path": "source/API_CONTRACT.md"
+    },
+    {
+      "label": "Run the full-stack application",
+      "path": "source/README.md"
+    }
+  ],
+  "screenshots": [],
+  "pageUrl": "https://burapa2025.github.io/engse203-student-labs-68543210032-7/labs/week-13/",
+  "sourceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/lab/week-13/labs/week-13/source",
+  "evidenceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/lab/week-13/labs/week-13/evidence",
+  "hasPublish": false,
+  "sourceEntries": 18
+}

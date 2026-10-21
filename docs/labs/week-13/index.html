@@ -1,0 +1,503 @@
+<!doctype html>
+<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#092746">
+<title>week-13 — Campus Service — Authentication, Authorization &amp; Security</title>
+<style>*{box-sizing:border-box}body{margin:0;font-family:Tahoma,Arial,sans-serif;line-height:1.65;color:#10253d;background:#eaf1f7}header{padding:30px max(22px,calc((100% - 1100px)/2));color:white;background:linear-gradient(135deg,#071f39,#0d4c77 72%,#078386)}header a{color:#d7edf9}h1{line-height:1.3;font-size:clamp(24px,4vw,34px)}main{max-width:1144px;margin:0 auto;padding:24px 22px 48px}section{padding:22px;margin-bottom:18px;background:white;border:1px solid #c4d6e4;border-radius:14px}h2{margin-top:0;font-size:21px}a{color:#075ea8}.pill,.result{color:#10253d;display:inline-block;padding:4px 10px;border-radius:99px;background:#e5f1fa;font-size:14px;font-weight:bold}.result.pass{color:#155d39;background:#e3f3e9}.result.fail{color:#8a2727;background:#fbe7e7}.result.partial{color:#705005;background:#fff1c8}.notice{padding:16px;border-left:5px solid #f4b942;background:#fff8e6}.actions{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}.actions a{padding:9px 14px;border:1px solid #1261a6;border-radius:8px;text-decoration:none}.actions .primary{background:#1261a6;color:white}table{width:100%;border-collapse:collapse}th,td{padding:12px;text-align:left;vertical-align:top;border-bottom:1px solid #dce5ec}th{min-width:140px}.table-wrap{overflow-x:auto}pre{white-space:pre-wrap;overflow-wrap:anywhere;padding:16px;background:#f0f5f9;border-radius:8px;font-size:14px}code{overflow-wrap:anywhere}details{margin:12px 0;border:1px solid #c4d6e4;border-radius:8px;padding:12px}summary{cursor:pointer;font-weight:bold}figure{margin:22px 0}img{display:block;max-width:100%;height:auto;border:1px solid #c4d6e4;border-radius:8px}figcaption{margin-top:8px;color:#52677c}.meta{color:#52677c;font-size:14px}@media(max-width:560px){section{padding:16px}main{padding:18px 12px}th,td{padding:9px}th{min-width:110px}}</style></head>
+<body><header><a href="../../index.html">← LAB Portfolio</a><h1>week-13 — Campus Service — Authentication, Authorization &amp; Security</h1><span class="pill">Published</span></header>
+<main><section><h2>ผลลัพธ์และหลักฐาน</h2><p class="notice">เผยแพร่รายงานผลทดสอบ JWT, สิทธิ์เจ้าหน้าที่และความปลอดภัย; ระบบจริงต้องมี API และฐานข้อมูลแยกจาก GitHub Pages</p><ul><li>Vitest: API 68/68 และ frontend 3/3 ผ่าน</li><li>ตรวจ password hashing ด้วย scrypt, JWT login และสิทธิ์ 401/403</li><li>ตรวจ validation, body limit, security header และ login rate limit</li><li>Week 13 checker ผ่าน 27/27 รายการ และ frontend production build ผ่าน</li></ul>
+<div class="actions"><a class="primary" href="https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/lab/week-13/labs/week-13/source">View Source</a><a href="https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/lab/week-13/labs/week-13/evidence">View Evidence</a></div>
+<p class="meta">Branch: <code>lab/week-13</code> • Source commit: a66f5400b0844d921274a4018c76ffd848d32ebc</p></section>
+<section><h2>ผลการตรวจสอบ</h2><div class="table-wrap"><table><thead><tr><th>รายการ</th><th>ผล</th><th>คำสั่งและรายละเอียด</th></tr></thead><tbody><tr><th scope="row">API and frontend tests</th><td><span class="result pass">pass</span></td><td><code>npm test</code><p>API: 4 files, 68 tests; frontend: 1 file, 3 tests. All passed using an in-memory SQLite database.</p></td></tr><tr><th scope="row">Week 13 security checker</th><td><span class="result pass">pass</span></td><td><code>npm run check</code><p>27/27 checks: in-class 23/23, challenge 4/4. Covers hashing, JWT, 401/403, validation, production secret requirement, security header and login rate limiting.</p></td></tr><tr><th scope="row">Frontend production build</th><td><span class="result pass">pass</span></td><td><code>npm run build --prefix frontend</code><p>Vite 8.1.5 built 42 modules and produced dist/index.html with CSS and JavaScript assets.</p></td></tr></tbody></table></div></section>
+<section><h2>วิธีรันบนเครื่อง</h2><pre>cd labs/week-13/source
+npm ci --prefix api
+npm ci --prefix frontend
+npm test
+npm run check
+npm run build --prefix frontend</pre></section>
+
+<section><h2>เอกสารและผลทดสอบ</h2><details><summary>Pages verification and backend requirements</summary><p><a href="https://github.com/Burapa2025/engse203-student-labs-68543210032-7/blob/lab/week-13/labs/week-13/evidence/PAGES_VERIFICATION.md">เปิดไฟล์บน GitHub</a></p><pre># LAB 13 — Pages verification
+
+Verified on 2026-10-21 from branch `lab/week-13`, source commit `a66f5400b0844d921274a4018c76ffd848d32ebc`.
+
+## Published result
+
+This Pages entry presents authentication, authorization and security evidence for Campus Service (React + Express + SQLite). GitHub Pages hosts static files; running the interactive full-stack application also requires an Express API and a database.
+
+## Verification environment
+
+- Windows, Node.js `v24.18.0`, npm `11.16.0`.
+- Source copied to a temporary validation directory, excluding `node_modules`, local `.env` files, database files, build output and coverage output.
+- Dependencies installed from lockfiles with `npm ci --prefix .`, `npm ci --prefix api` and `npm ci --prefix frontend` (all exit 0).
+- Tests used `DB_FILE=:memory:` and cleared `TURSO_DATABASE_URL` / `TURSO_AUTH_TOKEN`; no connection to a deployed database was used.
+- The security checker uses development or disposable checker secrets. It verifies rejection of missing production secrets without reading local `.env` values.
+
+## Commands and observed results
+
+Run the following from `labs/week-13/source` after installing dependencies:
+
+```powershell
+$env:DB_FILE=&#039;:memory:&#039;
+$env:NODE_ENV=&#039;test&#039;
+Remove-Item Env:TURSO_DATABASE_URL,Env:TURSO_AUTH_TOKEN -ErrorAction SilentlyContinue
+npm test
+npm run check
+npm run build --prefix frontend
+```
+
+| Command | Observed result |
+| --- | --- |
+| `npm test` | Exit 0. API: 4 test files, 68/68 tests passed. Frontend: 1 test file, 3/3 tests passed. |
+| `npm run check` | Exit 0. In-class CP48–CP52: 23/23; challenge: 4/4; total: 27/27. |
+| `npm run build --prefix frontend` | Exit 0. Vite 8.1.5 transformed 42 modules and generated `dist/index.html`, CSS and JavaScript assets. |
+
+Security checks observed:
+
+- Input length boundaries and rejection of request bodies larger than 10 KB.
+- Salted scrypt password hashes, password verification and hashed staff seed records.
+- Successful JWT login, token expiry information and uniform errors for incorrect credentials.
+- Missing or forged token returns 401; a valid non-staff token returns 403; staff PUT/DELETE return 200/204.
+- Public GET/POST remain available, and the earlier delete/create regression remains fixed.
+- Production refuses to start without `JWT_SECRET`; production error responses omit stack traces.
+- `X-Content-Type-Options: nosniff`; a sixth login attempt after five failures returns 429.
+- The frontend API client attaches a stored Bearer token; `render.yaml` requests generated JWT secret configuration.
+
+The integration suites exercise Express through Supertest using SQLite in memory. These results establish local automated checks; a deployed API and a browser login session were not part of this verification.
+
+## API and backend requirements
+
+- Use Node.js 22.13 or newer with the API dependencies from `api/package-lock.json`.
+- A local API normally listens on `http://localhost:3001`; the frontend development server uses `http://localhost:5173`.
+- The frontend reads `VITE_API_BASE_URL`; its default is `http://localhost:3001`. A public deployment needs the HTTPS URL of a running backend and a matching `CORS_ORIGIN` for the frontend origin.
+- The API needs the SQLite schema at `api/data/schema.sql` and a writable database location selected by `DB_FILE`. `DB_FILE=:memory:` is suitable for disposable verification. Persistent deployment needs a durable database location or the separately configured remote database supported by the source.
+- `NODE_ENV=production` requires `JWT_SECRET`. Supply a deployment secret through the backend environment. `/api/auth/login` issues tokens; staff roles are required for PUT and DELETE on `/api/requests/:id`.
+- `/api/health` reports service and database connectivity. CRUD operations use `/api/requests`; user endpoints use `/api/users`.
+- For production on one backend origin, build the frontend with `VITE_API_BASE_URL` set to an empty string so it requests `/api/...`, then run the API in production. Hosting a static build on Pages alone does not supply these endpoints.
+- The supplied frontend includes token storage and Bearer forwarding. The source describes a complete login screen as later Term Project work, so this report does not claim a finished browser sign-in flow.
+
+## Existing project evidence
+
+- [Test case design](../source/TEST_CASES.md)
+- [Debugging log and regression cases](../source/DEBUG_LOG.md)
+- [API contract](../source/API_CONTRACT.md)
+- [Application and authentication setup](../source/README.md)
+
+No screenshot or live demo URL is claimed by this verification. The original `DEMO.md` still contains an unfilled recording checklist.
+</pre></details>
+<details><summary>Test cases</summary><p><a href="https://github.com/Burapa2025/engse203-student-labs-68543210032-7/blob/lab/week-13/labs/week-13/source/TEST_CASES.md">เปิดไฟล์บน GitHub</a></p><pre># ตารางกรณีทดสอบ (Test Cases) — POST /api/requests
+
+ออกแบบ**ก่อน**เขียนโค้ด test (CP44) · แต่ละข้อเปลี่ยนข้อมูลทีละช่องจากข้อมูลที่ถูกต้อง
+
+**ข้อมูลตั้งต้นที่ถูกต้อง:** ชื่อ `สมชาย ใจดี` · ประเภท `แจ้งซ่อม` · สถานที่ `ห้อง 301` · รายละเอียด `แอร์ไม่เย็นตั้งแต่เช้า` · ความเร่งด่วน `normal`
+
+| รหัส | กลุ่ม | ข้อมูลที่เปลี่ยน | ผลที่คาดหวัง | ระดับ test |
+|---|---|---|---|---|
+| TC-01 | ถูกต้อง | — (ถูกทุกช่อง) | ไม่มี error · API ตอบ 201 | unit + integration |
+| TC-02 | ค่าขอบ รายละเอียด | 9 ตัวอักษร | error 1 ข้อ | unit |
+| TC-03 | ค่าขอบ รายละเอียด | 10 ตัวอักษรพอดี | ผ่าน | unit |
+| TC-04 | ค่าขอบ รายละเอียด | 11 ตัวอักษร | ผ่าน | unit |
+| TC-05 | ไม่ถูกต้อง | รายละเอียดเป็นช่องว่างล้วน | error (ตัดช่องว่างก่อนนับ) | unit |
+| TC-06 | ค่าขอบ ชื่อ | 1 ตัวอักษร | error | unit |
+| TC-07 | ค่าขอบ ชื่อ | 2 ตัวอักษร | ผ่าน | unit |
+| TC-08 | นอกรายการ | ประเภท `แจ้งเหตุ` | error ประเภทไม่ถูกต้อง | unit |
+| TC-09 | นอกรายการ | ความเร่งด่วน `high` | error | unit |
+| TC-10 | ผิดรูปแบบ | body เป็น null / array / ตัวเลข | error เดียว &quot;ต้องส่งข้อมูล&quot; | unit |
+| TC-11 | ผิดหลายช่อง | `{}` | error ครบ 5 ช่อง · API ตอบ 400 | unit + integration |
+| TC-12 | ลำดับการทำงาน | ลบ REQ-002 แล้วเพิ่มใหม่ | 201 · รหัสไม่ซ้ำ | integration |
+
+&gt; **ทำไมต้องมีค่าขอบ** — bug ชอบซ่อนตรงขอบ เช่น เขียน `&lt;=` แทน `&lt;` · ทดสอบ 9 · 10 · 11 จะเห็นทันที
+</pre></details>
+<details><summary>Debug log</summary><p><a href="https://github.com/Burapa2025/engse203-student-labs-68543210032-7/blob/lab/week-13/labs/week-13/source/DEBUG_LOG.md">เปิดไฟล์บน GitHub</a></p><pre># บันทึกการไล่ปัญหา (Debug Log)
+
+แต่ละ bug ตอบ 6 ข้อ: อาการ → ทำซ้ำ → เครื่องมือ → สาเหตุ → วิธีแก้ → test ที่กันไม่ให้กลับมา
+
+---
+
+## BUG #0 · ค่าขอบรายละเอียด 10 ตัวอักษร (test เจอ — ไม่มีผู้ใช้แจ้ง)
+
+- **อาการ:** ส่งรายละเอียด 10 ตัวอักษรพอดี ถูกปฏิเสธ ทั้งที่ข้อความบอกว่า &quot;อย่างน้อย 10&quot;
+- **วิธีทำซ้ำ:** unit test `validateRequestInput({ ...valid, details: &#039;1234567890&#039; })`
+- **เครื่องมือ:** unit test ค่าขอบ (TC-03) — fail ทันทีที่เขียน
+- **สาเหตุ (ไฟล์:บรรทัด):** `api/src/validators/requestValidator.js` เงื่อนไข `length &lt;= MIN_DETAILS` ทำให้ 10 ตัวถูกนับว่าไม่ผ่าน
+- **วิธีแก้:** เปลี่ยนเป็น `length &lt; MIN_DETAILS`
+- **test ที่กัน:** `tests/unit/requestValidator.test.js` → &quot;10 ตัวอักษร → ผ่าน (ตรงขอบพอดี)&quot;
+
+## BUG #1 · ลบคำร้องแล้วเพิ่มใหม่ ได้ 500
+
+- **อาการ:** หลังลบคำร้องรายการกลาง การสร้างคำร้องใหม่ได้ 500
+- **วิธีทำซ้ำ:** `DELETE /api/requests/REQ-002` แล้ว `POST /api/requests` → 500
+- **เครื่องมือ:** อ่าน log ใน terminal (`UNIQUE constraint failed: requests.id`) → วาง breakpoint ใน `nextId()` ด้วย JavaScript Debug Terminal เห็นว่าได้ `REQ-005` ซึ่งมีอยู่แล้ว
+- **สาเหตุ (ไฟล์:บรรทัด):** `api/src/services/requestService.js` ฟังก์ชัน `nextId()` คำนวณรหัสจาก `COUNT(*) + 1` — เมื่อลบรายการกลาง จำนวนลดลง รหัสที่ได้จึงชนกับรหัสที่ยังอยู่
+- **วิธีแก้:** หารหัสล่าสุด (`ORDER BY id DESC LIMIT 1`) แล้วบวก 1
+- **test ที่กัน:** `tests/integration/requests.api.test.js` → &quot;ลบรายการกลาง แล้วเพิ่มใหม่ → 201 และรหัสไม่ซ้ำของเดิม&quot;
+
+## BUG #2 · Dashboard แสดง &quot;กำลังดำเนินการ 0&quot;
+
+- **อาการ:** การ์ดสรุปบอกว่ากำลังดำเนินการ 0 แต่ในรายการมีคำร้อง in-progress
+- **วิธีทำซ้ำ:** เปิด Dashboard ด้วยข้อมูลตั้งต้น (REQ-002 เป็น in-progress)
+- **เครื่องมือ:** DevTools → Network → `GET /api/requests` ส่ง `&quot;status&quot;: &quot;in-progress&quot;` ถูกต้อง → ปัญหาอยู่ฝั่ง frontend → วาง breakpoint ใน `summarizeRequests` (DevTools → Sources)
+- **สาเหตุ (ไฟล์:บรรทัด):** `frontend/src/utils/requestSummary.js` นับด้วย `&#039;in progress&#039;` (ช่องว่าง) แทน `&#039;in-progress&#039;` (ขีด) จึงไม่ตรงกับค่าที่ API ส่งมา
+- **วิธีแก้:** ใช้ `&#039;in-progress&#039;` ให้ตรงกับ API
+- **test ที่กัน:** `frontend/src/utils/requestSummary.test.js` → &quot;นับครบทุกสถานะ&quot;
+
+## BUG #3 · เปลี่ยนสถานะคำร้องที่ไม่มีอยู่ ได้ 500
+
+- **อาการ:** `PUT /api/requests/REQ-999` ได้ 500 แทน 404
+- **วิธีทำซ้ำ:** `curl -X PUT localhost:3001/api/requests/REQ-999 -H &quot;Content-Type: application/json&quot; -d &#039;{&quot;status&quot;:&quot;completed&quot;}&#039;`
+- **เครื่องมือ:** อ่าน stack trace ใน terminal — บรรทัดแรกบอก `TypeError: Cannot read properties of null (reading &#039;id&#039;)` บรรทัดถัดไปบอกไฟล์และบรรทัดใน controller
+- **สาเหตุ (ไฟล์:บรรทัด):** `api/src/controllers/requestController.js` ใน `updateRequestStatus` มีบรรทัด log `updated.id` อยู่**ก่อน**การตรวจ `if (!updated)` — เมื่อไม่พบคำร้อง `updated` เป็น null จึงพัง
+- **วิธีแก้:** ย้าย log ไปไว้หลังการตรวจ null
+- **test ที่กัน:** `tests/integration/requests.api.test.js` → &quot;คำร้องที่ไม่มีอยู่ → 404 (ไม่ใช่ 500)&quot;
+</pre></details>
+<details><summary>API contract</summary><p><a href="https://github.com/Burapa2025/engse203-student-labs-68543210032-7/blob/lab/week-13/labs/week-13/source/API_CONTRACT.md">เปิดไฟล์บน GitHub</a></p><pre># API Contract — Campus Service Request API
+
+**เวอร์ชัน:** 2.0.0 · **Base URL:** `http://localhost:3001`
+**รูปแบบข้อมูล:** JSON (`Content-Type: application/json`)
+
+&gt; **API Contract คืออะไร** — ข้อตกลงระหว่างคนทำ front-end กับคนทำ back-end
+&gt; ว่าจะคุยกันด้วย endpoint อะไร ส่งอะไรไป ได้อะไรกลับ
+&gt; มีไว้เพื่อให้สองฝั่ง**ทำงานคู่ขนานกันได้** โดยไม่ต้องรอกัน
+
+---
+
+## โครงสร้างข้อมูล Request
+
+| field | ชนิด | คำอธิบาย | ตัวอย่าง |
+|---|---|---|---|
+| `id` | string | รหัสคำร้อง · ขึ้นต้นด้วย `REQ-` · เซิร์ฟเวอร์สร้างให้ | `&quot;REQ-001&quot;` |
+| `requesterName` | string | ชื่อผู้แจ้ง · อย่างน้อย 2 ตัวอักษร | `&quot;สมชาย ใจดี&quot;` |
+| `requestType` | string | ประเภท · 1 ใน 4 ค่าที่กำหนด | `&quot;แจ้งซ่อม&quot;` |
+| `location` | string | สถานที่ · ห้ามว่าง | `&quot;ห้องปฏิบัติการ 301&quot;` |
+| `details` | string | รายละเอียด · อย่างน้อย 10 ตัวอักษร | `&quot;เครื่องปรับอากาศไม่ทำงาน&quot;` |
+| `priority` | string | `&quot;normal&quot;` หรือ `&quot;urgent&quot;` | `&quot;urgent&quot;` |
+| `status` | string | `&quot;pending&quot;` · `&quot;in-progress&quot;` · `&quot;completed&quot;` | `&quot;pending&quot;` |
+
+**ค่าที่ยอมรับของ `requestType`** — `แจ้งซ่อม` · `บริการบัญชีผู้ใช้` · `ขอใช้อุปกรณ์` · `อื่น ๆ`
+
+---
+
+## Endpoints
+
+| Method | Endpoint | คำอธิบาย | Request body | สำเร็จ | ผิดพลาด |
+|---|---|---|---|---|---|
+| `GET` | `/api/requests` | ดูคำร้องทั้งหมด | — | `200` + array | — |
+| `GET` | `/api/requests?status=` | กรองตามสถานะ | — | `200` + array | — |
+| `GET` | `/api/requests/:id` | ดูคำร้องใบเดียว | — | `200` + object | `404` ไม่พบ |
+| `POST` | `/api/requests` | สร้างคำร้องใหม่ | Request (ไม่ต้องมี `id`, `status`) | `201` + object ที่สร้าง | `400` ข้อมูลไม่ถูกต้อง |
+| `PUT` | `/api/requests/:id` | เปลี่ยนสถานะ | `{ &quot;status&quot;: &quot;...&quot; }` | `200` + object ที่แก้แล้ว | `400` สถานะผิด · `404` ไม่พบ |
+| `DELETE` | `/api/requests/:id` | ลบคำร้อง | — | `204` ไม่มี body | `404` ไม่พบ |
+
+---
+
+## ตัวอย่างการเรียกใช้
+
+### GET /api/requests
+
+```http
+GET /api/requests HTTP/1.1
+Host: localhost:3001
+```
+
+```json
+[
+  {
+    &quot;id&quot;: &quot;REQ-001&quot;,
+    &quot;requesterName&quot;: &quot;สมชาย ใจดี&quot;,
+    &quot;requestType&quot;: &quot;แจ้งซ่อม&quot;,
+    &quot;location&quot;: &quot;ห้องปฏิบัติการ 301&quot;,
+    &quot;details&quot;: &quot;เครื่องปรับอากาศไม่ทำงานตั้งแต่เช้า&quot;,
+    &quot;priority&quot;: &quot;urgent&quot;,
+    &quot;status&quot;: &quot;pending&quot;
+  }
+]
+```
+
+### POST /api/requests
+
+```http
+POST /api/requests HTTP/1.1
+Content-Type: application/json
+
+{
+  &quot;requesterName&quot;: &quot;สุภาวดี รักเรียน&quot;,
+  &quot;requestType&quot;: &quot;ขอใช้อุปกรณ์&quot;,
+  &quot;location&quot;: &quot;ห้องประชุม 2&quot;,
+  &quot;details&quot;: &quot;ขอยืมโปรเจกเตอร์สำหรับนำเสนอ&quot;,
+  &quot;priority&quot;: &quot;normal&quot;
+}
+```
+
+**201 Created**
+
+```json
+{
+  &quot;id&quot;: &quot;REQ-MTYOA3MX-YEX9&quot;,
+  &quot;requesterName&quot;: &quot;สุภาวดี รักเรียน&quot;,
+  &quot;requestType&quot;: &quot;ขอใช้อุปกรณ์&quot;,
+  &quot;location&quot;: &quot;ห้องประชุม 2&quot;,
+  &quot;details&quot;: &quot;ขอยืมโปรเจกเตอร์สำหรับนำเสนอ&quot;,
+  &quot;priority&quot;: &quot;normal&quot;,
+  &quot;status&quot;: &quot;pending&quot;
+}
+```
+
+**400 Bad Request** — เมื่อข้อมูลไม่ถูกต้อง
+
+```json
+{
+  &quot;error&quot;: &quot;ข้อมูลคำร้องไม่ถูกต้อง&quot;,
+  &quot;details&quot;: [
+    &quot;ชื่อผู้แจ้งต้องมีอย่างน้อย 2 ตัวอักษร&quot;,
+    &quot;รายละเอียดต้องมีอย่างน้อย 10 ตัวอักษร&quot;
+  ]
+}
+```
+
+### PUT /api/requests/:id
+
+```http
+PUT /api/requests/REQ-001 HTTP/1.1
+Content-Type: application/json
+
+{ &quot;status&quot;: &quot;in-progress&quot; }
+```
+
+**200 OK** — คืนคำร้องที่อัปเดตแล้ว
+
+### DELETE /api/requests/:id
+
+**204 No Content** — ไม่มี body ส่งกลับ
+
+---
+
+## รูปแบบ Error
+
+ทุก error ตอบเป็น JSON ที่มี field `error` เสมอ
+
+```json
+{ &quot;error&quot;: &quot;ข้อความที่ผู้ใช้ทั่วไปอ่านเข้าใจ&quot; }
+```
+
+กรณี validation จะมี `details` เพิ่มมาเป็น array บอกว่าผิดตรงไหนบ้าง
+
+| Status | เมื่อไหร่ | ฝั่งไหนผิด |
+|---|---|---|
+| `400` | ข้อมูลที่ส่งมาไม่ถูกต้อง | ผู้ใช้ |
+| `404` | ไม่พบทรัพยากรที่ขอ | ผู้ใช้ |
+| `500` | โค้ดเซิร์ฟเวอร์ผิดพลาด | เซิร์ฟเวอร์ |
+
+&gt; **ตอน production จะไม่ส่ง stack trace กลับไป** — เปิดเผยโครงสร้างภายในให้คนภายนอกเห็นไม่ได้
+
+---
+
+## CORS
+
+API อนุญาตให้เรียกจาก origin ที่กำหนดใน `CORS_ORIGIN` เท่านั้น
+
+```
+Access-Control-Allow-Origin: http://localhost:5173
+```
+
+**ถ้าเรียกจาก origin อื่น** เบราว์เซอร์จะบล็อกก่อนที่โค้ดจะได้เห็น response — จะเห็น error ใน Console ว่าถูกบล็อกโดย CORS policy
+
+&gt; ⚠ CORS เป็นกลไกของ **เบราว์เซอร์** เท่านั้น · Postman และ curl ไม่ถูกบล็อก เพราะไม่ใช่เบราว์เซอร์
+
+---
+
+## Environment Variables
+
+### ฝั่ง API (`api/.env`)
+
+| ตัวแปร | ค่าเริ่มต้น | คำอธิบาย |
+|---|---|---|
+| `PORT` | `3001` | พอร์ตที่ API รับคำขอ |
+| `CORS_ORIGIN` | `http://localhost:5173` | origin ที่อนุญาตให้เรียก |
+| `NODE_ENV` | `development` | `production` จะเปลี่ยนรูปแบบ log และซ่อน stack trace |
+
+### ฝั่ง Frontend (`frontend/.env.local`)
+
+| ตัวแปร | ค่าเริ่มต้น | คำอธิบาย |
+|---|---|---|
+| `VITE_API_BASE_URL` | `http://localhost:3001` | ที่อยู่ของ API |
+
+&gt; **ต้องขึ้นต้นด้วย `VITE_`** ไม่งั้น Vite จะไม่ส่งค่าไปให้โค้ดฝั่งเบราว์เซอร์
+&gt; และ**ห้าม commit ไฟล์ `.env`** — ใช้ `.env.example` เป็นตัวอย่างแทน
+
+---
+
+## การรันทั้งระบบ
+
+ต้องเปิด **2 terminal** พร้อมกัน
+
+```bash
+# Terminal 1 — API
+cd api &amp;&amp; npm run dev          # http://localhost:3001
+
+# Terminal 2 — Frontend
+cd frontend &amp;&amp; npm run dev     # http://localhost:5173
+```
+
+**ลำดับสำคัญ** — เปิด API ก่อนเสมอ ไม่งั้น frontend จะขึ้นข้อความว่าติดต่อเซิร์ฟเวอร์ไม่ได้
+
+---
+
+## Data Model (เพิ่มใน Week 10)
+
+API เก็บข้อมูลในฐานข้อมูล SQLite (`api/data/campus.db`) แยกเป็น 2 ตาราง
+
+### ตาราง `users`
+
+| คอลัมน์ | ชนิด | ข้อกำหนด |
+|---|---|---|
+| `id` | INTEGER | PRIMARY KEY AUTOINCREMENT |
+| `name` | TEXT | NOT NULL |
+| `department` | TEXT | NOT NULL |
+| `email` | TEXT | NOT NULL UNIQUE |
+
+### ตาราง `requests`
+
+| คอลัมน์ | ชนิด | ข้อกำหนด |
+|---|---|---|
+| `id` | TEXT | PRIMARY KEY (รูปแบบ `REQ-NNN`) |
+| `requester_id` | INTEGER | NOT NULL · FOREIGN KEY → `users(id)` |
+| `request_type` | TEXT | NOT NULL · CHECK 4 ค่า |
+| `location` · `details` | TEXT | NOT NULL |
+| `priority` | TEXT | DEFAULT `&#039;normal&#039;` · CHECK |
+| `status` | TEXT | DEFAULT `&#039;pending&#039;` · CHECK |
+| `created_at` | TEXT | DEFAULT เวลาปัจจุบัน |
+
+### ข้อสังเกตสำคัญ
+
+**โครงสร้างในฐานข้อมูลไม่เหมือนรูปแบบที่ API ส่งออก**
+
+- ฐานข้อมูลเก็บ `requester_id` (ตัวเลข) เพื่อไม่ให้ข้อมูลผู้ใช้ซ้ำ
+- API คืน `requesterName` (ชื่อ) เพราะ frontend ต้องการแบบนั้น
+- **ชั้น service เป็นตัวแปลงระหว่างสองรูปแบบด้วย `JOIN` และ `AS`**
+
+ตอน POST — frontend ส่ง `requesterName` มา · service หา `id` ของชื่อนั้น ถ้ายังไม่มีก็สร้าง user ใหม่ให้ แล้วเก็บ `requester_id` ลงตาราง `requests`
+</pre></details>
+<details><summary>Run the full-stack application</summary><p><a href="https://github.com/Burapa2025/engse203-student-labs-68543210032-7/blob/lab/week-13/labs/week-13/source/README.md">เปิดไฟล์บน GitHub</a></p><pre># Campus Service — ระบบ Full-Stack (ENGSE203 Week 11)
+
+ระบบรับคำร้องขอใช้บริการภายในมหาวิทยาลัย · **React + Express API + SQLite** ทำงานครบวงจร
+
+## สถาปัตยกรรม 3 ชั้น
+
+```
+┌─────────────┐   HTTP    ┌──────────────┐   SQL    ┌───────────┐
+│  React      │ ────────► │  Express API │ ───────► │  SQLite   │
+│  (frontend) │ ◄──────── │  (api)       │ ◄─────── │  campus.db│
+└─────────────┘   JSON    └──────────────┘   rows   └───────────┘
+   พอร์ต 5173              พอร์ต 3001              ไฟล์ในเครื่อง
+```
+
+| ชั้น | หน้าที่ | โฟลเดอร์ |
+|---|---|---|
+| Frontend | หน้าจอผู้ใช้ · เรียก API | `frontend/` |
+| API | route · controller · service | `api/src/` |
+| Database | เก็บข้อมูลถาวร | `api/data/campus.db` |
+
+## วิธีรัน (development)
+
+```bash
+# ชั้นฐานข้อมูล + API
+cd api
+npm install
+cp .env.example .env
+npm run db:setup      # สร้าง campus.db จาก schema.sql
+npm run dev           # API ที่ http://localhost:3001
+
+# ชั้น frontend (อีก terminal)
+cd frontend
+npm install
+npm run dev           # React ที่ http://localhost:5173
+```
+
+## วิธีรัน (production)
+
+```bash
+# build แบบเดียวกับ cloud (script อยู่ใน package.json ระดับบนสุด)
+NODE_ENV=production npm install
+NODE_ENV=production npm run build
+
+# start — เสิร์ฟทั้งหน้าเว็บและ API จากพอร์ตเดียว (สัปดาห์ 13: production ต้องตั้ง JWT_SECRET ไม่งั้นไม่ยอม start)
+NODE_ENV=production JWT_SECRET=&lt;ค่าสุ่ม&gt; PORT=10000 npm start
+# เปิด http://localhost:10000
+```
+
+| ไฟล์ | ทำให้ production ทำงานอย่างไร |
+|---|---|
+| `frontend/.env.production` | `VITE_API_BASE_URL=` ว่าง → frontend เรียก `/api/...` บนโดเมนเดียวกัน |
+| `api/src/app.js` | production เสิร์ฟ `frontend/dist` · path ที่ไม่ใช่ `/api` ได้ index.html |
+| `package.json` | `build` ใช้ `--include=dev` เพราะ cloud ตั้ง NODE_ENV=production ตั้งแต่ build |
+
+## Live Demo
+
+🔗 (ใส่ URL หลัง deploy ขึ้น Render)
+
+หมายเหตุ: Render free tier — เปิดครั้งแรกช้า 30–60 วินาที · ข้อมูลที่เพิ่มจะกลับเป็นค่าตั้งต้นเมื่อ restart
+
+## ตรวจสุขภาพระบบ
+
+```bash
+curl http://localhost:3001/api/health
+# { &quot;status&quot;: &quot;ok&quot;, &quot;env&quot;: &quot;...&quot;, &quot;database&quot;: { &quot;connected&quot;: true, ... } }
+```
+
+## Environment Variables
+
+| ตัวแปร | ค่าเริ่มต้น | ความหมาย |
+|---|---|---|
+| `NODE_ENV` | development | สภาพแวดล้อม |
+| `PORT` | 3001 | พอร์ต API |
+| `CORS_ORIGIN` | http://localhost:5173 | ที่อยู่ frontend ที่อนุญาต |
+| `DB_FILE` | api/data/campus.db | ไฟล์ฐานข้อมูล |
+| `JWT_SECRET` | (dev: ค่าสำหรับพัฒนา) | secret สำหรับเซ็น JWT · production ไม่ตั้ง = ไม่ยอม start |
+
+## API Endpoints
+
+ดู `API_CONTRACT.md` สำหรับรายละเอียดครบ · สรุป: `GET/POST/PUT/DELETE /api/requests` · `GET /api/health`
+
+## การตัดสินใจด้านการออกแบบ
+
+- **แยก 3 ชั้นชัดเจน** — เปลี่ยนแหล่งข้อมูลได้โดยกระทบชั้นเดียว (พิสูจน์มา 4 ครั้งใน Week 05–10)
+- **เลือก SQLite** — ข้อมูลมีโครงและความสัมพันธ์ชัด · ดู `DATABASE_CHOICES.md`
+- **config รวมศูนย์** — ไม่ hardcode · แยก dev/production ด้วย `NODE_ENV`
+
+## การทดสอบ (สัปดาห์ 12)
+
+```bash
+npm install --prefix api &amp;&amp; npm install --prefix frontend
+npm test                 # api (Vitest) + frontend (Vitest)
+npm run coverage         # รายงานว่าบรรทัดไหนยังไม่มี test วิ่งผ่าน → api/coverage/index.html
+```
+
+| โฟลเดอร์ | ชนิด test | ทดสอบอะไร |
+|---|---|---|
+| `api/tests/unit/` | unit | pure function เช่น `validators/requestValidator.js` — ไม่ต้องเปิด server |
+| `api/tests/integration/` | integration | ยิง HTTP จริงผ่านทุกชั้น ด้วย supertest บนฐานข้อมูลในหน่วยความจำ (`DB_FILE=:memory:`) |
+| `frontend/src/**/*.test.js` | unit | pure function ฝั่ง React เช่น `utils/requestSummary.js` |
+
+หลักฐานการไล่ปัญหา: `BUG_REPORTS.md` (อาการที่ผู้ใช้แจ้ง) · `DEBUG_LOG.md` (สาเหตุและวิธีแก้) · `TEST_CASES.md` (ตารางกรณีทดสอบ)
+
+
+## ความปลอดภัย (สัปดาห์ 13)
+
+| เรื่อง | ไฟล์ |
+|---|---|
+| validation เข้มขึ้น (ชนิดข้อมูล · ความยาวสูงสุด · body ≤ 10kb) | `api/src/validators/requestValidator.js` · `api/src/app.js` |
+| รหัสผ่านเก็บเป็น hash (scrypt) | `api/src/utils/password.js` |
+| เข้าสู่ระบบด้วย JWT | `api/src/services/authService.js` · `POST /api/auth/login` |
+| สิทธิ์: GET/POST ทุกคน · PUT/DELETE เฉพาะเจ้าหน้าที่ | `api/src/middleware/auth.js` · `api/src/routes/requestRoutes.js` |
+| secret มาจาก env · production ไม่มี secret = ไม่ start | `api/src/config.js` · `api/.env.example` |
+
+**บัญชีเจ้าหน้าที่สำหรับพัฒนา** — `staff@rmutl.ac.th` / `staff1234` (อยู่ใน schema.sql เป็น hash)
+⚠ ก่อนใช้งานจริง: สร้างบัญชีใหม่ด้วย `npm run create-staff --prefix api -- &lt;อีเมล&gt; &lt;รหัสผ่าน&gt;` และตั้ง `JWT_SECRET` ใน Environment ของ Render
+
+```bash
+curl -X POST localhost:3001/api/auth/login -H &quot;Content-Type: application/json&quot; \
+  -d &#039;{&quot;email&quot;:&quot;staff@rmutl.ac.th&quot;,&quot;password&quot;:&quot;staff1234&quot;}&#039;
+# → { &quot;token&quot;: &quot;eyJ...&quot;, &quot;user&quot;: { ... } }
+
+curl -X PUT localhost:3001/api/requests/REQ-001 -H &quot;Authorization: Bearer &lt;token&gt;&quot; \
+  -H &quot;Content-Type: application/json&quot; -d &#039;{&quot;status&quot;:&quot;completed&quot;}&#039;
+```
+</pre></details></section>
+</main></body></html>

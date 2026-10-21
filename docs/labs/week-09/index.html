@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#092746">
+<title>week-09 — Relational Database &amp; SQL</title>
+<style>*{box-sizing:border-box}body{margin:0;font-family:Tahoma,Arial,sans-serif;line-height:1.65;color:#10253d;background:#eaf1f7}header{padding:30px max(22px,calc((100% - 1100px)/2));color:white;background:linear-gradient(135deg,#071f39,#0d4c77 72%,#078386)}header a{color:#d7edf9}h1{line-height:1.3;font-size:clamp(24px,4vw,34px)}main{max-width:1144px;margin:0 auto;padding:24px 22px 48px}section{padding:22px;margin-bottom:18px;background:white;border:1px solid #c4d6e4;border-radius:14px}h2{margin-top:0;font-size:21px}a{color:#075ea8}.pill,.result{color:#10253d;display:inline-block;padding:4px 10px;border-radius:99px;background:#e5f1fa;font-size:14px;font-weight:bold}.result.pass{color:#155d39;background:#e3f3e9}.result.fail{color:#8a2727;background:#fbe7e7}.result.partial{color:#705005;background:#fff1c8}.notice{padding:16px;border-left:5px solid #f4b942;background:#fff8e6}.actions{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}.actions a{padding:9px 14px;border:1px solid #1261a6;border-radius:8px;text-decoration:none}.actions .primary{background:#1261a6;color:white}table{width:100%;border-collapse:collapse}th,td{padding:12px;text-align:left;vertical-align:top;border-bottom:1px solid #dce5ec}th{min-width:140px}.table-wrap{overflow-x:auto}pre{white-space:pre-wrap;overflow-wrap:anywhere;padding:16px;background:#f0f5f9;border-radius:8px;font-size:14px}code{overflow-wrap:anywhere}details{margin:12px 0;border:1px solid #c4d6e4;border-radius:8px;padding:12px}summary{cursor:pointer;font-weight:bold}figure{margin:22px 0}img{display:block;max-width:100%;height:auto;border:1px solid #c4d6e4;border-radius:8px}figcaption{margin-top:8px;color:#52677c}.meta{color:#52677c;font-size:14px}@media(max-width:560px){section{padding:16px}main{padding:18px 12px}th,td{padding:9px}th{min-width:110px}}</style></head>
+<body><header><a href="../../index.html">← LAB Portfolio</a><h1>week-09 — Relational Database &amp; SQL</h1><span class="pill">Published</span></header>
+<main><section><h2>ผลลัพธ์และหลักฐาน</h2><p class="notice">Checker ของ campus.db เดิมผ่าน 24/30; schema.sql สร้างฐานข้อมูลใหม่ได้ 4 users / 8 requests ไม่มี foreign-key violation และ SQL 8 ข้อรันผ่าน</p><ul><li>ออกแบบ users และ requests ด้วยความสัมพันธ์แบบหนึ่งต่อหลาย</li><li>มี schema.sql, queries.sql และ DATA_MODEL.md พร้อมเหตุผลการออกแบบ</li><li>ทดสอบ SQL ทั้ง 8 ข้อและ constraints 5 แบบกับฐานข้อมูลใหม่ในหน่วยความจำผ่าน</li><li>เผยแพร่ผลตรวจ campus.db เดิมตามจริง: ข้อมูลยังไม่ครบและมี orphan references; Challenge ยังไม่ทำ</li></ul>
+<div class="actions"><a class="primary" href="https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/lab/week-09/labs/week-09/lab09/source">View Source</a><a href="https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/lab/week-09/labs/week-09/evidence">View Evidence</a></div>
+<p class="meta">Branch: <code>lab/week-09</code> • Source commit: 2de67ca43e94efaf815aae3e4ec4cbed0a632834</p></section>
+<section><h2>ผลการตรวจสอบ</h2><div class="table-wrap"><table><thead><tr><th>รายการ</th><th>ผล</th><th>คำสั่งและรายละเอียด</th></tr></thead><tbody><tr><th scope="row">Original campus.db checker</th><td><span class="result partial">partial</span></td><td><code>node --disable-warning=ExperimentalWarning check-week09.mjs (isolated copy)</code><p>24/30: ในห้อง 9/11, ที่บ้าน 15/16, Challenge 0/3; DB เดิมมี users 3 คน, requests 6 รายการ และ orphan references 3 รายการ</p></td></tr><tr><th scope="row">Schema, queries and constraints</th><td><span class="result pass">pass</span></td><td><code>node:sqlite in-memory verification (see evidence/PAGES_VERIFICATION.md)</code><p>schema.sql สร้าง 4 users / 8 requests, foreign_key_check ไม่พบปัญหา; SELECT ทั้ง 8 ข้อรันได้ และ NOT NULL, UNIQUE, CHECK, PRIMARY KEY, FOREIGN KEY ปฏิเสธข้อมูลผิดครบ 5 แบบ</p></td></tr></tbody></table></div></section>
+<section><h2>วิธีรันบนเครื่อง</h2><pre>cd labs/week-09/lab09/source
+node --disable-warning=ExperimentalWarning check-week09.mjs (รันในสำเนาโฟลเดอร์แยก เพราะ checker เขียนข้อมูลทดสอบลง DB)
+ทดสอบ schema.sql และ queries.sql ใน SQLite :memory: ตาม evidence/PAGES_VERIFICATION.md</pre></section>
+
+<section><h2>เอกสารและผลทดสอบ</h2><details><summary>ผลตรวจล่าสุดและข้อจำกัด</summary><p><a href="https://github.com/Burapa2025/engse203-student-labs-68543210032-7/blob/lab/week-09/labs/week-09/evidence/PAGES_VERIFICATION.md">เปิดไฟล์บน GitHub</a></p><pre># LAB09 — Pages verification
+
+ตรวจวันที่ **2026-10-21** ด้วย Node.js **v24.18.0** จาก branch `lab/week-09` ก่อนเพิ่มรายงาน (`2de67ca43e94efaf815aae3e4ec4cbed0a632834`)
+
+งานที่ใช้เผยแพร่อยู่ใน `lab09/source/` ของ branch นี้ ประกอบด้วย SQLite database, schema, queries และ data model Pages แสดงรายงานและลิงก์ไฟล์ SQL/เอกสาร
+
+## ผล checker ของฐานข้อมูลเดิม
+
+คัดลอกไฟล์ใน `lab09/source/` ไปยังโฟลเดอร์ชั่วคราวแยก แล้วรัน:
+
+```sh
+node --disable-warning=ExperimentalWarning check-week09.mjs
+```
+
+ใช้สำเนาแยกเนื่องจาก checker มี INSERT/DELETE สำหรับตรวจ constraint จึงรักษา `campus.db` ที่ส่งไว้เดิมโดยไม่แก้ไข ผลจริง:
+
+```text
+ในห้อง (CP17–CP21)  9/11
+ที่บ้าน (CP22–CP25) 15/16
+Challenge           0/3
+รวม                 24/30
+```
+
+สถานะเป็น **partial** แม้ checker คืน exit code 0 รายการที่ไม่ผ่าน:
+
+- users ต้องมีอย่างน้อย 4 คน แต่ฐานข้อมูลเดิมมี 3 คน
+- requests ต้องมีอย่างน้อย 8 รายการ แต่ฐานข้อมูลเดิมมี 6 รายการ
+- พบคำร้องที่อ้างถึง users ที่ไม่มีอยู่ 3 รายการ
+- ยังไม่มี Challenge: GROUP BY, aggregate function และ INDEX
+
+## ตรวจ schema และ queries แยกจาก DB เดิม
+
+ตรวจโดยรัน `schema.sql` ในฐานข้อมูล `:memory:` ใหม่ ไม่เขียนทับ `campus.db`:
+
+```text
+Schema seed: users=4, requests=8, foreignKeyViolations=0
+Query 1: PASS; rows=8
+Query 2: PASS; rows=3
+Query 3: PASS; rows=3
+Query 4: PASS; rows=2
+Query 5: PASS; rows=8
+Query 6: PASS; rows=4
+Query 7: PASS; rows=4
+Query 8: PASS; rows=3
+NOT NULL: PASS (ปฏิเสธ users.name=NULL)
+UNIQUE: PASS (ปฏิเสธ email ซ้ำ)
+CHECK: PASS (ปฏิเสธ status=&#039;wrong-status&#039;)
+PRIMARY KEY: PASS (ปฏิเสธ users.id=1 ซ้ำ)
+FOREIGN KEY: PASS (ปฏิเสธ requester_id=999)
+```
+
+คำสั่ง Node ที่ใช้ตรวจจาก `lab09/source/` (ส่งโค้ดต่อไปนี้ให้ `node --disable-warning=ExperimentalWarning --input-type=module` ผ่าน stdin):
+
+```js
+import { DatabaseSync } from &#039;node:sqlite&#039;;
+import { readFileSync } from &#039;node:fs&#039;;
+const db = new DatabaseSync(&#039;:memory:&#039;);
+db.exec(readFileSync(&#039;schema.sql&#039;, &#039;utf8&#039;));
+console.log(&#039;Schema seed:&#039;, JSON.stringify({
+  users: db.prepare(&#039;SELECT COUNT(*) n FROM users&#039;).get().n,
+  requests: db.prepare(&#039;SELECT COUNT(*) n FROM requests&#039;).get().n,
+  foreignKeyViolations: db.prepare(&#039;PRAGMA foreign_key_check&#039;).all().length,
+}));
+const sql = readFileSync(&#039;queries.sql&#039;, &#039;utf8&#039;).replace(/--[^\n]*/g, &#039;&#039;);
+const queries = sql.split(&#039;;&#039;).map(s =&gt; s.trim()).filter(Boolean);
+for (let i = 0; i &lt; queries.length; i++) {
+  console.log(&#039;Query &#039; + (i + 1) + &#039;: PASS; rows=&#039; + db.prepare(queries[i]).all().length);
+}
+const failures = [];
+function reject(label, sql) {
+  try {
+    db.exec(sql);
+    failures.push(label);
+    console.log(label + &#039;: FAIL (accepted invalid input)&#039;);
+  } catch (error) {
+    console.log(label + &#039;: PASS (&#039; + error.message + &#039;)&#039;);
+  }
+}
+reject(&#039;NOT NULL&#039;, &quot;INSERT INTO users(name,department,email) VALUES(NULL,&#039;test&#039;,&#039;not-null@test&#039;)&quot;);
+reject(&#039;UNIQUE&#039;, &quot;INSERT INTO users(name,department,email) VALUES(&#039;test&#039;,&#039;test&#039;,&#039;somchai@example.com&#039;)&quot;);
+reject(&#039;CHECK&#039;, &quot;UPDATE requests SET status=&#039;wrong-status&#039; WHERE id=&#039;REQ-001&#039;&quot;);
+reject(&#039;PRIMARY KEY&#039;, &quot;INSERT INTO users(id,name,department,email) VALUES(1,&#039;test&#039;,&#039;test&#039;,&#039;pk@test&#039;)&quot;);
+reject(&#039;FOREIGN KEY&#039;, &quot;UPDATE requests SET requester_id=999 WHERE id=&#039;REQ-001&#039;&quot;);
+if (failures.length) process.exitCode = 1;
+db.close();
+```
+
+ผลชุดนี้เป็น **pass** และ process exit code 0 แสดงว่า schema สามารถสร้างข้อมูลตั้งต้นครบและ SQL ทั้ง 8 คำสั่งรันได้ ส่วนความไม่ครบของ DB ที่ commit ไว้เดิมยังคงรายงานตาม checker ข้างต้น
+</pre></details>
+<details><summary>Database schema</summary><p><a href="https://github.com/Burapa2025/engse203-student-labs-68543210032-7/blob/lab/week-09/labs/week-09/lab09/source/schema.sql">เปิดไฟล์บน GitHub</a></p><pre>-- ═══════════════════════════════════════════════════════════
+-- Campus Service Request — โครงสร้างฐานข้อมูล
+-- ENGSE203 สัปดาห์ที่ 9 · หน่วยที่ 4
+--
+-- 🏠 TODO W09-SCHEMA (CP23)
+-- ไฟล์นี้ต้องรันแล้วสร้างฐานข้อมูลได้ครบทั้งหมดในครั้งเดียว
+-- และต้อง &quot;รันซ้ำได้&quot; โดยไม่ error
+-- ═══════════════════════════════════════════════════════════
+
+PRAGMA foreign_keys = ON;
+
+-- TODO ①  ลบตารางเดิมก่อน เพื่อให้รันไฟล์นี้ซ้ำได้
+--         ⚠ ลำดับสำคัญ — ต้องลบตารางที่มี foreign key ก่อน
+--         คำใบ้: DROP TABLE IF EXISTS ...
+DROP TABLE IF EXISTS requests;
+DROP TABLE IF EXISTS users;
+
+-- TODO ②  สร้างตาราง users
+--         ต้องมี: id (PK, INTEGER, AUTOINCREMENT)
+--                name (TEXT, ห้ามว่าง)
+--                department (TEXT, ห้ามว่าง)
+--                email (TEXT, ห้ามว่าง, ห้ามซ้ำ)
+CREATE TABLE users (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    department TEXT NOT NULL,
+    email TEXT NOT NULL UNIQUE
+);
+
+-- TODO ③  สร้างตาราง requests
+--         ต้องมี: id (PK, TEXT — ใช้รหัสแบบ REQ-001)
+--                requester_id (INTEGER, ห้ามว่าง, ชี้ไป users(id))
+--                request_type (TEXT, ห้ามว่าง, จำกัดค่าด้วย CHECK)
+--                location, details (TEXT, ห้ามว่าง)
+--                priority (ค่าเริ่มต้น &#039;normal&#039;, จำกัดด้วย CHECK)
+--                status (ค่าเริ่มต้น &#039;pending&#039;, จำกัดด้วย CHECK)
+--                created_at (ค่าเริ่มต้นเป็นเวลาปัจจุบัน)
+--
+--         ⚠ อย่าลืม FOREIGN KEY — เป็นหัวใจของสัปดาห์นี้
+CREATE TABLE requests (
+    id TEXT PRIMARY KEY,
+    requester_id INTEGER NOT NULL,
+    request_type TEXT NOT NULL
+        CHECK (request_type IN (&#039;แจ้งซ่อม&#039;, &#039;ขอใช้อุปกรณ์&#039;, &#039;แจ้งปัญหา&#039;)),
+    location TEXT NOT NULL,
+    details TEXT NOT NULL,
+    priority TEXT NOT NULL DEFAULT &#039;normal&#039;
+        CHECK (priority IN (&#039;normal&#039;, &#039;urgent&#039;)),
+    status TEXT NOT NULL DEFAULT &#039;pending&#039;
+        CHECK (status IN (&#039;pending&#039;, &#039;in-progress&#039;, &#039;completed&#039;)),
+    created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (requester_id)
+        REFERENCES users(id)
+);
+
+-- TODO ④  ใส่ข้อมูลตั้งต้น
+--         users อย่างน้อย 4 คน · requests อย่างน้อย 5 รายการ
+INSERT INTO users (id, name, department, email)
+VALUES
+    (1, &#039;สมชาย ใจดี&#039;, &#039;วิศวกรรมซอฟต์แวร์&#039;, &#039;somchai@example.com&#039;),
+    (2, &#039;สุภาวดี รักเรียน&#039;, &#039;วิทยาการคอมพิวเตอร์&#039;, &#039;supawadee@example.com&#039;),
+    (3, &#039;ธนกฤต ตั้งใจ&#039;, &#039;วิศวกรรมซอฟต์แวร์&#039;, &#039;thanakrit@example.com&#039;),
+    (4, &#039;กมลชนก สดใส&#039;, &#039;เทคโนโลยีสารสนเทศ&#039;, &#039;kamonchanok@example.com&#039;);
+
+INSERT INTO requests
+    (id, requester_id, request_type, location, details, priority, status)
+VALUES
+    (&#039;REQ-001&#039;, 1, &#039;แจ้งซ่อม&#039;, &#039;ห้องปฏิบัติการ 301&#039;,
+     &#039;คอมพิวเตอร์เปิดไม่ติด&#039;, &#039;urgent&#039;, &#039;pending&#039;),
+
+    (&#039;REQ-002&#039;, 2, &#039;แจ้งปัญหา&#039;, &#039;ห้องเรียน 201&#039;,
+     &#039;โปรเจคเตอร์แสดงผลไม่ชัด&#039;, &#039;normal&#039;, &#039;in-progress&#039;),
+
+    (&#039;REQ-003&#039;, 3, &#039;ขอใช้อุปกรณ์&#039;, &#039;ห้องปฏิบัติการ 402&#039;,
+     &#039;ขอยืมอุปกรณ์สำหรับการเรียน&#039;, &#039;normal&#039;, &#039;completed&#039;),
+
+    (&#039;REQ-004&#039;, 4, &#039;แจ้งซ่อม&#039;, &#039;อาคารเรียน A&#039;,
+     &#039;เครื่องปรับอากาศไม่ทำงาน&#039;, &#039;urgent&#039;, &#039;pending&#039;),
+
+    (&#039;REQ-005&#039;, 1, &#039;แจ้งปัญหา&#039;, &#039;ห้องสมุด&#039;,
+     &#039;ระบบอินเทอร์เน็ตช้า&#039;, &#039;normal&#039;, &#039;in-progress&#039;);
+
+INSERT INTO requests
+    (id, requester_id, request_type, location, details, priority, status)
+VALUES
+    (&#039;REQ-006&#039;, 2, &#039;แจ้งซ่อม&#039;, &#039;ห้องปฏิบัติการ 401&#039;,
+     &#039;ไฟในห้องกะพริบตลอดเวลา&#039;, &#039;normal&#039;, &#039;pending&#039;),
+
+    (&#039;REQ-007&#039;, 3, &#039;ขอใช้อุปกรณ์&#039;, &#039;ห้องเรียน 203&#039;,
+     &#039;ขอยืมไมโครโฟนสำหรับกิจกรรม&#039;, &#039;normal&#039;, &#039;completed&#039;),
+
+    (&#039;REQ-008&#039;, 4, &#039;แจ้งซ่อม&#039;, &#039;ห้องสมุด ชั้น 3&#039;,
+     &#039;ไฟเพดานดับ&#039;, &#039;urgent&#039;, &#039;in-progress&#039;);</pre></details>
+<details><summary>SQL queries</summary><p><a href="https://github.com/Burapa2025/engse203-student-labs-68543210032-7/blob/lab/week-09/labs/week-09/lab09/source/queries.sql">เปิดไฟล์บน GitHub</a></p><pre>-- ═══════════════════════════════════════════════════════════
+-- queries.sql — คำสั่งค้นหาตอบโจทย์
+-- 🏠 TODO W09-QUERY (CP22) · เขียนอย่างน้อย 8 ข้อ
+--
+-- เขียนคำสั่งจริงที่รันได้ ไม่ใช่เขียนบรรยาย
+-- ทุกข้อต้องทดสอบแล้วว่าได้ผลลัพธ์ถูกต้อง
+-- ═══════════════════════════════════════════════════════════
+
+-- ① คำร้องทั้งหมด เรียงตามรหัส
+SELECT *
+FROM requests
+ORDER BY id;
+
+-- ② คำร้องที่ยังไม่ได้ดำเนินการ (status = &#039;pending&#039;)
+SELECT id, location, details
+FROM requests
+WHERE status = &#039;pending&#039;
+ORDER BY id;
+
+-- ③ คำร้องเร่งด่วนที่ยังไม่เสร็จ — ใช้เงื่อนไข 2 ข้อพร้อมกัน
+SELECT *
+FROM requests
+WHERE priority = &#039;urgent&#039;
+  AND status != &#039;completed&#039;
+ORDER BY id;
+
+-- ④ ค้นคำร้องจากคำบางส่วนในรายละเอียด  (คำใบ้: LIKE)
+SELECT *
+FROM requests
+WHERE details LIKE &#039;%ไฟ%&#039;;
+
+-- ⑤ คำร้องพร้อมชื่อผู้แจ้ง  ← ต้องใช้ JOIN เพราะชื่ออยู่คนละตาราง
+SELECT
+  r.id,
+  u.name AS requesterName,
+  r.status
+FROM requests r
+JOIN users u ON u.id = r.requester_id
+ORDER BY r.id;
+
+-- ⑥ คำร้องเฉพาะของภาควิชาหนึ่ง  (JOIN + WHERE)
+SELECT
+  r.id,
+  u.name,
+  u.department,
+  r.details,
+  r.status
+FROM requests r
+JOIN users u ON u.id = r.requester_id
+WHERE u.department = &#039;วิศวกรรมซอฟต์แวร์&#039;
+ORDER BY r.id;
+
+-- ⑦ รายชื่อผู้แจ้งที่ไม่ซ้ำกัน  (คำใบ้: DISTINCT)
+SELECT DISTINCT u.name
+FROM users u
+JOIN requests r ON r.requester_id = u.id
+ORDER BY u.name;
+
+-- ⑧ คำร้อง 3 รายการล่าสุด  (คำใบ้: ORDER BY + LIMIT)
+SELECT *
+FROM requests
+ORDER BY created_at DESC
+LIMIT 3;
+
+-- ⭐ Challenge ─────────────────────────────────────────────
+-- ⑨ นับจำนวนคำร้องแยกตามสถานะ  (GROUP BY + COUNT)
+-- ⑩ ใครแจ้งคำร้องมากที่สุด  (คำใบ้: LEFT JOIN เพื่อให้คนที่ยังไม่เคยแจ้งติดมาด้วย)
+-- ⑪ สร้าง INDEX ให้การค้นด้วย status เร็วขึ้น</pre></details>
+<details><summary>Data model</summary><p><a href="https://github.com/Burapa2025/engse203-student-labs-68543210032-7/blob/lab/week-09/labs/week-09/lab09/source/DATA_MODEL.md">เปิดไฟล์บน GitHub</a></p><pre># DATA_MODEL.md — การออกแบบฐานข้อมูล Campus Service Request
+
+## 1. ภาพรวมและความสัมพันธ์ของข้อมูล
+
+ระบบ Campus Service API แยกข้อมูลออกเป็น 2 ตารางหลัก ได้แก่ `users` และ `requests`
+
+ความสัมพันธ์ของข้อมูลเป็นแบบ **One-to-Many (1:N)**
+
+- ผู้ใช้ 1 คน (`users`) สามารถมีคำร้องได้หลายรายการ (`requests`)
+- คำร้องแต่ละรายการจะอ้างอิงผู้สร้างคำร้องผ่าน `requester_id`
+- `requester_id` เป็น Foreign Key ที่อ้างอิง `users.id`
+
+```text
+users
+  |
+  | 1
+  |
+  | N
+  v
+requests
+
+users.id &lt;---- requests.requester_id
+```
+
+การแยกข้อมูลลักษณะนี้ช่วยลดการเก็บข้อมูลซ้ำ และทำให้ข้อมูลผู้ใช้สามารถนำกลับมาใช้ร่วมกับคำร้องหลายรายการได้
+
+---
+
+## 2. เหตุผลที่แยกเป็น 2 ตาราง
+
+หากเก็บข้อมูลผู้ใช้และข้อมูลคำร้องทั้งหมดไว้ในตารางเดียว จะเกิดปัญหาได้ เช่น
+
+### 2.1 ข้อมูลซ้ำ (Duplicate Data)
+
+หากผู้ใช้คนเดียวสร้างหลายคำร้อง ข้อมูล เช่น ชื่อ แผนก และอีเมล จะต้องถูกเก็บซ้ำในทุกคำร้อง ทำให้ฐานข้อมูลมีข้อมูลซ้ำโดยไม่จำเป็น
+
+### 2.2 ปัญหาการแก้ไขข้อมูลไม่ครบ (Update Anomaly)
+
+ถ้าผู้ใช้เปลี่ยนชื่อหรือเปลี่ยนแผนก หากข้อมูลถูกเก็บซ้ำหลายแถว จะต้องแก้ไขทุกแถว การแยก `users` ออกมาทำให้ข้อมูลผู้ใช้ถูกเก็บไว้เพียงจุดเดียว
+
+### 2.3 ปัญหาการเพิ่มข้อมูล (Insert Anomaly)
+
+การแยกตารางทำให้สามารถเพิ่มข้อมูลผู้ใช้ใน `users` ได้ก่อน แล้วจึงเพิ่มคำร้องใน `requests` ภายหลัง
+
+### 2.4 ปัญหาการสะกดข้อมูลไม่ตรงกัน
+
+เมื่อชื่อหรือแผนกถูกพิมพ์ซ้ำหลายครั้ง อาจเกิดการสะกดไม่เหมือนกัน การเก็บข้อมูลผู้ใช้ไว้ใน `users` ช่วยให้ข้อมูลหลักถูกจัดเก็บในจุดเดียว และ `requests` ใช้ `requester_id` สำหรับอ้างอิงแทนการคัดลอกข้อมูล
+
+---
+
+## 3. รายละเอียดของตาราง
+
+### 3.1 ตาราง `users`
+
+| Column | Type | Constraint | เหตุผล |
+|---|---|---|---|
+| `id` | INTEGER | PRIMARY KEY AUTOINCREMENT | ใช้ระบุผู้ใช้แต่ละคนแบบไม่ซ้ำกัน |
+| `name` | TEXT | NOT NULL | ผู้ใช้ต้องมีชื่อ |
+| `department` | TEXT | NOT NULL | ผู้ใช้ต้องมีหน่วยงาน/แผนก |
+| `email` | TEXT | NOT NULL UNIQUE | ต้องมีอีเมลและไม่ควรมีผู้ใช้สองคนใช้อีเมลเดียวกัน |
+
+### 3.2 ตาราง `requests`
+
+| Column | Type | Constraint | เหตุผล |
+|---|---|---|---|
+| `id` | TEXT | PRIMARY KEY | ใช้ระบุคำร้องแต่ละรายการ เช่น `REQ-001` |
+| `requester_id` | INTEGER | NOT NULL, FOREIGN KEY | ต้องระบุผู้สร้างคำร้องและต้องอ้างอิงผู้ใช้ที่มีอยู่จริง |
+| `request_type` | TEXT | NOT NULL, CHECK | ต้องมีประเภทคำร้องและจำกัดค่าให้เป็นประเภทที่ระบบรองรับ |
+| `location` | TEXT | NOT NULL | คำร้องต้องระบุสถานที่ |
+| `details` | TEXT | NOT NULL | ต้องมีรายละเอียดของปัญหาหรือคำขอ |
+| `priority` | TEXT | NOT NULL, DEFAULT, CHECK | กำหนดระดับความสำคัญเป็นค่าที่ระบบรองรับ |
+| `status` | TEXT | NOT NULL, DEFAULT, CHECK | จำกัดสถานะให้เป็นค่าที่ระบบรองรับ |
+| `created_at` | TEXT | NOT NULL, DEFAULT | บันทึกเวลาที่สร้างคำร้องโดยอัตโนมัติ |
+
+ค่าที่กำหนดด้วย `CHECK` ได้แก่
+
+```text
+request_type:
+- แจ้งซ่อม
+- ขอใช้อุปกรณ์
+- แจ้งปัญหา
+
+priority:
+- normal
+- urgent
+
+status:
+- pending
+- in-progress
+- completed
+```
+
+---
+
+## 4. เหตุผลในการเลือกชนิดข้อมูลและ Constraint
+
+### 4.1 ทำไม `users.id` และ `requests.id` จึงใช้ Type ต่างกัน?
+
+`users.id` ใช้ `INTEGER` เพราะเป็นหมายเลขภายในฐานข้อมูลและใช้ `AUTOINCREMENT` เพื่อสร้างหมายเลขผู้ใช้ใหม่โดยอัตโนมัติ
+
+ส่วน `requests.id` ใช้ `TEXT` เพราะระบบต้องการรหัสคำร้องที่อ่านง่ายและมีรูปแบบ เช่น `REQ-001`
+
+ดังนั้นชนิดข้อมูลจึงแตกต่างกันตามลักษณะของรหัสที่ต้องการใช้งาน
+
+### 4.2 ทำไมต้องมี CHECK Constraint ทั้งที่ API มี Validate อยู่แล้ว?
+
+การตรวจสอบข้อมูลที่ API ช่วยป้องกันข้อมูลที่ไม่ถูกต้องจากผู้ใช้งาน API แต่ Database Constraint เป็นการป้องกันข้อมูลในระดับฐานข้อมูลอีกชั้นหนึ่ง
+
+ตัวอย่างเช่น `status` สามารถกำหนดให้รับเฉพาะ `pending`, `in-progress` และ `completed`
+
+ดังนั้นแม้ว่าจะมีโปรแกรมอื่นหรือคำสั่ง SQL พยายามบันทึกค่าอื่นลงฐานข้อมูล Database ก็ยังสามารถปฏิเสธข้อมูลที่ไม่ถูกต้องได้
+
+จึงเป็นการป้องกันข้อมูลทั้งในระดับ Application และ Database
+
+---
+
+## 5. ตัวอย่าง JOIN และผลลัพธ์
+
+สามารถใช้ `JOIN` เพื่อแสดงข้อมูลคำร้องพร้อมชื่อผู้ร้องได้ เช่น
+
+```sql
+SELECT
+    r.id,
+    u.name AS requester_name,
+    u.department,
+    r.request_type,
+    r.location,
+    r.details,
+    r.priority,
+    r.status,
+    r.created_at
+FROM requests r
+JOIN users u ON r.requester_id = u.id
+ORDER BY r.id;
+```
+
+ตัวอย่างผลลัพธ์:
+
+| id | requester_name | department | request_type | location | priority | status |
+|---|---|---|---|---|---|---|
+| REQ-001 | สมชาย ใจดี | วิศวกรรมซอฟต์แวร์ | แจ้งซ่อม | ห้องปฏิบัติการ 101 | urgent | pending |
+| REQ-002 | สุภาวดี รักเรียน | วิทยาการคอมพิวเตอร์ | ขอใช้อุปกรณ์ | ห้องเรียน 202 | normal | in-progress |
+| REQ-003 | ธนกฤต ตั้งใจ | วิศวกรรมซอฟต์แวร์ | แจ้งปัญหา | ห้องสมุด | normal | completed |
+| REQ-004 | กมลชนก สดใส | เทคโนโลยีสารสนเทศ | แจ้งซ่อม | ห้องปฏิบัติการ 302 | urgent | pending |
+| REQ-005 | สมชาย ใจดี | วิศวกรรมซอฟต์แวร์ | ขอใช้อุปกรณ์ | ห้องประชุม | normal | completed |
+
+&gt; หมายเหตุ: ตารางด้านบนเป็นตัวอย่างผลลัพธ์ของ JOIN โดยข้อมูลจริงอาจมี REQ-006 ถึง REQ-008 เพิ่มเติมตาม seed data ของ `schema.sql`
+
+---
+
+## 6. สิ่งที่สังเกตได้เมื่อนำไปใช้กับ Week 10
+
+การจัดเก็บข้อมูลแบบ Relational Database ทำให้ข้อมูลมีโครงสร้างชัดเจนและสามารถกำหนดความสัมพันธ์ระหว่างข้อมูลได้
+
+ในระบบนี้ ตาราง `users` เก็บข้อมูลผู้ใช้ ส่วนตาราง `requests` เก็บข้อมูลคำร้องและใช้ `requester_id` เพื่อเชื่อมโยงกลับไปยังผู้ใช้
+
+เมื่อทำงานร่วมกับ API ใน Week 10 สามารถใช้ SQL Query เพื่อดึงข้อมูลจากหลายตารางด้วย `JOIN` แล้วส่งผลลัพธ์กลับไปยัง Client ได้
+
+ข้อสังเกตที่สำคัญคือ Database ช่วยดูแลเรื่องความถูกต้องของข้อมูล เช่น
+
+- `PRIMARY KEY` ป้องกัน ID ซ้ำ
+- `UNIQUE` ป้องกันอีเมลซ้ำ
+- `NOT NULL` ป้องกันข้อมูลสำคัญหาย
+- `FOREIGN KEY` ป้องกันการอ้างอิงผู้ใช้ที่ไม่มีอยู่จริง
+- `CHECK` จำกัดค่าที่อนุญาตในบางฟิลด์
+
+ดังนั้น Database จึงไม่ได้ทำหน้าที่เพียงเก็บข้อมูล แต่ยังช่วยรักษาความถูกต้องและความสอดคล้องของข้อมูลของระบบด้วย</pre></details>
+<details><summary>Constraint evidence เดิม</summary><p><a href="https://github.com/Burapa2025/engse203-student-labs-68543210032-7/blob/lab/week-09/labs/week-09/lab09/evidence/CONSTRAINT_TEST.md">เปิดไฟล์บน GitHub</a></p><pre># CONSTRAINT_TEST.md — ผลการทดสอบ Constraint
+
+### ① Foreign Key
+
+**คำสั่งที่ลอง**
+
+```sql
+INSERT INTO requests
+(id, requester_id, request_type, location, details, priority, status)
+VALUES
+(&#039;TEST-FK&#039;, 999, &#039;แจ้งซ่อม&#039;, &#039;ห้อง 101&#039;, &#039;ทดสอบ Foreign Key&#039;, &#039;normal&#039;, &#039;pending&#039;);
+```
+
+**ผลที่ได้** `FOREIGN KEY constraint failed` ✓ ถูกปฏิเสธตามที่ควร
+
+---
+
+### ② CHECK
+
+**คำสั่งที่ลอง**
+
+```sql
+INSERT INTO requests
+(id, requester_id, request_type, location, details, priority, status)
+VALUES
+(&#039;TEST-CHECK&#039;, 1, &#039;แจ้งซ่อม&#039;, &#039;ห้อง 101&#039;, &#039;ทดสอบ CHECK&#039;, &#039;normal&#039;, &#039;wrong-status&#039;);
+```
+
+**ผลที่ได้** `CHECK constraint failed` ✓ ถูกปฏิเสธตามที่ควร
+
+---
+
+### ③ UNIQUE
+
+**คำสั่งที่ลอง**
+
+```sql
+INSERT INTO users
+(name, department, email)
+VALUES
+(&#039;ทดสอบ UNIQUE&#039;, &#039;ทดสอบ&#039;, &#039;somchai@example.com&#039;);
+```
+
+**ผลที่ได้** `UNIQUE constraint failed` ✓ ถูกปฏิเสธตามที่ควร
+
+---
+
+### ④ PRIMARY KEY
+
+**คำสั่งที่ลอง**
+
+```sql
+INSERT INTO requests
+(id, requester_id, request_type, location, details, priority, status)
+VALUES
+(&#039;REQ-001&#039;, 1, &#039;แจ้งซ่อม&#039;, &#039;ห้อง 999&#039;, &#039;ทดสอบ ID ซ้ำ&#039;, &#039;normal&#039;, &#039;pending&#039;);;
+```
+
+**ผลที่ได้** `UNIQUE constraint failed` ✓ ถูกปฏิเสธตามที่ควร
+
+---
+
+### ⑤ NOT NULL
+
+**คำสั่งที่ลอง**
+
+```sql
+INSERT INTO requests
+(id, requester_id, request_type, location, details, priority, status)
+VALUES
+(&#039;TEST-NOTNULL&#039;, 1, &#039;แจ้งซ่อม&#039;, NULL, &#039;ทดสอบ NOT NULL&#039;, &#039;normal&#039;, &#039;pending&#039;);;
+```
+
+**ผลที่ได้** `NOT NULL constraint failed` ✓ ถูกปฏิเสธตามที่ควร
+
+---
+
+</pre></details></section>
+</main></body></html>

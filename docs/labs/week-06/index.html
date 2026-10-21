@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#092746">
+<title>week-06 — Express API Foundation</title>
+<style>*{box-sizing:border-box}body{margin:0;font-family:Tahoma,Arial,sans-serif;line-height:1.65;color:#10253d;background:#eaf1f7}header{padding:30px max(22px,calc((100% - 1100px)/2));color:white;background:linear-gradient(135deg,#071f39,#0d4c77 72%,#078386)}header a{color:#d7edf9}h1{line-height:1.3;font-size:clamp(24px,4vw,34px)}main{max-width:1144px;margin:0 auto;padding:24px 22px 48px}section{padding:22px;margin-bottom:18px;background:white;border:1px solid #c4d6e4;border-radius:14px}h2{margin-top:0;font-size:21px}a{color:#075ea8}.pill,.result{color:#10253d;display:inline-block;padding:4px 10px;border-radius:99px;background:#e5f1fa;font-size:14px;font-weight:bold}.result.pass{color:#155d39;background:#e3f3e9}.result.fail{color:#8a2727;background:#fbe7e7}.result.partial{color:#705005;background:#fff1c8}.notice{padding:16px;border-left:5px solid #f4b942;background:#fff8e6}.actions{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0}.actions a{padding:9px 14px;border:1px solid #1261a6;border-radius:8px;text-decoration:none}.actions .primary{background:#1261a6;color:white}table{width:100%;border-collapse:collapse}th,td{padding:12px;text-align:left;vertical-align:top;border-bottom:1px solid #dce5ec}th{min-width:140px}.table-wrap{overflow-x:auto}pre{white-space:pre-wrap;overflow-wrap:anywhere;padding:16px;background:#f0f5f9;border-radius:8px;font-size:14px}code{overflow-wrap:anywhere}details{margin:12px 0;border:1px solid #c4d6e4;border-radius:8px;padding:12px}summary{cursor:pointer;font-weight:bold}figure{margin:22px 0}img{display:block;max-width:100%;height:auto;border:1px solid #c4d6e4;border-radius:8px}figcaption{margin-top:8px;color:#52677c}.meta{color:#52677c;font-size:14px}@media(max-width:560px){section{padding:16px}main{padding:18px 12px}th,td{padding:9px}th{min-width:110px}}</style></head>
+<body><header><a href="../../index.html">← LAB Portfolio</a><h1>week-06 — Express API Foundation</h1><span class="pill">Published</span></header>
+<main><section><h2>ผลลัพธ์และหลักฐาน</h2><p class="notice">เผยแพร่รายงาน Express API และผลตรวจบน GitHub Pages; รัน API จริงด้วย Node.js ในเครื่อง</p><ul><li>Express API แยก routes, controllers, services และ middleware</li><li>รองรับรายการคำร้อง, ค้นตามรหัส, เพิ่ม, เปลี่ยนสถานะ และลบคำร้อง</li><li>ตรวจข้อมูลและตอบ HTTP status รวม 400, 404, 201 และ 204</li><li>Checker ยิงคำขอจริงผ่านครบ 28/28 รายการ; ข้อมูลเก็บในหน่วยความจำของเซิร์ฟเวอร์</li></ul>
+<div class="actions"><a class="primary" href="https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/lab/week-06/labs/week-06/lab06/starter">View Source</a><a href="https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/lab/week-06/labs/week-06/evidence">View Evidence</a><a href="https://github.com/Burapa2025/engse203-student-labs-68543210032-7/pull/13">Pull Request</a></div>
+<p class="meta">Branch: <code>lab/week-06</code> • Source commit: 0b4881150e14d1feaf52b6ac7090fa1829812b45</p></section>
+<section><h2>ผลการตรวจสอบ</h2><div class="table-wrap"><table><thead><tr><th>รายการ</th><th>ผล</th><th>คำสั่งและรายละเอียด</th></tr></thead><tbody><tr><th scope="row">Express API checker</th><td><span class="result pass">pass</span></td><td><code>npm run check (lab06/starter)</code><p>ตรวจจริงวันที่ 2026-10-21: ผ่าน 28/28 รายการ (ในห้อง 23/23, ที่บ้าน 2/2, Challenge 3/3); มี logger แสดง method/path/status ใน output</p></td></tr></tbody></table></div></section>
+<section><h2>วิธีรันบนเครื่อง</h2><pre>cd labs/week-06/lab06/starter
+npm ci
+npm run check
+npm start</pre></section>
+
+<section><h2>เอกสารและผลทดสอบ</h2><details><summary>ผลตรวจ API และวิธีรัน</summary><p><a href="https://github.com/Burapa2025/engse203-student-labs-68543210032-7/blob/lab/week-06/labs/week-06/evidence/PAGES_VERIFICATION.md">เปิดไฟล์บน GitHub</a></p><pre># LAB06 — Pages verification
+
+ตรวจวันที่ **2026-10-21** ด้วย Node.js **v24.18.0** จาก branch `lab/week-06` ก่อนเพิ่มรายงาน (`0b4881150e14d1feaf52b6ac7090fa1829812b45`)
+
+GitHub Pages แสดงรายงานและลิงก์ source ของ Express API นี้ การเรียก API จริงต้องรัน Node.js; ข้อมูลคำร้องโหลดจาก `data/initialRequests.json` แล้วเก็บในหน่วยความจำ การเปลี่ยนข้อมูลระหว่างรันไม่ถูกเขียนกลับไฟล์
+
+## คำสั่งที่ตรวจจริง
+
+รันจาก `labs/week-06/lab06/starter/`:
+
+```sh
+npm ci --no-audit --no-fund
+npm run check
+```
+
+ติดตั้งสำเร็จ และ checker ส่ง HTTP requests เข้า Express app ผ่าน supertest ได้ครบ:
+
+```text
+ในห้อง (CP00–CP05)  23/23
+ที่บ้าน (CP06–CP08)  2/2
+Challenge            3/3
+รวม                  28/28
+```
+
+ผล checker เป็น **pass** (exit code 0) ครอบคลุม root endpoint, GET รายการ/รายละเอียด, POST ที่ถูกและผิด, DELETE, 404 route, การกรองสถานะ และ PUT เปลี่ยนสถานะ มี logger พิมพ์ method, path และ status ใน output
+
+## API ที่ตรวจ
+
+| Method | Path | ผลที่สำคัญ |
+|---|---|---|
+| GET | `/` | 200 พร้อมข้อความ API |
+| GET | `/api/requests` | 200 พร้อมรายการ; รองรับ `?status=pending` |
+| GET | `/api/requests/:id` | 200 เมื่อพบ, 404 เมื่อไม่พบ |
+| POST | `/api/requests` | 201 เมื่อข้อมูลถูกต้อง; 400 เมื่อข้อมูลไม่ครบหรือไม่ถูกต้อง |
+| PUT | `/api/requests/:id` | 200 เมื่อเปลี่ยนสถานะ; 400 เมื่อสถานะไม่ถูกต้อง |
+| DELETE | `/api/requests/:id` | 204 เมื่อลบ; 404 เมื่อไม่พบ |
+
+## เปิด API ในเครื่อง
+
+```sh
+cd labs/week-06/lab06/starter
+npm ci
+npm start
+```
+
+ใช้ Postman collection ที่ `lab06/starter/evidence/Campus_Service_API.postman_collection.json` ทดสอบต่อได้ ตารางเดิมใน `lab06/starter/evidence/API_TEST.md` ยังเป็นแบบฟอร์มว่าง จึงใช้ผลตรวจอัตโนมัติข้างต้นเป็นหลักฐานของการเผยแพร่ครั้งนี้ ผล 28/28 เป็นขอบเขตที่ checker ตรวจ ไม่ได้ยืนยันการเก็บข้อมูลถาวรหลัง restart
+</pre></details>
+<details><summary>Postman collection</summary><p><a href="https://github.com/Burapa2025/engse203-student-labs-68543210032-7/blob/lab/week-06/labs/week-06/lab06/starter/evidence/Campus_Service_API.postman_collection.json">เปิดไฟล์บน GitHub</a></p><pre>{
+  &quot;info&quot;: {
+    &quot;name&quot;: &quot;ENGSE203 Campus Service API (Week 06)&quot;,
+    &quot;description&quot;: &quot;ยิงทดสอบ API ที่สร้างในสัปดาห์ที่ 6 · เปิดเซิร์ฟเวอร์ด้วย npm run dev ก่อน&quot;,
+    &quot;schema&quot;: &quot;https://schema.getpostman.com/json/collection/v2.1.0/collection.json&quot;
+  },
+  &quot;variable&quot;: [{ &quot;key&quot;: &quot;baseUrl&quot;, &quot;value&quot;: &quot;http://localhost:3001&quot; }],
+  &quot;item&quot;: [
+    { &quot;name&quot;: &quot;00 · GET / (ตรวจว่าเซิร์ฟเวอร์ทำงาน)&quot;,
+      &quot;request&quot;: { &quot;method&quot;: &quot;GET&quot;, &quot;url&quot;: { &quot;raw&quot;: &quot;{{baseUrl}}/&quot;, &quot;host&quot;: [&quot;{{baseUrl}}&quot;], &quot;path&quot;: [&quot;&quot;] } } },
+    { &quot;name&quot;: &quot;01 · GET /api/requests (ดูทั้งหมด → 200)&quot;,
+      &quot;request&quot;: { &quot;method&quot;: &quot;GET&quot;, &quot;url&quot;: { &quot;raw&quot;: &quot;{{baseUrl}}/api/requests&quot;, &quot;host&quot;: [&quot;{{baseUrl}}&quot;], &quot;path&quot;: [&quot;api&quot;,&quot;requests&quot;] } } },
+    { &quot;name&quot;: &quot;02 · GET /api/requests/REQ-001 (พบ → 200)&quot;,
+      &quot;request&quot;: { &quot;method&quot;: &quot;GET&quot;, &quot;url&quot;: { &quot;raw&quot;: &quot;{{baseUrl}}/api/requests/REQ-001&quot;, &quot;host&quot;: [&quot;{{baseUrl}}&quot;], &quot;path&quot;: [&quot;api&quot;,&quot;requests&quot;,&quot;REQ-001&quot;] } } },
+    { &quot;name&quot;: &quot;03 · GET /api/requests/REQ-999 (ไม่พบ → 404)&quot;,
+      &quot;request&quot;: { &quot;method&quot;: &quot;GET&quot;, &quot;url&quot;: { &quot;raw&quot;: &quot;{{baseUrl}}/api/requests/REQ-999&quot;, &quot;host&quot;: [&quot;{{baseUrl}}&quot;], &quot;path&quot;: [&quot;api&quot;,&quot;requests&quot;,&quot;REQ-999&quot;] } } },
+    { &quot;name&quot;: &quot;04 · POST /api/requests (ถูกต้อง → 201)&quot;,
+      &quot;request&quot;: { &quot;method&quot;: &quot;POST&quot;,
+        &quot;header&quot;: [{ &quot;key&quot;: &quot;Content-Type&quot;, &quot;value&quot;: &quot;application/json&quot; }],
+        &quot;body&quot;: { &quot;mode&quot;: &quot;raw&quot;, &quot;raw&quot;: &quot;{\n  \&quot;requesterName\&quot;: \&quot;ทดสอบ นักศึกษา\&quot;,\n  \&quot;requestType\&quot;: \&quot;แจ้งซ่อม\&quot;,\n  \&quot;location\&quot;: \&quot;C3-401\&quot;,\n  \&quot;details\&quot;: \&quot;รายละเอียดยาวพอสมควรจริง\&quot;,\n  \&quot;priority\&quot;: \&quot;normal\&quot;\n}&quot; },
+        &quot;url&quot;: { &quot;raw&quot;: &quot;{{baseUrl}}/api/requests&quot;, &quot;host&quot;: [&quot;{{baseUrl}}&quot;], &quot;path&quot;: [&quot;api&quot;,&quot;requests&quot;] } } },
+    { &quot;name&quot;: &quot;05 · POST /api/requests (ไม่ครบ → 400)&quot;,
+      &quot;request&quot;: { &quot;method&quot;: &quot;POST&quot;,
+        &quot;header&quot;: [{ &quot;key&quot;: &quot;Content-Type&quot;, &quot;value&quot;: &quot;application/json&quot; }],
+        &quot;body&quot;: { &quot;mode&quot;: &quot;raw&quot;, &quot;raw&quot;: &quot;{\n  \&quot;requesterName\&quot;: \&quot;x\&quot;\n}&quot; },
+        &quot;url&quot;: { &quot;raw&quot;: &quot;{{baseUrl}}/api/requests&quot;, &quot;host&quot;: [&quot;{{baseUrl}}&quot;], &quot;path&quot;: [&quot;api&quot;,&quot;requests&quot;] } } },
+    { &quot;name&quot;: &quot;06 · DELETE /api/requests/REQ-003 (→ 204)&quot;,
+      &quot;request&quot;: { &quot;method&quot;: &quot;DELETE&quot;, &quot;url&quot;: { &quot;raw&quot;: &quot;{{baseUrl}}/api/requests/REQ-003&quot;, &quot;host&quot;: [&quot;{{baseUrl}}&quot;], &quot;path&quot;: [&quot;api&quot;,&quot;requests&quot;,&quot;REQ-003&quot;] } } },
+    { &quot;name&quot;: &quot;07 · ⭐ GET /api/requests?status=pending (กรอง)&quot;,
+      &quot;request&quot;: { &quot;method&quot;: &quot;GET&quot;, &quot;url&quot;: { &quot;raw&quot;: &quot;{{baseUrl}}/api/requests?status=pending&quot;, &quot;host&quot;: [&quot;{{baseUrl}}&quot;], &quot;path&quot;: [&quot;api&quot;,&quot;requests&quot;], &quot;query&quot;: [{ &quot;key&quot;: &quot;status&quot;, &quot;value&quot;: &quot;pending&quot; }] } } },
+    { &quot;name&quot;: &quot;08 · ⭐ PUT /api/requests/REQ-001 (เปลี่ยนสถานะ)&quot;,
+      &quot;request&quot;: { &quot;method&quot;: &quot;PUT&quot;,
+        &quot;header&quot;: [{ &quot;key&quot;: &quot;Content-Type&quot;, &quot;value&quot;: &quot;application/json&quot; }],
+        &quot;body&quot;: { &quot;mode&quot;: &quot;raw&quot;, &quot;raw&quot;: &quot;{\n  \&quot;status\&quot;: \&quot;in-progress\&quot;\n}&quot; },
+        &quot;url&quot;: { &quot;raw&quot;: &quot;{{baseUrl}}/api/requests/REQ-001&quot;, &quot;host&quot;: [&quot;{{baseUrl}}&quot;], &quot;path&quot;: [&quot;api&quot;,&quot;requests&quot;,&quot;REQ-001&quot;] } } }
+  ]
+}
+</pre></details></section>
+</main></body></html>

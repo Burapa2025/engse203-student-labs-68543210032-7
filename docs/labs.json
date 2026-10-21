@@ -1,6 +1,7 @@
 [
   {
     "week": "week-01",
+    "sourceBranch": "labs/week-01",
     "title": "Developer Environment & GitHub Repository Setup",
     "status": "submitted",
     "sourceOrigin": "migrated-repository",
@@ -10,8 +11,9 @@
     "submissionTag": "lab-01-submission-v1",
     "testStatus": "pass",
     "notes": "",
-    "pageUrl": "https://Burapa2025.github.io/engse203-student-labs-68543210032/labs/week-01/",
-    "sourceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032/tree/lab/week-01/labs/week-01/source",
+    "pageUrl": "https://burapa2025.github.io/engse203-student-labs-68543210032-7/labs/week-01/",
+    "sourceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/labs/week-01/labs/week-01/source",
+    "evidenceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/labs/week-01/labs/week-01/evidence",
     "hasPublish": false,
     "sourceEntries": 5
   },
@@ -26,10 +28,11 @@
     "submissionTag": "lab-02-submission-v1",
     "testStatus": "pass",
     "notes": "",
-    "pageUrl": "https://Burapa2025.github.io/engse203-student-labs-68543210032/labs/week-02/",
-    "sourceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032/tree/lab/week-02/labs/week-02/source",
+    "pageUrl": "https://burapa2025.github.io/engse203-student-labs-68543210032-7/labs/week-02/",
+    "sourceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/lab/week-02/labs/week-02/source",
+    "evidenceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/lab/week-02/labs/week-02/evidence",
     "hasPublish": true,
-    "sourceEntries": 11
+    "sourceEntries": 10
   },
   {
     "week": "week-03",
@@ -42,8 +45,9 @@
     "submissionTag": "lab-03-submission-v1",
     "testStatus": "pass",
     "notes": "",
-    "pageUrl": "https://Burapa2025.github.io/engse203-student-labs-68543210032/labs/week-03/",
-    "sourceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032/tree/lab/week-03/labs/week-03/source",
+    "pageUrl": "https://burapa2025.github.io/engse203-student-labs-68543210032-7/labs/week-03/",
+    "sourceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/lab/week-03/labs/week-03/source",
+    "evidenceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/lab/week-03/labs/week-03/evidence",
     "hasPublish": true,
     "sourceEntries": 7
   },
@@ -58,10 +62,11 @@
     "submissionTag": "lab-04-submission-v1",
     "testStatus": "pass",
     "notes": "",
-    "pageUrl": "https://Burapa2025.github.io/engse203-student-labs-68543210032/labs/week-04/",
-    "sourceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032/tree/lab/week-04/labs/week-04/source",
+    "pageUrl": "https://burapa2025.github.io/engse203-student-labs-68543210032-7/labs/week-04/",
+    "sourceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/lab/week-04/labs/week-04/source",
+    "evidenceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/lab/week-04/labs/week-04/evidence",
     "hasPublish": true,
-    "sourceEntries": 11
+    "sourceEntries": 10
   },
   {
     "week": "week-05",
@@ -76,9 +81,526 @@
     "submissionTag": "lab-05-submission-v1",
     "testStatus": "pass",
     "notes": "React Campus Service Request with LocalStorage Persistence",
-    "pageUrl": "https://Burapa2025.github.io/engse203-student-labs-68543210032/labs/week-05/",
-    "sourceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032/tree/lab/week-05/labs/week-05/source",
+    "pageUrl": "https://burapa2025.github.io/engse203-student-labs-68543210032-7/labs/week-05/",
+    "sourceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/lab/week-05/labs/week-05/source",
+    "evidenceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/lab/week-05/labs/week-05/evidence",
     "hasPublish": true,
-    "sourceEntries": 12
+    "sourceEntries": 10
+  },
+  {
+    "week": "week-06",
+    "title": "Express API Foundation",
+    "type": "evidence-report",
+    "status": "published",
+    "sourceOrigin": "student-created",
+    "sourcePath": "lab06/starter",
+    "evidencePath": "evidence",
+    "originalRepoUrl": "",
+    "originalCommit": "0b4881150e14d1feaf52b6ac7090fa1829812b45",
+    "pullRequestUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/pull/13",
+    "submissionTag": "",
+    "testStatus": "pass",
+    "notes": "เผยแพร่รายงาน Express API และผลตรวจบน GitHub Pages; รัน API จริงด้วย Node.js ในเครื่อง",
+    "highlights": [
+      "Express API แยก routes, controllers, services และ middleware",
+      "รองรับรายการคำร้อง, ค้นตามรหัส, เพิ่ม, เปลี่ยนสถานะ และลบคำร้อง",
+      "ตรวจข้อมูลและตอบ HTTP status รวม 400, 404, 201 และ 204",
+      "Checker ยิงคำขอจริงผ่านครบ 28/28 รายการ; ข้อมูลเก็บในหน่วยความจำของเซิร์ฟเวอร์"
+    ],
+    "runCommands": [
+      "cd labs/week-06/lab06/starter",
+      "npm ci",
+      "npm run check",
+      "npm start"
+    ],
+    "verification": [
+      {
+        "label": "Express API checker",
+        "command": "npm run check (lab06/starter)",
+        "result": "pass",
+        "detail": "ตรวจจริงวันที่ 2026-10-21: ผ่าน 28/28 รายการ (ในห้อง 23/23, ที่บ้าน 2/2, Challenge 3/3); มี logger แสดง method/path/status ใน output"
+      }
+    ],
+    "reportFiles": [
+      {
+        "label": "ผลตรวจ API และวิธีรัน",
+        "path": "evidence/PAGES_VERIFICATION.md"
+      },
+      {
+        "label": "Postman collection",
+        "path": "lab06/starter/evidence/Campus_Service_API.postman_collection.json"
+      }
+    ],
+    "screenshots": [],
+    "pageUrl": "https://burapa2025.github.io/engse203-student-labs-68543210032-7/labs/week-06/",
+    "sourceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/lab/week-06/labs/week-06/lab06/starter",
+    "evidenceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/lab/week-06/labs/week-06/evidence",
+    "hasPublish": false,
+    "sourceEntries": 8
+  },
+  {
+    "week": "week-07",
+    "title": "RESTful API, CORS & Frontend Integration",
+    "type": "evidence-report",
+    "status": "published",
+    "sourceOrigin": "student-created",
+    "sourcePath": "starter",
+    "evidencePath": "evidence",
+    "originalRepoUrl": "",
+    "originalCommit": "5f9dbb4a9ac4e751c16adba8e7c45124685c467a",
+    "pullRequestUrl": "",
+    "submissionTag": "",
+    "testStatus": "partial",
+    "notes": "API tests ผ่าน 6/6, Week07 checker 35/36, frontend build ผ่าน; มีรายละเอียดรายการที่ยังไม่ผ่านในรายงาน การใช้งานเต็มระบบต้องเปิด API และ frontend พร้อมกัน",
+    "highlights": [
+      "เชื่อม React กับ Express ผ่าน apiClient, fetch และ environment config",
+      "รองรับ CORS, preflight, PUT เปลี่ยนสถานะ และ API error handling",
+      "มี API contract, automated tests และภาพหลักฐานจาก branch เดิม",
+      "Pages แสดงรายงาน; API จริงใช้ Node.js ที่พอร์ต 3001 และ frontend ที่พอร์ต 5173"
+    ],
+    "runCommands": [
+      "npm ci (repository root; dependency ของ Week07 checker)",
+      "cd labs/week-07/starter/api && npm ci && npm test && npm start",
+      "cd labs/week-07/starter/frontend && npm ci && npm run dev (อีก terminal)",
+      "node labs/week-07/starter/check-week07.mjs",
+      "cd labs/week-07/starter/frontend && npm run build"
+    ],
+    "verification": [
+      {
+        "label": "API automated tests",
+        "command": "npm test (starter/api)",
+        "result": "pass",
+        "detail": "6/6 tests ผ่าน, 0 fail: GET, POST, validation, 404 และ CORS header"
+      },
+      {
+        "label": "Week07 checker",
+        "command": "node check-week07.mjs (starter)",
+        "result": "partial",
+        "detail": "35/36: ในห้อง 24/25, ที่บ้าน 8/8, Challenge 3/3; ขาด api/.env.example (checker ยังคืน exit code 0)"
+      },
+      {
+        "label": "Frontend production build",
+        "command": "npm run build (starter/frontend)",
+        "result": "pass",
+        "detail": "Vite build สำเร็จ 41 modules; ใช้ HashRouter และ base './'"
+      },
+      {
+        "label": "Inherited frontend verifier",
+        "command": "npm run verify (starter/frontend)",
+        "result": "fail",
+        "detail": "LAB05 checker เดิมผ่าน 126/136 และ exit 1; ยังตรวจ localStorage และ direct fetch ตามสถาปัตยกรรมเดิม ขณะที่ Week07 ใช้ API client; รายละเอียดและข้อจำกัดอยู่ในรายงาน"
+      }
+    ],
+    "reportFiles": [
+      {
+        "label": "ผลตรวจล่าสุดและวิธีรัน",
+        "path": "evidence/PAGES_VERIFICATION.md"
+      },
+      {
+        "label": "API contract",
+        "path": "starter/API_CONTRACT.md"
+      },
+      {
+        "label": "หลักฐานการทดสอบเดิม",
+        "path": "starter/evidence/API_TEST.md"
+      }
+    ],
+    "screenshots": [
+      {
+        "path": "starter/evidence/images/app-with-api.png",
+        "caption": "ภาพจาก branch เดิม: Dashboard แสดงคำร้องและ Network requests ไปยัง API"
+      },
+      {
+        "path": "starter/evidence/images/network-cors-ok.png",
+        "caption": "ภาพจาก branch เดิม: response มี Access-Control-Allow-Origin: http://localhost:5173"
+      },
+      {
+        "path": "starter/evidence/images/error-state.png",
+        "caption": "ภาพเดิมชื่อ error-state.png แสดงสถานะกำลังโหลดและคำขอ pending; ยังไม่แสดงข้อความ error"
+      }
+    ],
+    "pageUrl": "https://burapa2025.github.io/engse203-student-labs-68543210032-7/labs/week-07/",
+    "sourceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/lab/week-07/labs/week-07/starter",
+    "evidenceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/lab/week-07/labs/week-07/evidence",
+    "hasPublish": false,
+    "sourceEntries": 6
+  },
+  {
+    "week": "week-09",
+    "title": "Relational Database & SQL",
+    "type": "evidence-report",
+    "status": "published",
+    "sourceOrigin": "student-created",
+    "sourcePath": "lab09/source",
+    "evidencePath": "evidence",
+    "originalRepoUrl": "",
+    "originalCommit": "2de67ca43e94efaf815aae3e4ec4cbed0a632834",
+    "pullRequestUrl": "",
+    "submissionTag": "",
+    "testStatus": "partial",
+    "notes": "Checker ของ campus.db เดิมผ่าน 24/30; schema.sql สร้างฐานข้อมูลใหม่ได้ 4 users / 8 requests ไม่มี foreign-key violation และ SQL 8 ข้อรันผ่าน",
+    "highlights": [
+      "ออกแบบ users และ requests ด้วยความสัมพันธ์แบบหนึ่งต่อหลาย",
+      "มี schema.sql, queries.sql และ DATA_MODEL.md พร้อมเหตุผลการออกแบบ",
+      "ทดสอบ SQL ทั้ง 8 ข้อและ constraints 5 แบบกับฐานข้อมูลใหม่ในหน่วยความจำผ่าน",
+      "เผยแพร่ผลตรวจ campus.db เดิมตามจริง: ข้อมูลยังไม่ครบและมี orphan references; Challenge ยังไม่ทำ"
+    ],
+    "runCommands": [
+      "cd labs/week-09/lab09/source",
+      "node --disable-warning=ExperimentalWarning check-week09.mjs (รันในสำเนาโฟลเดอร์แยก เพราะ checker เขียนข้อมูลทดสอบลง DB)",
+      "ทดสอบ schema.sql และ queries.sql ใน SQLite :memory: ตาม evidence/PAGES_VERIFICATION.md"
+    ],
+    "verification": [
+      {
+        "label": "Original campus.db checker",
+        "command": "node --disable-warning=ExperimentalWarning check-week09.mjs (isolated copy)",
+        "result": "partial",
+        "detail": "24/30: ในห้อง 9/11, ที่บ้าน 15/16, Challenge 0/3; DB เดิมมี users 3 คน, requests 6 รายการ และ orphan references 3 รายการ"
+      },
+      {
+        "label": "Schema, queries and constraints",
+        "command": "node:sqlite in-memory verification (see evidence/PAGES_VERIFICATION.md)",
+        "result": "pass",
+        "detail": "schema.sql สร้าง 4 users / 8 requests, foreign_key_check ไม่พบปัญหา; SELECT ทั้ง 8 ข้อรันได้ และ NOT NULL, UNIQUE, CHECK, PRIMARY KEY, FOREIGN KEY ปฏิเสธข้อมูลผิดครบ 5 แบบ"
+      }
+    ],
+    "reportFiles": [
+      {
+        "label": "ผลตรวจล่าสุดและข้อจำกัด",
+        "path": "evidence/PAGES_VERIFICATION.md"
+      },
+      {
+        "label": "Database schema",
+        "path": "lab09/source/schema.sql"
+      },
+      {
+        "label": "SQL queries",
+        "path": "lab09/source/queries.sql"
+      },
+      {
+        "label": "Data model",
+        "path": "lab09/source/DATA_MODEL.md"
+      },
+      {
+        "label": "Constraint evidence เดิม",
+        "path": "lab09/evidence/CONSTRAINT_TEST.md"
+      }
+    ],
+    "screenshots": [],
+    "pageUrl": "https://burapa2025.github.io/engse203-student-labs-68543210032-7/labs/week-09/",
+    "sourceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/lab/week-09/labs/week-09/lab09/source",
+    "evidenceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/lab/week-09/labs/week-09/evidence",
+    "hasPublish": false,
+    "sourceEntries": 6
+  },
+  {
+    "week": "week-10",
+    "title": "Node.js & SQLite Integration",
+    "status": "published",
+    "sourceOrigin": "student-created",
+    "evidencePath": "evidence",
+    "submissionTag": "",
+    "pullRequestUrl": "",
+    "testStatus": "partial",
+    "sourcePath": "source",
+    "originalCommit": "af84f2665306bea2a5e62ea729d4afe533f1a4ac",
+    "notes": "เผยแพร่รายงานและหลักฐานของระบบ React + Express + SQLite บน GitHub Pages; ตัว API ต้องรันด้วย Node.js ผลตรวจยังผ่านบางส่วนและบันทึกข้อจำกัดไว้ครบถ้วน",
+    "highlights": [
+      "เชื่อม Express API กับ SQLite ผ่าน node:sqlite และ JOIN เพื่อคืน requesterName",
+      "ใช้ parameterized queries และแยกชั้น route, controller และ service",
+      "Frontend build ผ่าน; checker LAB10 ผ่าน 22/31 และ checker LAB07 ผ่าน 32/36",
+      "API test เดิมมี 1 placeholder จึงยังยืนยันความครอบคลุมการทดสอบไม่ได้"
+    ],
+    "runCommands": [
+      "npm ci --include=dev",
+      "npm ci --prefix labs/week-10/source/api --include=dev",
+      "npm ci --prefix labs/week-10/source/frontend --include=dev",
+      "npm start --prefix labs/week-10/source/api",
+      "npm run dev --prefix labs/week-10/source/frontend",
+      "npm run build --prefix labs/week-10/source/frontend"
+    ],
+    "verification": [
+      {
+        "label": "Frontend production build",
+        "command": "npm run build --prefix frontend",
+        "result": "pass",
+        "detail": "Vite 8.1.5 build สำเร็จ 41 modules (รันจาก source/)"
+      },
+      {
+        "label": "LAB10 checker",
+        "command": "node --disable-warning=ExperimentalWarning check-week10.mjs",
+        "result": "partial",
+        "detail": "22/31: ในห้อง 17/20, ที่บ้าน 5/8, Challenge 0/3; ฐานข้อมูลใหม่ไม่มีข้อมูลตั้งต้นสำหรับ REQ-001, test ยังเป็น placeholder และเอกสาร/Challenge ยังไม่ครบ"
+      },
+      {
+        "label": "LAB07 regression checker",
+        "command": "node --disable-warning=ExperimentalWarning check-week07.mjs",
+        "result": "partial",
+        "detail": "32/36: ขาด .env.example, REQ-001 ไม่มีในฐานข้อมูลใหม่ และ test ยังไม่ยิง HTTP จริง"
+      },
+      {
+        "label": "Existing API test script",
+        "command": "npm test --prefix api",
+        "result": "partial",
+        "detail": "process ผ่าน 1/1 แต่เคสทดสอบมีเพียง assert.ok(true); ไม่นับเป็นหลักฐานยืนยันพฤติกรรม API"
+      }
+    ],
+    "reportFiles": [
+      {
+        "label": "ผลตรวจ Pages และข้อจำกัด",
+        "path": "evidence/PAGES_VERIFICATION.md"
+      },
+      {
+        "label": "API contract",
+        "path": "source/API_CONTRACT.md"
+      }
+    ],
+    "pageUrl": "https://burapa2025.github.io/engse203-student-labs-68543210032-7/labs/week-10/",
+    "sourceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/lab/week-10/labs/week-10/source",
+    "evidenceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/lab/week-10/labs/week-10/evidence",
+    "hasPublish": false,
+    "sourceEntries": 5
+  },
+  {
+    "week": "week-11",
+    "title": "Full-Stack Production Integration",
+    "status": "published",
+    "sourceOrigin": "student-created",
+    "evidencePath": "evidence",
+    "submissionTag": "",
+    "pullRequestUrl": "",
+    "testStatus": "partial",
+    "sourcePath": "lab11/source",
+    "originalCommit": "6a891030c8159cefa8a600a136f41ffaf0f2377b",
+    "notes": "เผยแพร่หลักฐานระบบ React + Express + SQLite แบบ production บน GitHub Pages; API และฐานข้อมูลต้องรันบน Node.js แยกต่างหาก ผลตรวจในห้องครบ แต่เอกสารส่งงานบางส่วนยังไม่ครบ",
+    "highlights": [
+      "รวม config, health check, error handling และ logging ของระบบ 3 ชั้น",
+      "Production Express เสิร์ฟ frontend build และ API จากพอร์ตเดียว",
+      "API integration tests ผ่าน 8/8 และ checker LAB10 ผ่าน 31/31",
+      "Checker LAB11 ผ่าน 34/41 โดยส่วนในห้องผ่าน 17/17; รายการเอกสารส่งงานและ CI บางส่วนยังขาด"
+    ],
+    "runCommands": [
+      "npm ci --prefix labs/week-11/lab11/source/api --include=dev",
+      "npm ci --prefix labs/week-11/lab11/source/frontend --include=dev",
+      "npm start --prefix labs/week-11/lab11/source/api",
+      "$env:VITE_API_BASE_URL='http://localhost:3001'; npm run dev --prefix labs/week-11/lab11/source/frontend",
+      "npm run build --prefix labs/week-11/lab11/source/frontend"
+    ],
+    "verification": [
+      {
+        "label": "Frontend production build",
+        "command": "npm run build --prefix frontend",
+        "result": "pass",
+        "detail": "Vite 8.1.5 build สำเร็จ 41 modules; bundle ไม่ฝัง localhost:3001 (รันจาก lab11/source/)"
+      },
+      {
+        "label": "API integration tests",
+        "command": "npm test --prefix api",
+        "result": "pass",
+        "detail": "8/8 ครอบคลุม GET, filter, พบ/ไม่พบ id, POST/validation และ SQL injection บน SQLite ในหน่วยความจำ"
+      },
+      {
+        "label": "LAB11 checker",
+        "command": "node --disable-warning=ExperimentalWarning check-week11.mjs",
+        "result": "partial",
+        "detail": "34/41: ในห้อง 17/17, ที่บ้าน 14/20, Challenge 3/4; ขาด README ที่สมบูรณ์, DATABASE_CHOICES.md, DEMO.md, .env.production และ CI"
+      },
+      {
+        "label": "LAB10 regression checker",
+        "command": "node --disable-warning=ExperimentalWarning check-week10.mjs",
+        "result": "pass",
+        "detail": "31/31 บน SQLite ในหน่วยความจำ"
+      },
+      {
+        "label": "LAB07 regression checker",
+        "command": "node --disable-warning=ExperimentalWarning check-week07.mjs",
+        "result": "partial",
+        "detail": "35/36; ขาด api/.env.example"
+      }
+    ],
+    "reportFiles": [
+      {
+        "label": "ผลตรวจ Pages และข้อจำกัด",
+        "path": "evidence/PAGES_VERIFICATION.md"
+      },
+      {
+        "label": "API contract",
+        "path": "lab11/source/API_CONTRACT.md"
+      },
+      {
+        "label": "README ของระบบเดิม",
+        "path": "lab11/source/README.md"
+      }
+    ],
+    "pageUrl": "https://burapa2025.github.io/engse203-student-labs-68543210032-7/labs/week-11/",
+    "sourceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/lab/week-11/labs/week-11/lab11/source",
+    "evidenceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/lab/week-11/labs/week-11/evidence",
+    "hasPublish": false,
+    "sourceEntries": 11
+  },
+  {
+    "week": "week-12",
+    "title": "Campus Service — Testing, Debugging & Regression Tests",
+    "type": "evidence-report",
+    "status": "published",
+    "sourceOrigin": "student-created",
+    "sourcePath": "source",
+    "evidencePath": "evidence",
+    "originalRepoUrl": "",
+    "originalCommit": "c7b2b48425f9c6957398d7894bdaaceb90dd73b6",
+    "submissionTag": "",
+    "pullRequestUrl": "",
+    "testStatus": "pass",
+    "notes": "เผยแพร่รายงานผลทดสอบของ React + Express + SQLite; ระบบจริงต้องมี API และฐานข้อมูลแยกจาก GitHub Pages",
+    "highlights": [
+      "Vitest: API 41/41 และ frontend 3/3 ผ่าน",
+      "ทดสอบค่าขอบ, CRUD และ regression ของปัญหารหัสคำร้องซ้ำ, Dashboard และ 404",
+      "API coverage: statements 88.19%, branches 72.41%, functions 87.87%, lines 90.64%",
+      "Week 12 checker ผ่าน 22/22 รายการ และ frontend production build ผ่าน"
+    ],
+    "runCommands": [
+      "cd labs/week-12/source",
+      "npm ci --prefix api",
+      "npm ci --prefix frontend",
+      "npm test",
+      "npm run check",
+      "npm run coverage",
+      "npm run build --prefix frontend"
+    ],
+    "verification": [
+      {
+        "label": "API and frontend tests",
+        "command": "npm test",
+        "result": "pass",
+        "detail": "API: 2 files, 41 tests; frontend: 1 file, 3 tests. All passed using an in-memory SQLite database."
+      },
+      {
+        "label": "Week 12 checker",
+        "command": "npm run check",
+        "result": "pass",
+        "detail": "22/22 checks: in-class 20/20, challenge 2/2. The isolated copy includes the original branch CI workflow so repository-level CI inspection remains valid."
+      },
+      {
+        "label": "API coverage",
+        "command": "npm run coverage --prefix api",
+        "result": "pass",
+        "detail": "41/41 tests; statements 88.19%, branches 72.41%, functions 87.87%, lines 90.64%."
+      },
+      {
+        "label": "Frontend production build",
+        "command": "npm run build --prefix frontend",
+        "result": "pass",
+        "detail": "Vite 8.1.5 built 42 modules and produced dist/index.html with CSS and JavaScript assets."
+      }
+    ],
+    "reportFiles": [
+      {
+        "label": "Pages verification and backend requirements",
+        "path": "evidence/PAGES_VERIFICATION.md"
+      },
+      {
+        "label": "Test cases",
+        "path": "source/TEST_CASES.md"
+      },
+      {
+        "label": "Debug log",
+        "path": "source/DEBUG_LOG.md"
+      },
+      {
+        "label": "Reported bugs",
+        "path": "source/BUG_REPORTS.md"
+      },
+      {
+        "label": "API contract",
+        "path": "source/API_CONTRACT.md"
+      },
+      {
+        "label": "Run the full-stack application",
+        "path": "source/README.md"
+      }
+    ],
+    "screenshots": [],
+    "pageUrl": "https://burapa2025.github.io/engse203-student-labs-68543210032-7/labs/week-12/",
+    "sourceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/lab/week-12/labs/week-12/source",
+    "evidenceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/lab/week-12/labs/week-12/evidence",
+    "hasPublish": false,
+    "sourceEntries": 17
+  },
+  {
+    "week": "week-13",
+    "title": "Campus Service — Authentication, Authorization & Security",
+    "type": "evidence-report",
+    "status": "published",
+    "sourceOrigin": "student-created",
+    "sourcePath": "source",
+    "evidencePath": "evidence",
+    "originalRepoUrl": "",
+    "originalCommit": "a66f5400b0844d921274a4018c76ffd848d32ebc",
+    "submissionTag": "",
+    "pullRequestUrl": "",
+    "testStatus": "pass",
+    "notes": "เผยแพร่รายงานผลทดสอบ JWT, สิทธิ์เจ้าหน้าที่และความปลอดภัย; ระบบจริงต้องมี API และฐานข้อมูลแยกจาก GitHub Pages",
+    "highlights": [
+      "Vitest: API 68/68 และ frontend 3/3 ผ่าน",
+      "ตรวจ password hashing ด้วย scrypt, JWT login และสิทธิ์ 401/403",
+      "ตรวจ validation, body limit, security header และ login rate limit",
+      "Week 13 checker ผ่าน 27/27 รายการ และ frontend production build ผ่าน"
+    ],
+    "runCommands": [
+      "cd labs/week-13/source",
+      "npm ci --prefix api",
+      "npm ci --prefix frontend",
+      "npm test",
+      "npm run check",
+      "npm run build --prefix frontend"
+    ],
+    "verification": [
+      {
+        "label": "API and frontend tests",
+        "command": "npm test",
+        "result": "pass",
+        "detail": "API: 4 files, 68 tests; frontend: 1 file, 3 tests. All passed using an in-memory SQLite database."
+      },
+      {
+        "label": "Week 13 security checker",
+        "command": "npm run check",
+        "result": "pass",
+        "detail": "27/27 checks: in-class 23/23, challenge 4/4. Covers hashing, JWT, 401/403, validation, production secret requirement, security header and login rate limiting."
+      },
+      {
+        "label": "Frontend production build",
+        "command": "npm run build --prefix frontend",
+        "result": "pass",
+        "detail": "Vite 8.1.5 built 42 modules and produced dist/index.html with CSS and JavaScript assets."
+      }
+    ],
+    "reportFiles": [
+      {
+        "label": "Pages verification and backend requirements",
+        "path": "evidence/PAGES_VERIFICATION.md"
+      },
+      {
+        "label": "Test cases",
+        "path": "source/TEST_CASES.md"
+      },
+      {
+        "label": "Debug log",
+        "path": "source/DEBUG_LOG.md"
+      },
+      {
+        "label": "API contract",
+        "path": "source/API_CONTRACT.md"
+      },
+      {
+        "label": "Run the full-stack application",
+        "path": "source/README.md"
+      }
+    ],
+    "screenshots": [],
+    "pageUrl": "https://burapa2025.github.io/engse203-student-labs-68543210032-7/labs/week-13/",
+    "sourceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/lab/week-13/labs/week-13/source",
+    "evidenceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/lab/week-13/labs/week-13/evidence",
+    "hasPublish": false,
+    "sourceEntries": 18
   }
 ]

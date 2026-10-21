@@ -1,0 +1,68 @@
+{
+  "week": "week-10",
+  "title": "Node.js & SQLite Integration",
+  "status": "published",
+  "sourceOrigin": "student-created",
+  "evidencePath": "evidence",
+  "submissionTag": "",
+  "pullRequestUrl": "",
+  "testStatus": "partial",
+  "sourcePath": "source",
+  "originalCommit": "af84f2665306bea2a5e62ea729d4afe533f1a4ac",
+  "notes": "เผยแพร่รายงานและหลักฐานของระบบ React + Express + SQLite บน GitHub Pages; ตัว API ต้องรันด้วย Node.js ผลตรวจยังผ่านบางส่วนและบันทึกข้อจำกัดไว้ครบถ้วน",
+  "highlights": [
+    "เชื่อม Express API กับ SQLite ผ่าน node:sqlite และ JOIN เพื่อคืน requesterName",
+    "ใช้ parameterized queries และแยกชั้น route, controller และ service",
+    "Frontend build ผ่าน; checker LAB10 ผ่าน 22/31 และ checker LAB07 ผ่าน 32/36",
+    "API test เดิมมี 1 placeholder จึงยังยืนยันความครอบคลุมการทดสอบไม่ได้"
+  ],
+  "runCommands": [
+    "npm ci --include=dev",
+    "npm ci --prefix labs/week-10/source/api --include=dev",
+    "npm ci --prefix labs/week-10/source/frontend --include=dev",
+    "npm start --prefix labs/week-10/source/api",
+    "npm run dev --prefix labs/week-10/source/frontend",
+    "npm run build --prefix labs/week-10/source/frontend"
+  ],
+  "verification": [
+    {
+      "label": "Frontend production build",
+      "command": "npm run build --prefix frontend",
+      "result": "pass",
+      "detail": "Vite 8.1.5 build สำเร็จ 41 modules (รันจาก source/)"
+    },
+    {
+      "label": "LAB10 checker",
+      "command": "node --disable-warning=ExperimentalWarning check-week10.mjs",
+      "result": "partial",
+      "detail": "22/31: ในห้อง 17/20, ที่บ้าน 5/8, Challenge 0/3; ฐานข้อมูลใหม่ไม่มีข้อมูลตั้งต้นสำหรับ REQ-001, test ยังเป็น placeholder และเอกสาร/Challenge ยังไม่ครบ"
+    },
+    {
+      "label": "LAB07 regression checker",
+      "command": "node --disable-warning=ExperimentalWarning check-week07.mjs",
+      "result": "partial",
+      "detail": "32/36: ขาด .env.example, REQ-001 ไม่มีในฐานข้อมูลใหม่ และ test ยังไม่ยิง HTTP จริง"
+    },
+    {
+      "label": "Existing API test script",
+      "command": "npm test --prefix api",
+      "result": "partial",
+      "detail": "process ผ่าน 1/1 แต่เคสทดสอบมีเพียง assert.ok(true); ไม่นับเป็นหลักฐานยืนยันพฤติกรรม API"
+    }
+  ],
+  "reportFiles": [
+    {
+      "label": "ผลตรวจ Pages และข้อจำกัด",
+      "path": "evidence/PAGES_VERIFICATION.md"
+    },
+    {
+      "label": "API contract",
+      "path": "source/API_CONTRACT.md"
+    }
+  ],
+  "pageUrl": "https://burapa2025.github.io/engse203-student-labs-68543210032-7/labs/week-10/",
+  "sourceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/lab/week-10/labs/week-10/source",
+  "evidenceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/lab/week-10/labs/week-10/evidence",
+  "hasPublish": false,
+  "sourceEntries": 5
+}

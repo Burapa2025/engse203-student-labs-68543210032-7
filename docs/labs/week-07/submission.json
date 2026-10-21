@@ -1,0 +1,87 @@
+{
+  "week": "week-07",
+  "title": "RESTful API, CORS & Frontend Integration",
+  "type": "evidence-report",
+  "status": "published",
+  "sourceOrigin": "student-created",
+  "sourcePath": "starter",
+  "evidencePath": "evidence",
+  "originalRepoUrl": "",
+  "originalCommit": "5f9dbb4a9ac4e751c16adba8e7c45124685c467a",
+  "pullRequestUrl": "",
+  "submissionTag": "",
+  "testStatus": "partial",
+  "notes": "API tests ผ่าน 6/6, Week07 checker 35/36, frontend build ผ่าน; มีรายละเอียดรายการที่ยังไม่ผ่านในรายงาน การใช้งานเต็มระบบต้องเปิด API และ frontend พร้อมกัน",
+  "highlights": [
+    "เชื่อม React กับ Express ผ่าน apiClient, fetch และ environment config",
+    "รองรับ CORS, preflight, PUT เปลี่ยนสถานะ และ API error handling",
+    "มี API contract, automated tests และภาพหลักฐานจาก branch เดิม",
+    "Pages แสดงรายงาน; API จริงใช้ Node.js ที่พอร์ต 3001 และ frontend ที่พอร์ต 5173"
+  ],
+  "runCommands": [
+    "npm ci (repository root; dependency ของ Week07 checker)",
+    "cd labs/week-07/starter/api && npm ci && npm test && npm start",
+    "cd labs/week-07/starter/frontend && npm ci && npm run dev (อีก terminal)",
+    "node labs/week-07/starter/check-week07.mjs",
+    "cd labs/week-07/starter/frontend && npm run build"
+  ],
+  "verification": [
+    {
+      "label": "API automated tests",
+      "command": "npm test (starter/api)",
+      "result": "pass",
+      "detail": "6/6 tests ผ่าน, 0 fail: GET, POST, validation, 404 และ CORS header"
+    },
+    {
+      "label": "Week07 checker",
+      "command": "node check-week07.mjs (starter)",
+      "result": "partial",
+      "detail": "35/36: ในห้อง 24/25, ที่บ้าน 8/8, Challenge 3/3; ขาด api/.env.example (checker ยังคืน exit code 0)"
+    },
+    {
+      "label": "Frontend production build",
+      "command": "npm run build (starter/frontend)",
+      "result": "pass",
+      "detail": "Vite build สำเร็จ 41 modules; ใช้ HashRouter และ base './'"
+    },
+    {
+      "label": "Inherited frontend verifier",
+      "command": "npm run verify (starter/frontend)",
+      "result": "fail",
+      "detail": "LAB05 checker เดิมผ่าน 126/136 และ exit 1; ยังตรวจ localStorage และ direct fetch ตามสถาปัตยกรรมเดิม ขณะที่ Week07 ใช้ API client; รายละเอียดและข้อจำกัดอยู่ในรายงาน"
+    }
+  ],
+  "reportFiles": [
+    {
+      "label": "ผลตรวจล่าสุดและวิธีรัน",
+      "path": "evidence/PAGES_VERIFICATION.md"
+    },
+    {
+      "label": "API contract",
+      "path": "starter/API_CONTRACT.md"
+    },
+    {
+      "label": "หลักฐานการทดสอบเดิม",
+      "path": "starter/evidence/API_TEST.md"
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "starter/evidence/images/app-with-api.png",
+      "caption": "ภาพจาก branch เดิม: Dashboard แสดงคำร้องและ Network requests ไปยัง API"
+    },
+    {
+      "path": "starter/evidence/images/network-cors-ok.png",
+      "caption": "ภาพจาก branch เดิม: response มี Access-Control-Allow-Origin: http://localhost:5173"
+    },
+    {
+      "path": "starter/evidence/images/error-state.png",
+      "caption": "ภาพเดิมชื่อ error-state.png แสดงสถานะกำลังโหลดและคำขอ pending; ยังไม่แสดงข้อความ error"
+    }
+  ],
+  "pageUrl": "https://burapa2025.github.io/engse203-student-labs-68543210032-7/labs/week-07/",
+  "sourceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/lab/week-07/labs/week-07/starter",
+  "evidenceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/lab/week-07/labs/week-07/evidence",
+  "hasPublish": false,
+  "sourceEntries": 6
+}

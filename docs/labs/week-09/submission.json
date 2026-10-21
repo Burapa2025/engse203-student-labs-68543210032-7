@@ -1,0 +1,68 @@
+{
+  "week": "week-09",
+  "title": "Relational Database & SQL",
+  "type": "evidence-report",
+  "status": "published",
+  "sourceOrigin": "student-created",
+  "sourcePath": "lab09/source",
+  "evidencePath": "evidence",
+  "originalRepoUrl": "",
+  "originalCommit": "2de67ca43e94efaf815aae3e4ec4cbed0a632834",
+  "pullRequestUrl": "",
+  "submissionTag": "",
+  "testStatus": "partial",
+  "notes": "Checker ของ campus.db เดิมผ่าน 24/30; schema.sql สร้างฐานข้อมูลใหม่ได้ 4 users / 8 requests ไม่มี foreign-key violation และ SQL 8 ข้อรันผ่าน",
+  "highlights": [
+    "ออกแบบ users และ requests ด้วยความสัมพันธ์แบบหนึ่งต่อหลาย",
+    "มี schema.sql, queries.sql และ DATA_MODEL.md พร้อมเหตุผลการออกแบบ",
+    "ทดสอบ SQL ทั้ง 8 ข้อและ constraints 5 แบบกับฐานข้อมูลใหม่ในหน่วยความจำผ่าน",
+    "เผยแพร่ผลตรวจ campus.db เดิมตามจริง: ข้อมูลยังไม่ครบและมี orphan references; Challenge ยังไม่ทำ"
+  ],
+  "runCommands": [
+    "cd labs/week-09/lab09/source",
+    "node --disable-warning=ExperimentalWarning check-week09.mjs (รันในสำเนาโฟลเดอร์แยก เพราะ checker เขียนข้อมูลทดสอบลง DB)",
+    "ทดสอบ schema.sql และ queries.sql ใน SQLite :memory: ตาม evidence/PAGES_VERIFICATION.md"
+  ],
+  "verification": [
+    {
+      "label": "Original campus.db checker",
+      "command": "node --disable-warning=ExperimentalWarning check-week09.mjs (isolated copy)",
+      "result": "partial",
+      "detail": "24/30: ในห้อง 9/11, ที่บ้าน 15/16, Challenge 0/3; DB เดิมมี users 3 คน, requests 6 รายการ และ orphan references 3 รายการ"
+    },
+    {
+      "label": "Schema, queries and constraints",
+      "command": "node:sqlite in-memory verification (see evidence/PAGES_VERIFICATION.md)",
+      "result": "pass",
+      "detail": "schema.sql สร้าง 4 users / 8 requests, foreign_key_check ไม่พบปัญหา; SELECT ทั้ง 8 ข้อรันได้ และ NOT NULL, UNIQUE, CHECK, PRIMARY KEY, FOREIGN KEY ปฏิเสธข้อมูลผิดครบ 5 แบบ"
+    }
+  ],
+  "reportFiles": [
+    {
+      "label": "ผลตรวจล่าสุดและข้อจำกัด",
+      "path": "evidence/PAGES_VERIFICATION.md"
+    },
+    {
+      "label": "Database schema",
+      "path": "lab09/source/schema.sql"
+    },
+    {
+      "label": "SQL queries",
+      "path": "lab09/source/queries.sql"
+    },
+    {
+      "label": "Data model",
+      "path": "lab09/source/DATA_MODEL.md"
+    },
+    {
+      "label": "Constraint evidence เดิม",
+      "path": "lab09/evidence/CONSTRAINT_TEST.md"
+    }
+  ],
+  "screenshots": [],
+  "pageUrl": "https://burapa2025.github.io/engse203-student-labs-68543210032-7/labs/week-09/",
+  "sourceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/lab/week-09/labs/week-09/lab09/source",
+  "evidenceUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/tree/lab/week-09/labs/week-09/evidence",
+  "hasPublish": false,
+  "sourceEntries": 6
+}
