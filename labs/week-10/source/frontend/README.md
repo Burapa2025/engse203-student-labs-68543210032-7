@@ -24,7 +24,7 @@ npm run preview
 
 `build:pages` ตั้ง `VITE_PAGES_DEMO=true` เฉพาะ process ที่ build จากนั้น `requestService.js` จะเลือก `pagesDemoService.js` เพื่อจัดการข้อมูลตัวอย่างใน browser localStorage โหมดนี้ไม่มีการเรียก API หรือรัน SQLite บน Pages และแสดงคำอธิบายบน Dashboard, About และ footer
 
-ข้อมูลเริ่มต้นมี 10 รายการ: pending 5, in-progress 3 และ completed 2 รองรับกรอง สร้าง ดูรายละเอียด เปลี่ยนสถานะ ลบ และ Reset Demo Data หลังยืนยัน โดยใช้คีย์ `engse203-week-10-pages-demo-v1` แยกจากแลบอื่น ข้อมูลเสียหายจะกู้จาก seed พร้อมแจ้งผู้ใช้ และแสดงข้อผิดพลาดเมื่อ browser storage ใช้งานไม่ได้
+ข้อมูลเริ่มต้นมี 10 รายการ: pending 5, in-progress 3 และ completed 2 รองรับกรอง สร้าง ดูรายละเอียด เปลี่ยนสถานะ ลบ และ Reset Demo Data ซึ่งคืนข้อมูลตัวอย่างทันทีในโหมด Pages โดยใช้คีย์ `engse203-week-10-pages-demo-v1` แยกจากแลบอื่น ข้อมูลเสียหายจะกู้จาก seed พร้อมแจ้งผู้ใช้ และแสดงข้อผิดพลาดเมื่อ browser storage ใช้งานไม่ได้
 
 นำเฉพาะไฟล์ใน `dist/` ไปวางที่ `../../publish/` Node tests ใช้ storage mock ทดสอบ adapter ของ Pages เท่านั้น ไม่แทนผล checker ของ Express/SQLite API ที่ยังเป็น partial
 
