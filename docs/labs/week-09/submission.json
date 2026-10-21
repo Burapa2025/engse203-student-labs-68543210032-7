@@ -1,6 +1,7 @@
 {
   "week": "week-09",
-  "title": "Relational Database & SQL",
+  "title": "Relational Database & SQL (SQLite)",
+  "reportLayout": "summary",
   "type": "evidence-report",
   "status": "published",
   "sourceOrigin": "student-created",
@@ -11,7 +12,7 @@
   "pullRequestUrl": "",
   "submissionTag": "",
   "testStatus": "partial",
-  "notes": "Checker ของ campus.db เดิมผ่าน 24/30; schema.sql สร้างฐานข้อมูลใหม่ได้ 4 users / 8 requests ไม่มี foreign-key violation และ SQL 8 ข้อรันผ่าน",
+  "notes": "Schema, queries, data model, and SQLite database are present in this repository.",
   "highlights": [
     "ออกแบบ users และ requests ด้วยความสัมพันธ์แบบหนึ่งต่อหลาย",
     "มี schema.sql, queries.sql และ DATA_MODEL.md พร้อมเหตุผลการออกแบบ",

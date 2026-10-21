@@ -1,6 +1,7 @@
 {
   "week": "week-06",
-  "title": "Express API Foundation",
+  "title": "Node.js / Express API Foundation",
+  "reportLayout": "summary",
   "type": "evidence-report",
   "status": "published",
   "sourceOrigin": "student-created",
@@ -11,7 +12,7 @@
   "pullRequestUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/pull/13",
   "submissionTag": "",
   "testStatus": "pass",
-  "notes": "เผยแพร่รายงาน Express API และผลตรวจบน GitHub Pages; รัน API จริงด้วย Node.js ในเครื่อง",
+  "notes": "Source and API test evidence are present in this repository.",
   "highlights": [
     "Express API แยก routes, controllers, services และ middleware",
     "รองรับรายการคำร้อง, ค้นตามรหัส, เพิ่ม, เปลี่ยนสถานะ และลบคำร้อง",
