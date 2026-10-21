@@ -1,0 +1,12 @@
+[
+  { "id": "REQ-001", "requesterName": "ผู้ใช้งานตัวอย่าง 01", "requestType": "แจ้งซ่อม", "location": "ห้องปฏิบัติการ 301", "details": "เครื่องปรับอากาศไม่ทำงานตั้งแต่เช้า", "priority": "urgent", "status": "pending" },
+  { "id": "REQ-002", "requesterName": "ผู้ใช้งานตัวอย่าง 02", "requestType": "บริการบัญชีผู้ใช้", "location": "อาคารวิศวกรรมซอฟต์แวร์", "details": "เข้าสู่ระบบห้องปฏิบัติการไม่ได้", "priority": "normal", "status": "in-progress" },
+  { "id": "REQ-003", "requesterName": "ผู้ใช้งานตัวอย่าง 03", "requestType": "ขอใช้อุปกรณ์", "location": "ห้องประชุม 2", "details": "ขอยืมโปรเจกเตอร์สำหรับนำเสนอโครงงาน", "priority": "normal", "status": "completed" },
+  { "id": "REQ-004", "requesterName": "ผู้ใช้งานตัวอย่าง 04", "requestType": "แจ้งซ่อม", "location": "ห้องเรียน 204", "details": "หลอดไฟบริเวณหน้าห้องเรียนไม่สว่าง", "priority": "normal", "status": "pending" },
+  { "id": "REQ-005", "requesterName": "ผู้ใช้งานตัวอย่าง 05", "requestType": "อื่น ๆ", "location": "ห้องประชุม 3", "details": "ขอใช้ห้องประชุมสำหรับเตรียมงานกลุ่ม", "priority": "normal", "status": "pending" },
+  { "id": "REQ-006", "requesterName": "ผู้ใช้งานตัวอย่าง 06", "requestType": "บริการบัญชีผู้ใช้", "location": "ห้องปฏิบัติการ 302", "details": "ต้องการเปิดบัญชีทดสอบสำหรับกิจกรรมแลบ", "priority": "normal", "status": "pending" },
+  { "id": "REQ-007", "requesterName": "ผู้ใช้งานตัวอย่าง 07", "requestType": "แจ้งซ่อม", "location": "ห้องเรียน 205", "details": "สายเชื่อมต่อจอภาพของห้องเรียนชำรุด", "priority": "urgent", "status": "pending" },
+  { "id": "REQ-008", "requesterName": "ผู้ใช้งานตัวอย่าง 08", "requestType": "ขอใช้อุปกรณ์", "location": "ห้องประชุม 1", "details": "ขอยืมไมโครโฟนสำหรับซ้อมนำเสนองาน", "priority": "normal", "status": "in-progress" },
+  { "id": "REQ-009", "requesterName": "ผู้ใช้งานตัวอย่าง 09", "requestType": "แจ้งซ่อม", "location": "ห้องปฏิบัติการ 303", "details": "ตรวจสอบเครื่องคอมพิวเตอร์ที่เปิดไม่ติด", "priority": "normal", "status": "in-progress" },
+  { "id": "REQ-010", "requesterName": "ผู้ใช้งานตัวอย่าง 10", "requestType": "อื่น ๆ", "location": "ห้องกิจกรรม", "details": "ขอใช้ห้องสำหรับสรุปผลงานประจำสัปดาห์", "priority": "normal", "status": "completed" }
+]
