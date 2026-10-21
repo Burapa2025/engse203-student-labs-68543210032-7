@@ -67,7 +67,7 @@ function DashboardPage() {
   }
 
   async function handleReset() {
-    if (!window.confirm('ต้องการคืนข้อมูลตัวอย่างเริ่มต้นหรือไม่?')) return;
+    if (!isPagesDemo && !window.confirm('ต้องการคืนข้อมูลตัวอย่างเริ่มต้นหรือไม่?')) return;
     try {
       setRequests(await resetRequests());
       setStatusFilter('all');

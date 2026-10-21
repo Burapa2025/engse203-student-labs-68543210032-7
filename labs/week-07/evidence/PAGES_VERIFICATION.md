@@ -6,7 +6,7 @@
 
 `publish/` เป็น production output ของแอป React ที่มีหัวข้อ **ENGSE203 • LAB 07**, **Campus Service Request**, eyebrow **REACT + EXPRESS API**, เมนู Dashboard / New Request / About, สรุปจำนวน 3 / 1 / 1 / 1 และคำร้องตัวอย่างตรงกับ `starter/api/data/initialRequests.json`
 
-GitHub Pages เปิดเป็น **Pages Demo** ซึ่งระบุบน Dashboard ว่าข้อมูลสาธิตบันทึกในเบราว์เซอร์นี้ ใช้งาน filter, สร้างคำร้อง, เปิดรายละเอียด, เปลี่ยนสถานะ, ลบ และ Reset Demo Data ได้จริง การแก้ไขอยู่ใน localStorage key `engse203-week-07-pages-demo-v1` จึงไม่ปะปนกับแลบอื่น และยังอยู่หลัง reload หน้า เมื่อข้อมูลเสียจะคืน seed พร้อมแสดงข้อความแจ้งผู้ใช้
+GitHub Pages เปิดเป็น **Pages Demo** ซึ่งระบุบน Dashboard ว่าข้อมูลสาธิตบันทึกในเบราว์เซอร์นี้ ใช้งาน filter, สร้างคำร้อง, เปิดรายละเอียด, เปลี่ยนสถานะ, ลบ และ Reset Demo Data ได้จริง ปุ่ม Reset ในโหมดสาธิตคืน seed ทันทีพร้อมแสดงข้อความสำเร็จ การแก้ไขอยู่ใน localStorage key `engse203-week-07-pages-demo-v1` จึงไม่ปะปนกับแลบอื่น และยังอยู่หลัง reload หน้า เมื่อข้อมูลเสียจะคืน seed พร้อมแสดงข้อความแจ้งผู้ใช้
 
 โหมดนี้เปิดเฉพาะ `npm run build:pages` ด้วย Node helper `scripts/build-pages.mjs` ที่กำหนด public flag `VITE_PAGES_DEMO=true` แล้วเรียก Vite ใน mode pages คำสั่งเดียวกันใช้ได้บน Windows และระบบอื่นโดยไม่ต้องมีไฟล์ environment การรัน `npm run dev` หรือ `npm run build` ปกติยังใช้ Express ผ่าน `apiClient` และ `VITE_API_BASE_URL` (ค่าเริ่มต้น `http://localhost:3001`) ตามเดิม ไม่มีการเปลี่ยน API เป็น localStorage โดยอัตโนมัติเมื่อเชื่อมต่อไม่สำเร็จ
 
