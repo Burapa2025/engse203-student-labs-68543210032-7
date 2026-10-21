@@ -37,6 +37,7 @@ input[aria-invalid="true"],select[aria-invalid="true"],textarea[aria-invalid="tr
 .button.inline { display:inline-block; text-decoration:none; }
 .filter-bar { display:flex; flex-wrap:wrap; gap:.4rem; }
 .filter-button { border:1px solid var(--border); border-radius:.6rem; padding:.55rem .7rem; color:var(--navy); background:#eef4fb; }
+.filter-button.filter-active { color:white; background:var(--blue); }
 .request-list { display:grid; gap:.7rem; margin-top:1rem; }
 .request-card { display:flex; flex-direction:column; gap:.8rem; padding:1rem; border:1px solid var(--border); border-radius:.75rem; background:#f9fbfe; overflow-wrap:anywhere; }
 .request-card h3 { margin:.15rem 0; }

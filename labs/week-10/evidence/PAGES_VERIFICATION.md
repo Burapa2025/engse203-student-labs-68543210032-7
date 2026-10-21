@@ -77,3 +77,13 @@ npm run dev --prefix labs/week-10/source/frontend
 ```
 
 เปิด URL ที่ Vite แสดง (โดยปกติ `http://localhost:5173`) โดย API ใช้พอร์ต 3001 การเปลี่ยน backend host ต้องตั้ง `VITE_API_BASE_URL` และ CORS ให้ตรงกัน
+
+## Browser smoke test — 2026-10-21
+
+ตรวจ production Pages build ผ่าน HTTP ใต้ subpath ของ repository ใน Codex in-app browser:
+
+- Dashboard เริ่มต้น 10 รายการ สถานะ pending/in-progress/completed = 5/3/2
+- ตัวกรอง in-progress แสดง 3 รายการ โดยยอดสรุปยังนับคำร้องทั้งหมด
+- สร้าง REQ-011 จากแบบฟอร์ม เปลี่ยนสถานะเป็น in-progress แล้วรีเฟรช ข้อมูลยังอยู่
+- ลบ REQ-011 แล้วยอดเหลือ 10; ลบ REQ-001 แล้วยอดเหลือ 9
+- Reset Demo Data คืนรายการครบ 10 และสถานะ 5/3/2 ทันทีในโหมด Pages

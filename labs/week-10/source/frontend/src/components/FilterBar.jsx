@@ -10,7 +10,7 @@ function FilterBar({ value, onFilterChange }) {
     <div className="filter-bar" role="group" aria-label="กรองสถานะคำร้อง">
       {filters.map(([filterValue, label]) => (
         <button
-          className={value === filterValue ? 'filter-active' : 'filter-button'}
+          className={`filter-button${value === filterValue ? ' filter-active' : ''}`}
           key={filterValue}
           type="button"
           onClick={() => onFilterChange(filterValue)}
