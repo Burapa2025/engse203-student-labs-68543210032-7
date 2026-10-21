@@ -7,6 +7,8 @@
     "dev": "vite",
     "check": "node scripts/check-project.mjs",
     "build": "vite build",
+    "build:pages": "node scripts/build-pages.mjs",
+    "test:pages": "node --test tests/pagesDemo.test.js",
     "preview": "vite preview",
     "verify": "npm run check && npm run build"
   },
