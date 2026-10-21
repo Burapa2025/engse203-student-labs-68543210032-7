@@ -70,3 +70,13 @@ npm run preview
 - `app-with-api.png`: Dashboard แสดงข้อมูล 3 คำร้อง และ Network requests
 - `network-cors-ok.png`: Network แสดง `Access-Control-Allow-Origin: http://localhost:5173`
 - `error-state.png`: ภาพแสดง loading และ requests ที่ pending; ยังไม่แสดงข้อความ error จึงไม่ใช้ยืนยัน error UI
+
+## Browser smoke test — 2026-10-21
+
+ตรวจ production Pages build ผ่าน HTTP ใต้ subpath ของ repository ใน Codex in-app browser:
+
+- Dashboard เริ่มต้น 3 รายการ สถานะ 1/1/1 และตัวกรอง pending แสดง 1 รายการ
+- สร้างคำร้องจากแบบฟอร์ม เปิดหน้ารายละเอียด เปลี่ยนเป็น completed ได้
+- รีเฟรชหน้ารายละเอียดแล้วยังแสดงข้อมูลและสถานะที่บันทึกไว้
+- ลบคำร้องที่สร้างและข้อมูลตัวอย่างได้ ยอดสรุปเปลี่ยนตามรายการจริง
+- Reset Demo Data คืนข้อมูลเริ่มต้นครบ 3 รายการทันทีในโหมด Pages
