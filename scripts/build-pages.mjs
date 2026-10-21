@@ -29,6 +29,8 @@ for (const week of labs) {
   const publishRoot = path.join(labRoot, "publish");
   const target = path.join(docsRoot, "labs", week);
   const metadata = await readJson(path.join(labRoot, "lab-metadata.json"));
+  const liveUrl = validHttpUrl(metadata.liveUrl);
+  if (metadata.liveUrl && !liveUrl) throw new Error(`${week}: liveUrl must be an HTTP(S) URL`);
   const hasPublish = await exists(path.join(publishRoot, "index.html"));
   const branch = metadata.sourceBranch || `lab/${week}`;
   const sourcePath = metadata.sourcePath || "source";
@@ -58,8 +60,8 @@ for (const week of labs) {
   cards.push(`<article class="lab-card" data-status="${escapeHtml(metadata.status)}">
     <div class="card-top"><span class="week">${escapeHtml(week)}</span><span class="status">${escapeHtml(statusLabels[metadata.status] ?? metadata.status)}</span></div>
     <h2>${escapeHtml(metadata.title)}</h2>
-    <p>Test: <strong>${escapeHtml(metadata.testStatus)}</strong> • ${hasPublish ? "Web output" : "Evidence report"}</p>
-    <div class="links"><a class="primary" href="labs/${escapeHtml(week)}/">View Result</a><a href="${escapeHtml(sourceUrl)}">Source</a>${prUrl ? `<a href="${escapeHtml(prUrl)}">Pull Request</a>` : ""}</div>
+    <p>Test: <strong>${escapeHtml(metadata.testStatus)}</strong> • ${liveUrl ? "Live application" : hasPublish ? "Web output" : "Evidence report"}</p>
+    <div class="links"><a class="primary" href="${escapeHtml(liveUrl || `labs/${week}/`)}">View Result</a><a href="${escapeHtml(sourceUrl)}">Source</a>${prUrl ? `<a href="${escapeHtml(prUrl)}">Pull Request</a>` : ""}</div>
     <small>${metadata.submissionTag ? `Version: ${escapeHtml(metadata.submissionTag)}` : `Branch: ${escapeHtml(branch)}`}</small>
   </article>`);
 }

@@ -1,6 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import { ROOT, exists, labPath, listLabs, readJson } from "./common.mjs";
+import { ROOT, exists, labPath, listLabs, readJson, validHttpUrl } from "./common.mjs";
 
 const config = await readJson(path.join(ROOT, "student-config.json"));
 const docsRoot = path.join(ROOT, "docs");
@@ -8,6 +8,8 @@ const base = new URL(`https://${config.githubUsername}.github.io/${config.reposi
 const summaries = await readJson(path.join(docsRoot, "labs.json"));
 const weeks = await listLabs();
 const errors = [];
+const portfolio = await fs.readFile(path.join(docsRoot, "index.html"), "utf8");
+const cards = [...portfolio.matchAll(/<article\b[^>]*>([\s\S]*?)<\/article>/g)].map(match => match[1]);
 if (summaries.map(lab => lab.week).join(",") !== weeks.join(",")) errors.push("Portfolio does not contain every LAB exactly once");
 for (const lab of summaries) {
   const labRoot = path.join(ROOT, "labs", lab.week);
@@ -16,6 +18,12 @@ for (const lab of summaries) {
   if (lab.sourceUrl !== expectedSource) errors.push(`${lab.week}: Source URL does not match its branch/path`);
   if (!(await exists(labPath(labRoot, lab.sourcePath || "source")))) errors.push(`${lab.week}: missing source directory`);
   if (lab.pageUrl !== new URL(`labs/${lab.week}/`, base).href) errors.push(`${lab.week}: wrong Pages URL`);
+  const liveUrl = validHttpUrl(lab.liveUrl);
+  if (lab.liveUrl && !liveUrl) errors.push(`${lab.week}: invalid live URL`);
+  const card = cards.find(html => html.includes(`<span class="week">${lab.week}</span>`));
+  const resultHref = card?.match(/<a class="primary" href="([^"]+)">View Result<\/a>/)?.[1];
+  const expectedResult = liveUrl || new URL(`labs/${lab.week}/`, base).href;
+  if (!resultHref || new URL(resultHref.replaceAll("&amp;", "&"), base).href !== expectedResult) errors.push(`${lab.week}: View Result does not match its live/Pages URL`);
   const submission = await readJson(path.join(docsRoot, "labs", lab.week, "submission.json"));
   if (JSON.stringify(submission) !== JSON.stringify(lab)) errors.push(`${lab.week}: submission metadata is stale`);
 }

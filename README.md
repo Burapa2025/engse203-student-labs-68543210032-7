@@ -50,7 +50,7 @@ https://<github-username>.github.io/engse203-student-labs-<student-id>/
 
 Pages Hub มี LAB01–07 และ LAB09–13 (ไม่มี LAB08) โดยแยก branch `lab/week-NN` ของแต่ละแลบ และสร้างการ์ดจาก `labs/week-NN/` อัตโนมัติ
 
-LAB06 และ LAB09 ใช้หน้าสรุปหลักฐาน ส่วน LAB07 และ LAB10 เปิดเป็น Dashboard สาธิตที่เก็บข้อมูลในเบราว์เซอร์ โดย build ด้วย `VITE_PAGES_DEMO=true` การรัน source แบบปกติยังใช้ Express API/SQLite ตามเดิม LAB11–13 คงหน้ารายงานเดิมไว้ สถานะ `Published` หมายถึงเผยแพร่แล้ว ส่วนผลตรวจสอบของแต่ละแลบแสดงตามผลจริง
+LAB06 และ LAB09 ใช้หน้าสรุปหลักฐาน ส่วน LAB07 และ LAB10 เปิดเป็น Dashboard สาธิตที่เก็บข้อมูลในเบราว์เซอร์ โดย build ด้วย `VITE_PAGES_DEMO=true` การรัน source แบบปกติยังใช้ Express API/SQLite ตามเดิม LAB11–13 เปิดระบบจริงบน Render ผ่านปุ่ม View Result โดยกำหนด URL ใน metadata.liveUrl และยังเก็บหน้ารายงานหลักฐานบน Pages ไว้ สถานะ `Published` หมายถึงเผยแพร่แล้ว ส่วนผลตรวจสอบของแต่ละแลบแสดงตามผลจริง
 
 metadata รองรับ `sourcePath` และ `evidencePath` ที่อ้างอิงจากโฟลเดอร์ของแลบนั้น เพื่อใช้โครงสร้างงานเดิมได้โดยไม่ต้องย้าย source พร้อม `verification`, `highlights`, `runCommands`, `reportFiles` และ `screenshots` สำหรับสร้างรายงาน และ `reportLayout: "summary"` สำหรับหน้าสรุปแบบย่อ
 
