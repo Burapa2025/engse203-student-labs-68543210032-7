@@ -34,7 +34,7 @@ for (const week of labs) {
   if (!(await exists(path.join(ROOT, "docs", "labs", week, "index.html")))) errors.push(`${week}: ยังไม่มี Pages output — รัน npm run build:pages`);
   if (!setupMode) {
     if (!["ready", "submitted", "revision", "published"].includes(metadata.status)) errors.push(`${week}: status ยังเป็น draft/ไม่ถูกต้อง`);
-    if (metadata.status === "published") {
+    if (metadata.status === "published" || (metadata.status === "submitted" && metadata.verification?.length)) {
       if (!["pass", "partial", "fail", "not-tested"].includes(metadata.testStatus)) errors.push(`${week}: testStatus ไม่ถูกต้อง`);
       if (!metadata.verification?.length) errors.push(`${week}: published ต้องมีผลการตรวจสอบ`);
       if (metadata.testStatus !== "pass") warnings.push(`${week}: ผลทดสอบ ${metadata.testStatus} — ดูรายละเอียดในหน้ารายงาน`);
