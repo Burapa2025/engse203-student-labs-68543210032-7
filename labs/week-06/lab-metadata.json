@@ -1,0 +1,40 @@
+{
+  "week": "week-06",
+  "title": "Express API Foundation",
+  "type": "evidence-report",
+  "status": "published",
+  "sourceOrigin": "student-created",
+  "sourcePath": "lab06/starter",
+  "evidencePath": "evidence",
+  "originalRepoUrl": "",
+  "originalCommit": "0b4881150e14d1feaf52b6ac7090fa1829812b45",
+  "pullRequestUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/pull/13",
+  "submissionTag": "",
+  "testStatus": "pass",
+  "notes": "เผยแพร่รายงาน Express API และผลตรวจบน GitHub Pages; รัน API จริงด้วย Node.js ในเครื่อง",
+  "highlights": [
+    "Express API แยก routes, controllers, services และ middleware",
+    "รองรับรายการคำร้อง, ค้นตามรหัส, เพิ่ม, เปลี่ยนสถานะ และลบคำร้อง",
+    "ตรวจข้อมูลและตอบ HTTP status รวม 400, 404, 201 และ 204",
+    "Checker ยิงคำขอจริงผ่านครบ 28/28 รายการ; ข้อมูลเก็บในหน่วยความจำของเซิร์ฟเวอร์"
+  ],
+  "runCommands": [
+    "cd labs/week-06/lab06/starter",
+    "npm ci",
+    "npm run check",
+    "npm start"
+  ],
+  "verification": [
+    {
+      "label": "Express API checker",
+      "command": "npm run check (lab06/starter)",
+      "result": "pass",
+      "detail": "ตรวจจริงวันที่ 2026-10-21: ผ่าน 28/28 รายการ (ในห้อง 23/23, ที่บ้าน 2/2, Challenge 3/3); มี logger แสดง method/path/status ใน output"
+    }
+  ],
+  "reportFiles": [
+    { "label": "ผลตรวจ API และวิธีรัน", "path": "evidence/PAGES_VERIFICATION.md" },
+    { "label": "Postman collection", "path": "lab06/starter/evidence/Campus_Service_API.postman_collection.json" }
+  ],
+  "screenshots": []
+}
