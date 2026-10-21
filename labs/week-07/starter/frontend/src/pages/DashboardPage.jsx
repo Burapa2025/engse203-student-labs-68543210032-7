@@ -6,7 +6,7 @@ import LoadingState from '../components/LoadingState.jsx';
 import RequestList from '../components/RequestList.jsx';
 import SummaryPanel from '../components/SummaryPanel.jsx';
 import useManualReload from '../hooks/useManualReload.js';
-import { deleteRequest, getRequests, resetRequests } from '../services/requestService.js';
+import { deleteRequest, getRequests, isPagesDemo, resetRequests } from '../services/requestService.js';
 
 function DashboardPage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -80,7 +80,7 @@ function DashboardPage() {
   return (
     <section data-testid="page-dashboard">
       <div className="page-heading">
-        <div><p className="eyebrow dark">ROUTED + PERSISTENT</p><h1>Dashboard</h1><p>ติดตามคำร้องจาก URL, Service Layer และ browser storage</p></div>
+        <div><p className="eyebrow dark">REACT + EXPRESS API</p><h1>Dashboard</h1><p>ข้อมูลคำร้องจาก Express API ผ่าน apiClient · เปลี่ยนสถานะได้จากหน้ารายละเอียด</p>{isPagesDemo && <p className="demo-note">Pages Demo · ข้อมูลสาธิตบันทึกในเบราว์เซอร์นี้</p>}</div>
         <button className="button secondary" data-testid="reset-button" type="button" onClick={handleReset}>Reset Demo Data</button>
       </div>
       {scenario && <p className="lab-scenario" role="status">LAB test scenario: {scenario}</p>}

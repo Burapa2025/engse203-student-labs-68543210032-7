@@ -1,4 +1,18 @@
 import { apiFetch, ApiError } from './apiClient.js';
+import { createPagesDemoService } from './pagesDemoService.js';
+
+export const isPagesDemo = import.meta.env?.VITE_PAGES_DEMO === 'true';
+const pagesDemo = isPagesDemo ? createPagesDemoService({
+  storage: {
+    getItem: (key) => globalThis.localStorage.getItem(key),
+    setItem: (key, value) => globalThis.localStorage.setItem(key, value),
+  },
+  async loadSeed() {
+    const response = await fetch(`${import.meta.env.BASE_URL}data/initialRequests.json`);
+    if (!response.ok) throw new ApiError('โหลดข้อมูลตัวอย่างไม่สำเร็จ', response.status);
+    return response.json();
+  },
+}) : null;
 
 /**
  * Week 07 — เปลี่ยนจากอ่าน localStorage เป็นเรียก API จริง
@@ -17,6 +31,7 @@ export { ApiError };
  *   ใช้ encodeURIComponent() ป้องกันอักขระพิเศษ
  */
 export async function getRequests(options = {}) {
+  if (pagesDemo) return pagesDemo.getRequests(options);
   if (options.scenario === 'error') throw new ApiError('LAB scenario: จำลองการโหลดไม่สำเร็จ', 500);
   if (options.scenario === 'empty') return [];
 
@@ -31,6 +46,7 @@ export async function getRequests(options = {}) {
  *   คำใบ้: จับด้วย try/catch แล้วเช็ค error.status === 404
  */
 export async function getRequestById(requestId) {
+  if (pagesDemo) return pagesDemo.getRequestById(requestId);
   try {
     return await apiFetch(`/api/requests/${encodeURIComponent(requestId)}`);
   } catch (error) {
@@ -46,6 +62,7 @@ export async function getRequestById(requestId) {
  * - ส่ง body ด้วย JSON.stringify(requestInput)
  */
 export async function addRequest(requestInput) {
+  if (pagesDemo) return pagesDemo.addRequest(requestInput);
   return apiFetch('/api/requests', { method: 'POST', body: JSON.stringify(requestInput) });
 }
 
@@ -54,6 +71,7 @@ export async function addRequest(requestInput) {
  * body: { status }
  */
 export async function updateRequestStatus(requestId, status) {
+  if (pagesDemo) return pagesDemo.updateRequestStatus(requestId, status);
   return apiFetch(`/api/requests/${encodeURIComponent(requestId)}`, {
     method: 'PUT',
     body: JSON.stringify({ status }),
@@ -66,11 +84,13 @@ export async function updateRequestStatus(requestId, status) {
  *   เพื่อให้หน้าจอตรงกับข้อมูลจริงเสมอ ไม่ใช่เดาเอาเองว่าเหลืออะไร
  */
 export async function deleteRequest(requestId) {
+  if (pagesDemo) return pagesDemo.deleteRequest(requestId);
   await apiFetch(`/api/requests/${encodeURIComponent(requestId)}`, { method: 'DELETE' });
   return getRequests();   // คืนรายการล่าสุดจากเซิร์ฟเวอร์
 }
 
 /** Week 07 ยังไม่มี endpoint reset — โหลดรายการปัจจุบันกลับมาแทน */
 export async function resetRequests() {
+  if (pagesDemo) return pagesDemo.resetRequests();
   return getRequests();
 }

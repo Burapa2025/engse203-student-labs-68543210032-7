@@ -1,7 +1,7 @@
 {
   "week": "week-07",
   "title": "RESTful API, CORS & Frontend Integration",
-  "type": "evidence-report",
+  "type": "web-output",
   "status": "published",
   "sourceOrigin": "student-created",
   "sourcePath": "starter",
@@ -11,19 +11,21 @@
   "pullRequestUrl": "",
   "submissionTag": "",
   "testStatus": "partial",
-  "notes": "API tests ผ่าน 6/6, Week07 checker 35/36, frontend build ผ่าน; มีรายละเอียดรายการที่ยังไม่ผ่านในรายงาน การใช้งานเต็มระบบต้องเปิด API และ frontend พร้อมกัน",
+  "notes": "Pages เปิด Dashboard ใช้งานได้ด้วยข้อมูลสาธิตที่บันทึกแยกใน browser storage; การรันปกติยังใช้ Express API จริง API tests ผ่าน 6/6, Pages demo tests ผ่าน 8/8 และ build ทั้งสองโหมดผ่าน; คงผล Week07 checker เดิม 35/36 และข้อจำกัด inherited verifier ไว้ในรายงาน",
   "highlights": [
     "เชื่อม React กับ Express ผ่าน apiClient, fetch และ environment config",
     "รองรับ CORS, preflight, PUT เปลี่ยนสถานะ และ API error handling",
     "มี API contract, automated tests และภาพหลักฐานจาก branch เดิม",
-    "Pages แสดงรายงาน; API จริงใช้ Node.js ที่พอร์ต 3001 และ frontend ที่พอร์ต 5173"
+    "Pages Demo ใช้งาน Dashboard, filter, สร้างคำร้อง, เปลี่ยนสถานะ, ลบ และ Reset Demo Data พร้อมบันทึกแยกเฉพาะ LAB07",
+    "Build ปกติยังใช้ API จริงที่พอร์ต 3001; build:pages เปิดโหมดสาธิตอย่างชัดเจน"
   ],
   "runCommands": [
     "npm ci (repository root; dependency ของ Week07 checker)",
     "cd labs/week-07/starter/api && npm ci && npm test && npm start",
     "cd labs/week-07/starter/frontend && npm ci && npm run dev (อีก terminal)",
     "node labs/week-07/starter/check-week07.mjs",
-    "cd labs/week-07/starter/frontend && npm run build"
+    "cd labs/week-07/starter/frontend && npm run build",
+    "cd labs/week-07/starter/frontend && npm run test:pages && npm run build:pages"
   ],
   "verification": [
     {
@@ -42,7 +44,19 @@
       "label": "Frontend production build",
       "command": "npm run build (starter/frontend)",
       "result": "pass",
-      "detail": "Vite build สำเร็จ 41 modules; ใช้ HashRouter และ base './'"
+      "detail": "ตรวจใหม่ 2026-10-21: Vite build สำเร็จ 42 modules; ใช้ Express API ตามเดิม, HashRouter และ base './'"
+    },
+    {
+      "label": "Pages demo automated tests",
+      "command": "npm run test:pages (starter/frontend)",
+      "result": "pass",
+      "detail": "8/8 tests: seed, filters, CRUD, validation, reload persistence, reset, per-lab isolation, corruption recovery, storage failure, UI scenarios และ default Express API mode"
+    },
+    {
+      "label": "Pages frontend build",
+      "command": "npm run build:pages (starter/frontend)",
+      "result": "pass",
+      "detail": "Vite pages mode สำเร็จ 42 modules; Node build helper เปิด VITE_PAGES_DEMO=true โดยไม่ใช้ไฟล์ environment; คัดลอก dist ไป publish/ พร้อม relative assets และ seed JSON"
     },
     {
       "label": "Inherited frontend verifier",

@@ -1,50 +1,38 @@
-# LAB07 — Pages verification
+# LAB07 — Dashboard on Pages
 
-ตรวจวันที่ **2026-10-21** ด้วย Node.js **v24.18.0** จาก branch `lab/week-07` ก่อนเพิ่มรายงาน (`5f9dbb4a9ac4e751c16adba8e7c45124685c467a`)
+ปรับและตรวจวันที่ **2026-10-21** บน branch `lab/week-07` ด้วย Node.js **v24.18.0**
 
-Pages แสดงรายงาน, API contract และภาพหลักฐาน ส่วนระบบ React + Express ต้องรันทั้งสองโปรแกรม API client ใช้ `VITE_API_BASE_URL` และค่าเริ่มต้น `http://localhost:3001` จึงไม่สามารถใช้ Pages เป็น Express server ได้
+## หน้าเว็บตามภาพตัวอย่าง
 
-## ผลตรวจจริง
+`publish/` เป็น production output ของแอป React ที่มีหัวข้อ **ENGSE203 • LAB 07**, **Campus Service Request**, eyebrow **REACT + EXPRESS API**, เมนู Dashboard / New Request / About, สรุปจำนวน 3 / 1 / 1 / 1 และคำร้องตัวอย่างตรงกับ `starter/api/data/initialRequests.json`
 
-ติดตั้งด้วย `npm ci --no-audit --no-fund` ที่ repository root, `starter/api/` และ `starter/frontend/` สำเร็จ Dependency ที่ root ใช้สำหรับ import `supertest` ของ Week07 checker
+GitHub Pages เปิดเป็น **Pages Demo** ซึ่งระบุบน Dashboard ว่าข้อมูลสาธิตบันทึกในเบราว์เซอร์นี้ ใช้งาน filter, สร้างคำร้อง, เปิดรายละเอียด, เปลี่ยนสถานะ, ลบ และ Reset Demo Data ได้จริง การแก้ไขอยู่ใน localStorage key `engse203-week-07-pages-demo-v1` จึงไม่ปะปนกับแลบอื่น และยังอยู่หลัง reload หน้า เมื่อข้อมูลเสียจะคืน seed พร้อมแสดงข้อความแจ้งผู้ใช้
+
+โหมดนี้เปิดเฉพาะ `npm run build:pages` ด้วย Node helper `scripts/build-pages.mjs` ที่กำหนด public flag `VITE_PAGES_DEMO=true` แล้วเรียก Vite ใน mode pages คำสั่งเดียวกันใช้ได้บน Windows และระบบอื่นโดยไม่ต้องมีไฟล์ environment การรัน `npm run dev` หรือ `npm run build` ปกติยังใช้ Express ผ่าน `apiClient` และ `VITE_API_BASE_URL` (ค่าเริ่มต้น `http://localhost:3001`) ตามเดิม ไม่มีการเปลี่ยน API เป็น localStorage โดยอัตโนมัติเมื่อเชื่อมต่อไม่สำเร็จ
+
+## ผลตรวจรอบนี้
+
+ติดตั้งด้วย `npm ci --no-audit --no-fund` ที่ `starter/frontend/` และ `starter/api/` สำเร็จ
 
 | คำสั่ง | ตำแหน่งรัน | ผลจริง |
 |---|---|---|
+| `npm run test:pages` | `starter/frontend/` | **pass**, 8/8 tests, 0 fail, exit 0 |
+| `npm run build` | `starter/frontend/` | **pass**, Vite production mode, 42 modules, exit 0 |
+| `npm run build:pages` | `starter/frontend/` | **pass**, Vite pages mode, 42 modules, exit 0 |
 | `npm test` | `starter/api/` | **pass**, 6/6 tests, 0 fail, exit 0 |
-| `node check-week07.mjs` | `starter/` | **partial**, 35/36, exit 0 |
-| `npm run verify` | `starter/frontend/` | **fail**, LAB05 checker 126/136, exit 1; ไม่ถึงขั้น build |
-| `npm run build` | `starter/frontend/` | **pass**, Vite build 41 modules, exit 0 |
 
-Week07 checker:
+Pages tests ตรวจ seed และ filter ทั้ง 3 สถานะ, การคืนข้อมูลแบบ copy, create/update/delete ที่คงอยู่หลังสร้าง service instance ใหม่, validation และ 404, ลบจนว่างแล้ว reload, reset seed, แยก storage จาก LAB10, recovery เมื่อ JSON เสีย, storage failure, seed ผิด schema, error/empty scenarios และยืนยันว่า service โหมดปกติยังส่ง request ไป Express API
 
-```text
-ในห้อง (CP09–CP12)  24/25
-ที่บ้าน (CP13–CP16)  8/8
-Challenge            3/3
-รวม                  35/36
-รายการที่ขาด: api/.env.example
-```
+คัดลอกเฉพาะไฟล์ใน `starter/frontend/dist/` ไป `publish/` ไม่มี dependency, source ของ backend หรือ secret ใน output ใช้ Vite `base: './'` และ HashRouter เพื่อเปิดจากโฟลเดอร์ย่อยของ GitHub Pages ได้
 
-API tests ผ่านการคืนรายการ, การค้นที่พบ/ไม่พบ, การสร้างคำร้อง, การตรวจข้อมูลไม่ครบ และ CORS header นอกจากนี้ Week07 checker ตรวจ preflight และ PUT เปลี่ยนสถานะได้
+## ผล checker เดิมที่ยังคงไว้
 
-## ข้อจำกัดของ frontend verifier
+การเปลี่ยนรอบนี้ไม่ได้แก้ checker เดิมเพื่อเปลี่ยนผลคะแนน ผลก่อนปรับ Pages เมื่อวันที่เดียวกันยังบันทึกไว้ดังนี้:
 
-`starter/frontend/scripts/check-project.mjs` ระบุว่าเป็น **LAB05 checker v2** และยังตรวจ contract แบบ localStorage เดิม จึงมี 10 รายการไม่ผ่านเมื่อใช้กับ Week07:
+- `node check-week07.mjs` ที่ `starter/`: **partial 35/36**, exit 0; ในห้อง 24/25, ที่บ้าน 8/8, Challenge 3/3; ขาด `api/.env.example`
+- `npm run verify` ที่ `starter/frontend/`: **fail 126/136**, exit 1 เนื่องจากเป็น LAB05 checker v2 ที่ตรวจ contract แบบ localStorage เดิมและห้าม direct fetch ใน `apiClient.js` ซึ่งเป็นสถาปัตยกรรมที่ Week07 ตั้งใจใช้
 
-- คาดว่า `requestService.js` ตรวจ `response.ok` โดยตรง ขณะที่มีการตรวจใน `apiClient.js`
-- ห้าม direct fetch ใน `apiClient.js` ซึ่งเป็นไฟล์ที่ Week07 ตั้งใจใช้เรียก fetch
-- การทดสอบรายละเอียดคำร้อง 2 รายการใช้รูปแบบ mock ของ service เดิม
-- อีก 6 รายการคาดหวังการอ่าน/กู้คืน localStorage, สร้าง ID ฝั่ง client, validate ฝั่ง service, ลบพร้อม persist และ reset พร้อม persist
-
-จึงบันทึกผลรวมเป็น **partial** ไม่แก้ source หรือเปลี่ยน checker เพื่อให้คะแนนผ่าน `npm run build` รันแยกและสร้าง production output สำเร็จ แต่ไม่ได้ยืนยันว่า frontend ใช้งานจริงบน Pages ได้เมื่อไม่มี API
-
-## ภาพหลักฐานเดิม
-
-ภาพเหล่านี้มีอยู่แล้วใน branch ก่อนการตรวจครั้งนี้ และตรวจดูเนื้อหาภาพแล้ว:
-
-- `starter/evidence/images/app-with-api.png`: Dashboard แสดงข้อมูล 3 คำร้อง และ Network requests
-- `starter/evidence/images/network-cors-ok.png`: Network แสดง `Access-Control-Allow-Origin: http://localhost:5173`
-- `starter/evidence/images/error-state.png`: ภาพแสดง loading และ requests ที่ pending; แม้ชื่อไฟล์เป็น error-state แต่ยังไม่แสดงข้อความ error จึงไม่ใช้ยืนยัน error UI
+จึงยังคง `testStatus: partial` ใน metadata แม้ API tests, Pages tests และ production builds รอบนี้ผ่านทั้งหมด
 
 ## รันในเครื่อง
 
@@ -64,4 +52,21 @@ npm ci
 npm run dev
 ```
 
-`npm start` ใช้ค่าเริ่มต้นของ config ได้โดยไม่ต้องมี `.env`; คำสั่ง `npm run dev` ของ API มี `--env-file=.env` จึงต้องเตรียมไฟล์เองหากเลือกใช้คำสั่งนั้น เปิด frontend ที่ `http://localhost:5173` และ API ที่ `http://localhost:3001`
+เปิด frontend ที่ `http://localhost:5173` และ API ที่ `http://localhost:3001` คำสั่ง `npm start` ของ API ใช้ config เริ่มต้นได้โดยไม่ต้องมี `.env` ส่วน `npm run dev` ของ API ใช้ `--env-file=.env` จึงต้องเตรียมไฟล์หากเลือกคำสั่งนั้น
+
+สำหรับดู Pages Demo ในเครื่อง:
+
+```sh
+cd labs/week-07/starter/frontend
+npm run test:pages
+npm run build:pages
+npm run preview
+```
+
+## ภาพหลักฐานเดิม
+
+ภาพใน `starter/evidence/images/` เป็นภาพการใช้งาน API จาก branch เดิมก่อนปรับ Pages:
+
+- `app-with-api.png`: Dashboard แสดงข้อมูล 3 คำร้อง และ Network requests
+- `network-cors-ok.png`: Network แสดง `Access-Control-Allow-Origin: http://localhost:5173`
+- `error-state.png`: ภาพแสดง loading และ requests ที่ pending; ยังไม่แสดงข้อความ error จึงไม่ใช้ยืนยัน error UI
