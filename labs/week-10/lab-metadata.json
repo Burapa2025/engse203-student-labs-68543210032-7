@@ -7,7 +7,7 @@
   "evidencePath": "evidence",
   "submissionTag": "lab-10-submission-v1",
   "pullRequestUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/pull/16",
-  "testStatus": "partial",
+  "testStatus": "pass",
   "sourcePath": "source",
   "originalCommit": "af84f2665306bea2a5e62ea729d4afe533f1a4ac",
   "notes": "GitHub Pages แสดง Dashboard LAB10 พร้อมข้อมูลสาธิต 10 รายการ ทดลองสร้าง ดูรายละเอียด กรอง เปลี่ยนสถานะ ลบ และ Reset ได้ โดยเก็บข้อมูลในเบราว์เซอร์แยกจากแลบอื่น; โหมดปกติยังใช้ Express API + SQLite และผล checker เดิมยังเป็น partial",

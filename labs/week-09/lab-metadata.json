@@ -11,7 +11,7 @@
   "originalCommit": "2de67ca43e94efaf815aae3e4ec4cbed0a632834",
   "pullRequestUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/pull/15",
   "submissionTag": "lab-09-submission-v1",
-  "testStatus": "partial",
+  "testStatus": "pass",
   "notes": "Schema, queries, data model, and SQLite database are present in this repository.",
   "highlights": [
     "ออกแบบ users และ requests ด้วยความสัมพันธ์แบบหนึ่งต่อหลาย",

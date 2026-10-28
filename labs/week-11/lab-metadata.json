@@ -7,7 +7,7 @@
   "evidencePath": "evidence",
   "submissionTag": "lab-11-submission-v1",
   "pullRequestUrl": "https://github.com/Burapa2025/engse203-student-labs-68543210032-7/pull/17",
-  "testStatus": "partial",
+  "testStatus": "pass",
   "sourcePath": "lab11/source",
   "originalCommit": "6a891030c8159cefa8a600a136f41ffaf0f2377b",
   "notes": "เผยแพร่หลักฐานระบบ React + Express + SQLite แบบ production บน GitHub Pages; API และฐานข้อมูลต้องรันบน Node.js แยกต่างหาก ผลตรวจในห้องครบ แต่เอกสารส่งงานบางส่วนยังไม่ครบ",
